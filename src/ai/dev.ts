@@ -1,1 +1,5 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/ai-laptop-recommendations.ts';
+import '@/ai/flows/natural-language-laptop-search-flow.ts';

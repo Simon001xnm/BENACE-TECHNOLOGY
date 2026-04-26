@@ -1,3 +1,88 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "A minimalist and modern desk setup with a laptop",
+      "imageUrl": "https://picsum.photos/seed/hero1/1200/800",
+      "imageHint": "modern desk"
+    },
+    {
+      "id": "laptop-1",
+      "description": "A sleek silver laptop on a white desk",
+      "imageUrl": "https://picsum.photos/seed/laptop1/600/400",
+      "imageHint": "silver laptop"
+    },
+    {
+      "id": "laptop-2",
+      "description": "A black gaming laptop with a colorful keyboard",
+      "imageUrl": "https://picsum.photos/seed/laptop2/600/400",
+      "imageHint": "gaming laptop"
+    },
+    {
+      "id": "laptop-3",
+      "description": "An ultrabook being used in a coffee shop",
+      "imageUrl": "https://picsum.photos/seed/laptop3/600/400",
+      "imageHint": "laptop cafe"
+    },
+    {
+      "id": "laptop-4",
+      "description": "A 2-in-1 convertible laptop in tablet mode",
+      "imageUrl": "https://picsum.photos/seed/laptop4/600/400",
+      "imageHint": "convertible laptop"
+    },
+    {
+      "id": "laptop-5",
+      "description": "A powerful workstation laptop displaying 3D models",
+      "imageUrl": "https://picsum.photos/seed/laptop5/600/400",
+      "imageHint": "workstation laptop"
+    },
+    {
+      "id": "laptop-6",
+      "description": "A lightweight chromebook on a colorful background",
+      "imageUrl": "https://picsum.photos/seed/laptop6/600/400",
+      "imageHint": "chromebook laptop"
+    },
+    {
+      "id": "laptop-7",
+      "description": "A business laptop in a corporate meeting setting",
+      "imageUrl": "https://picsum.photos/seed/laptop7/600/400",
+      "imageHint": "business laptop"
+    },
+    {
+      "id": "laptop-8",
+      "description": "A creator's laptop next to a camera and a graphics tablet",
+      "imageUrl": "https://picsum.photos/seed/laptop8/600/400",
+      "imageHint": "creator laptop"
+    },
+    {
+      "id": "portfolio-1",
+      "description": "Homepage of a modern e-commerce website for a fashion brand",
+      "imageUrl": "https://picsum.photos/seed/portfolio1/600/400",
+      "imageHint": "ecommerce website"
+    },
+    {
+      "id": "portfolio-2",
+      "description": "A clean and professional corporate website for a financial consulting firm",
+      "imageUrl": "https://picsum.photos/seed/portfolio2/600/400",
+      "imageHint": "corporate website"
+    },
+    {
+      "id": "portfolio-3",
+      "description": "A vibrant and interactive portfolio website for a graphic designer",
+      "imageUrl": "https://picsum.photos/seed/portfolio3/600/400",
+      "imageHint": "portfolio website"
+    },
+    {
+      "id": "portfolio-4",
+      "description": "A user-friendly booking platform for a travel agency",
+      "imageUrl": "https://picsum.photos/seed/portfolio4/600/400",
+      "imageHint": "booking website"
+    },
+    {
+      "id": "cart-item-placeholder",
+      "description": "Placeholder for cart item",
+      "imageUrl": "https://picsum.photos/seed/cart-item/100/100",
+      "imageHint": "product image"
+    }
+  ]
 }
