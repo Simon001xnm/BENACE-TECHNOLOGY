@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
 import { laptops, accessories } from '@/lib/data';
-import { AiRecommender } from '@/components/ai/ai-recommender';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -99,21 +98,6 @@ export default function Home() {
               </Link>
             </Button>
           </div>
-        </div>
-      </section>
-
-      <section id="ai-recommender" className="py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="mb-12 text-center">
-            <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-              AI Laptop Finder
-            </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-              Not sure where to start? Describe what you need and let our AI
-              assistant find the perfect laptop for you.
-            </p>
-          </div>
-          <AiRecommender />
         </div>
       </section>
     </div>
