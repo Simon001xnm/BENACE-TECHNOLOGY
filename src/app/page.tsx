@@ -1,14 +1,16 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
-import { laptops } from '@/lib/data';
+import { laptops, accessories } from '@/lib/data';
 import { AiRecommender } from '@/components/ai/ai-recommender';
-import { Brush, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { AccessoryCard } from '@/components/accessories/accessory-card';
 
 export default function Home() {
   const featuredLaptops = laptops.slice(0, 4);
+  const featuredAccessories = accessories.slice(0, 4);
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-1');
 
   return (
@@ -75,35 +77,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="services-cta" className="bg-primary/5 py-16 md:py-24">
+      <section id="accessories" className="bg-primary/5 py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid items-center gap-8 rounded-lg bg-card p-8 shadow-lg md:grid-cols-2 md:p-12">
-            <div className="space-y-4">
-              <Brush className="h-12 w-12 text-accent" />
-              <h2 className="font-headline text-3xl font-bold text-primary">
-                Custom Web Design Services
-              </h2>
-              <p className="text-muted-foreground">
-                From sleek portfolios to robust e-commerce platforms, we build
-                digital experiences that captivate and convert. Let's bring
-                your brand to life online.
-              </p>
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link href="/services">
-                  Explore Our Services <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <div className="relative mt-8 h-64 w-full md:mt-0 md:h-full">
-              <Image
-                src="https://picsum.photos/seed/webdesign-cta/600/400"
-                alt="Web design process sketch"
-                fill
-                className="rounded-md object-cover"
-                data-ai-hint="web design sketch"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
+          <div className="mb-12 text-center">
+            <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+              Featured Accessories
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+              Enhance your setup with our curated selection of accessories.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {featuredAccessories.map(accessory => (
+              <AccessoryCard key={accessory.id} accessory={accessory} />
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Button asChild variant="secondary" size="lg">
+              <Link href="/accessories">
+                View All Accessories <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

@@ -37,3 +37,19 @@ export type CartItem = {
   quantity: number;
   imageId: string;
 };
+
+export type CartableProduct = {
+  id: string;
+  name: string;
+  price: number;
+  imageId: string;
+};
+
+export type Accessory = {
+  id: string;
+  name: string;
+  brand: string;
+  price: number;
+  category: string;
+  imageId: string;
+};

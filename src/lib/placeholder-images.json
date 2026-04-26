@@ -83,6 +83,30 @@
       "description": "Placeholder for cart item",
       "imageUrl": "https://picsum.photos/seed/cart-item/100/100",
       "imageHint": "product image"
+    },
+    {
+      "id": "accessory-1",
+      "description": "A sleek ergonomic mouse on a desk pad",
+      "imageUrl": "https://picsum.photos/seed/accessory1/600/400",
+      "imageHint": "ergonomic mouse"
+    },
+    {
+      "id": "accessory-2",
+      "description": "A mechanical keyboard with custom keycaps",
+      "imageUrl": "https://picsum.photos/seed/accessory2/600/400",
+      "imageHint": "mechanical keyboard"
+    },
+    {
+      "id": "accessory-3",
+      "description": "A pair of premium noise-cancelling headphones",
+      "imageUrl": "https://picsum.photos/seed/accessory3/600/400",
+      "imageHint": "wireless headphones"
+    },
+    {
+      "id": "accessory-4",
+      "description": "A portable power bank charging a smartphone",
+      "imageUrl": "https://picsum.photos/seed/accessory4/600/400",
+      "imageHint": "power bank"
     }
   ]
 }

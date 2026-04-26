@@ -1,4 +1,4 @@
-import type { Laptop, Service, PortfolioProject } from '@/lib/types';
+import type { Laptop, Service, PortfolioProject, Accessory } from '@/lib/types';
 import { Code, Brush, ShoppingCart } from 'lucide-react';
 
 export const laptops: Laptop[] = [
@@ -164,5 +164,40 @@ export const portfolioProjects: PortfolioProject[] = [
       'An interactive travel booking site with dynamic destination guides and a user-friendly trip planning interface.',
     category: 'Platform',
     imageId: 'portfolio-4',
+  },
+];
+
+export const accessories: Accessory[] = [
+  {
+    id: 'acc-001',
+    name: 'MX Master 3S Wireless Mouse',
+    brand: 'Logitech',
+    price: 99.99,
+    imageId: 'accessory-1',
+    category: 'Mouse',
+  },
+  {
+    id: 'acc-002',
+    name: 'Keychron K2 Mechanical Keyboard',
+    brand: 'Keychron',
+    price: 89.99,
+    imageId: 'accessory-2',
+    category: 'Keyboard',
+  },
+  {
+    id: 'acc-003',
+    name: 'WH-1000XM5 Wireless Headphones',
+    brand: 'Sony',
+    price: 399.99,
+    imageId: 'accessory-3',
+    category: 'Headphones',
+  },
+  {
+    id: 'acc-004',
+    name: 'Anker 737 Power Bank',
+    brand: 'Anker',
+    price: 149.99,
+    imageId: 'accessory-4',
+    category: 'Power',
   },
 ];

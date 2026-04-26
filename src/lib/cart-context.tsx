@@ -1,6 +1,6 @@
 "use client";
 
-import type { CartItem, Laptop } from '@/lib/types';
+import type { CartItem, CartableProduct } from '@/lib/types';
 import {
   createContext,
   useContext,
@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (laptop: Laptop) => void;
+  addToCart: (product: CartableProduct) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   cartCount: number;
@@ -27,12 +27,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const { toast } = useToast();
 
-  const addToCart = useCallback((laptop: Laptop) => {
+  const addToCart = useCallback((product: CartableProduct) => {
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === laptop.id);
+      const existingItem = prevItems.find(item => item.id === product.id);
       if (existingItem) {
         return prevItems.map(item =>
-          item.id === laptop.id
+          item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -40,17 +40,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return [
         ...prevItems,
         {
-          id: laptop.id,
-          name: laptop.name,
-          price: laptop.price,
+          id: product.id,
+          name: product.name,
+          price: product.price,
           quantity: 1,
-          imageId: laptop.imageId,
+          imageId: product.imageId,
         },
       ];
     });
     toast({
       title: "Added to cart",
-      description: `${laptop.name} is now in your cart.`,
+      description: `${product.name} is now in your cart.`,
     });
   }, [toast]);
 
