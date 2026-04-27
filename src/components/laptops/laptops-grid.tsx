@@ -20,7 +20,7 @@ const maxPrice = Math.ceil(Math.max(...allLaptops.map(l => l.price)));
 export function LaptopsGrid() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('all');
-  const [priceRange, setPriceRange] = useState([0, maxPrice]);
+  const [priceRange, setPriceRange] = useState([15000, 40000]);
 
   const filteredLaptops = useMemo(() => {
     return allLaptops
@@ -75,9 +75,9 @@ export function LaptopsGrid() {
           <Slider
             min={0}
             max={maxPrice}
-            step={50}
-            value={[priceRange[1]]}
-            onValueChange={value => setPriceRange([priceRange[0], value[0]])}
+            step={1000}
+            value={priceRange}
+            onValueChange={setPriceRange}
           />
         </div>
         <div className="md:col-span-4 flex justify-end">
