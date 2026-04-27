@@ -14,7 +14,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo.jpeg"
+            src="/logo.png"
             alt="Benace Technologies Logo"
             width={180}
             height={45}
