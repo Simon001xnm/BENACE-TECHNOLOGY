@@ -1,3 +1,5 @@
-Place static assets like images, fonts, and other files here. They will be served from the root of your application.
+Please add your `logo.jpeg` file to this `public` directory.
 
-For example, an image at `public/logo.png` can be accessed in your code at `/logo.png`.
+Files in this directory are served directly by the web server at the root of your site.
+
+For example, your `logo.jpeg` file will be available at `/logo.jpeg`.
