@@ -2,8 +2,6 @@
 
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -16,6 +14,7 @@ import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { MessageCircle } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
@@ -34,86 +33,41 @@ export default function CheckoutPage() {
     );
   }
   
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-        title: "Order Placed!",
-        description: "Thank you for your purchase. This is a demo and no real order was placed."
+  const handleWhatsAppCheckout = () => {
+    const phoneNumber = '254714210957';
+    let message = "Hello Benace Tech Hub, I'd like to place an order for the following items:\n\n";
+    
+    cartItems.forEach(item => {
+      message += `${item.name} (x${item.quantity}) - KSH ${(item.price * item.quantity).toFixed(2)}\n`;
     });
+
+    const total = cartTotal * 1.08;
+    message += `\nSubtotal: KSH ${cartTotal.toFixed(2)}`;
+    message += `\nTaxes (8%): KSH ${(cartTotal * 0.08).toFixed(2)}`;
+    message += `\n*Total: KSH ${total.toFixed(2)}*`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+    window.open(whatsappUrl, '_blank');
+
+    toast({
+        title: "Redirecting to WhatsApp",
+        description: "Your order details have been prepared. Please complete your purchase on WhatsApp."
+    });
+
     clearCart();
     router.push('/');
   }
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
-      <h1 className="mb-8 font-headline text-4xl font-bold tracking-tight text-primary">
-        Checkout
+    <div className="container mx-auto max-w-2xl px-4 py-8 md:px-6 md:py-12">
+      <h1 className="mb-8 font-headline text-4xl font-bold tracking-tight text-primary text-center">
+        Complete Your Order
       </h1>
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <form onSubmit={handleSubmit}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Shipping Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="first-name">First Name</Label>
-                    <Input id="first-name" placeholder="John" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="last-name">Last Name</Label>
-                    <Input id="last-name" placeholder="Doe" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="address">Address</Label>
-                  <Input id="address" placeholder="1234 Main St" />
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="city">City</Label>
-                    <Input id="city" placeholder="Anytown" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="state">State</Label>
-                    <Input id="state" placeholder="CA" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="zip">Zip Code</Label>
-                    <Input id="zip" placeholder="12345" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="mt-8">
-              <CardHeader>
-                <CardTitle>Payment Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="card-number">Card Number</Label>
-                  <Input id="card-number" placeholder="**** **** **** 1234" />
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="expiry">Expiry Date</Label>
-                    <Input id="expiry" placeholder="MM/YY" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="cvc">CVC</Label>
-                    <Input id="cvc" placeholder="123" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-             <Button size="lg" className="mt-8 w-full" type="submit">
-                Place Order
-            </Button>
-          </form>
-        </div>
-
+      <p className="text-center text-muted-foreground mb-8">
+        Review your items below and complete your purchase via WhatsApp.
+      </p>
         <div className="lg:col-span-1">
           <Card>
             <CardHeader>
@@ -166,8 +120,11 @@ export default function CheckoutPage() {
                 </div>
             </CardFooter>
           </Card>
+           <Button size="lg" className="mt-8 w-full" onClick={handleWhatsAppCheckout}>
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Checkout on WhatsApp
+            </Button>
         </div>
-      </div>
     </div>
   );
 }

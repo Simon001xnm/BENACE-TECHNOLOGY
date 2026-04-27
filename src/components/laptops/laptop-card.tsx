@@ -98,7 +98,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
           <ShoppingCart className="mr-2 h-3 w-3" /> Add to Cart
         </Button>
         <Button asChild size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 text-xs">
-            <Link href="/checkout">Buy Now</Link>
+            <Link href="/checkout">Checkout</Link>
         </Button>
       </CardFooter>
     </Card>
