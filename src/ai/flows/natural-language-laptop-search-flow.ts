@@ -11,7 +11,7 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const NaturalLanguageLaptopSearchInputSchema = z.object({
-  query: z.string().describe('The natural language query for laptop search, e.g., "Show me business laptops under $1200 with at least 512GB SSD".'),
+  query: z.string().describe('The natural language query for laptop search, e.g., "Show me business laptops under KSH 150000 with at least 512GB SSD".'),
 });
 export type NaturalLanguageLaptopSearchInput = z.infer<typeof NaturalLanguageLaptopSearchInputSchema>;
 
@@ -46,9 +46,9 @@ If a parameter is not explicitly mentioned, omit it from the output.
 Here are the available laptop types: business, gaming, ultrabook, 2-in-1, chromebook, student, general-purpose, workstation, creator, thin-and-light.
 Here are the available operating systems: Windows, macOS, ChromeOS, Linux.
 
-Example Query: "Show me business laptops under $1200 with at least 512GB SSD and 16GB RAM, preferably from Dell or HP."
+Example Query: "Show me business laptops under KSH 150000 with at least 512GB SSD and 16GB RAM, preferably from Dell or HP."
 Expected Output:
-{{"maxPrice": 1200, "minStorageGB": 512, "minRamGB": 16, "laptopType": "business", "brands": ["Dell", "HP"]}}
+{{"maxPrice": 150000, "minStorageGB": 512, "minRamGB": 16, "laptopType": "business", "brands": ["Dell", "HP"]}}
 
 Example Query: "I need a gaming laptop with an RTX 4070 and a 17-inch screen"
 Expected Output:
@@ -56,7 +56,7 @@ Expected Output:
 
 Example Query: "Affordable ultrabook"
 Expected Output:
-{{"laptopType": "ultrabook", "maxPrice": 1000}} (assuming affordable implies a maximum price)
+{{"laptopType": "ultrabook", "maxPrice": 120000}} (assuming affordable implies a maximum price)
 
 Example Query: "Laptop with touchscreen and long battery life"
 Expected Output:

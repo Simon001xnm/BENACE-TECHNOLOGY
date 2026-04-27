@@ -51,7 +51,7 @@ export function CartSheet({ children }: { children: React.ReactNode }) {
                       <div className="flex-grow">
                         <h3 className="font-medium">{item.name}</h3>
                         <p className="text-sm text-muted-foreground">
-                          ${item.price.toFixed(2)}
+                          KSH {item.price.toFixed(2)}
                         </p>
                         <div className="mt-2 flex items-center gap-2">
                           <Input
@@ -73,7 +73,7 @@ export function CartSheet({ children }: { children: React.ReactNode }) {
                           </Button>
                         </div>
                       </div>
-                      <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                      <p className="font-medium">KSH {(item.price * item.quantity).toFixed(2)}</p>
                     </div>
                   );
                 })}
@@ -83,7 +83,7 @@ export function CartSheet({ children }: { children: React.ReactNode }) {
               <div className="w-full space-y-4">
                 <div className="flex justify-between font-bold">
                   <span>Subtotal</span>
-                  <span>${cartTotal.toFixed(2)}</span>
+                  <span>KSH {cartTotal.toFixed(2)}</span>
                 </div>
                 <Button asChild size="lg" className="w-full">
                   <Link href="/checkout">Proceed to Checkout</Link>

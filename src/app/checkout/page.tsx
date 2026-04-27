@@ -142,7 +142,7 @@ export default function CheckoutPage() {
                         <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
                       </div>
                     </div>
-                    <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium">KSH {(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 );
               })}
@@ -150,11 +150,11 @@ export default function CheckoutPage() {
             <CardFooter className="flex flex-col items-stretch space-y-2">
                 <div className="flex justify-between font-semibold">
                     <span>Subtotal</span>
-                    <span>${cartTotal.toFixed(2)}</span>
+                    <span>KSH {cartTotal.toFixed(2)}</span>
                 </div>
                  <div className="flex justify-between text-sm text-muted-foreground">
                     <span>Taxes</span>
-                    <span>${(cartTotal * 0.08).toFixed(2)}</span>
+                    <span>KSH {(cartTotal * 0.08).toFixed(2)}</span>
                 </div>
                  <div className="flex justify-between text-sm text-muted-foreground">
                     <span>Shipping</span>
@@ -162,7 +162,7 @@ export default function CheckoutPage() {
                 </div>
                  <div className="flex justify-between text-lg font-bold border-t pt-2 mt-2">
                     <span>Total</span>
-                    <span>${(cartTotal * 1.08).toFixed(2)}</span>
+                    <span>KSH {(cartTotal * 1.08).toFixed(2)}</span>
                 </div>
             </CardFooter>
           </Card>

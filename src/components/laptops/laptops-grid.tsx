@@ -70,7 +70,7 @@ export function LaptopsGrid() {
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span>Price Range:</span>
-            <span className="font-medium">${priceRange[0]} - ${priceRange[1]}</span>
+            <span className="font-medium">KSH {priceRange[0]} - KSH {priceRange[1]}</span>
           </div>
           <Slider
             min={0}

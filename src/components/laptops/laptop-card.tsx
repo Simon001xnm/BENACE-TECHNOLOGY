@@ -43,7 +43,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       </CardContent>
       <CardFooter className="flex items-center justify-between p-4">
-        <p className="text-lg font-bold text-primary">${laptop.price.toFixed(2)}</p>
+        <p className="text-lg font-bold text-primary">KSH {laptop.price.toFixed(2)}</p>
         <Button variant="outline" onClick={() => addToCart(laptop)}>
           <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
         </Button>
