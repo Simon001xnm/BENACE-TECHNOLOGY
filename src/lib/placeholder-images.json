@@ -7,54 +7,6 @@
       "imageHint": "modern desk"
     },
     {
-      "id": "laptop-1",
-      "description": "A sleek silver laptop on a white desk",
-      "imageUrl": "https://picsum.photos/seed/laptop1/600/400",
-      "imageHint": "silver laptop"
-    },
-    {
-      "id": "laptop-2",
-      "description": "A black gaming laptop with a colorful keyboard",
-      "imageUrl": "https://picsum.photos/seed/laptop2/600/400",
-      "imageHint": "gaming laptop"
-    },
-    {
-      "id": "laptop-3",
-      "description": "An ultrabook being used in a coffee shop",
-      "imageUrl": "https://picsum.photos/seed/laptop3/600/400",
-      "imageHint": "laptop cafe"
-    },
-    {
-      "id": "laptop-4",
-      "description": "A 2-in-1 convertible laptop in tablet mode",
-      "imageUrl": "https://picsum.photos/seed/laptop4/600/400",
-      "imageHint": "convertible laptop"
-    },
-    {
-      "id": "laptop-5",
-      "description": "A powerful workstation laptop displaying 3D models",
-      "imageUrl": "https://picsum.photos/seed/laptop5/600/400",
-      "imageHint": "workstation laptop"
-    },
-    {
-      "id": "laptop-6",
-      "description": "A lightweight chromebook on a colorful background",
-      "imageUrl": "https://picsum.photos/seed/laptop6/600/400",
-      "imageHint": "chromebook laptop"
-    },
-    {
-      "id": "laptop-7",
-      "description": "A business laptop in a corporate meeting setting",
-      "imageUrl": "https://picsum.photos/seed/laptop7/600/400",
-      "imageHint": "business laptop"
-    },
-    {
-      "id": "laptop-8",
-      "description": "A creator's laptop next to a camera and a graphics tablet",
-      "imageUrl": "https://picsum.photos/seed/laptop8/600/400",
-      "imageHint": "creator laptop"
-    },
-    {
       "id": "portfolio-1",
       "description": "Homepage of a modern e-commerce website for a fashion brand",
       "imageUrl": "https://picsum.photos/seed/portfolio1/600/400",
@@ -85,28 +37,160 @@
       "imageHint": "product image"
     },
     {
-      "id": "accessory-1",
-      "description": "A sleek ergonomic mouse on a desk pad",
-      "imageUrl": "https://picsum.photos/seed/accessory1/600/400",
-      "imageHint": "ergonomic mouse"
+      "id": "laptop-hp-probook-11-g6",
+      "description": "HP Probook 11 G6",
+      "imageUrl": "https://picsum.photos/seed/hp1/600/400",
+      "imageHint": "hp laptop"
     },
     {
-      "id": "accessory-2",
-      "description": "A mechanical keyboard with custom keycaps",
-      "imageUrl": "https://picsum.photos/seed/accessory2/600/400",
-      "imageHint": "mechanical keyboard"
+      "id": "laptop-hp-dragonfly",
+      "description": "HP Dragonfly x360",
+      "imageUrl": "https://picsum.photos/seed/hp2/600/400",
+      "imageHint": "hp convertible"
     },
     {
-      "id": "accessory-3",
-      "description": "A pair of premium noise-cancelling headphones",
-      "imageUrl": "https://picsum.photos/seed/accessory3/600/400",
-      "imageHint": "wireless headphones"
+      "id": "laptop-hp-830-g7",
+      "description": "HP EliteBook 830 G7",
+      "imageUrl": "https://picsum.photos/seed/hp3/600/400",
+      "imageHint": "hp elitebook"
     },
     {
-      "id": "accessory-4",
-      "description": "A portable power bank charging a smartphone",
-      "imageUrl": "https://picsum.photos/seed/accessory4/600/400",
-      "imageHint": "power bank"
+      "id": "laptop-hp-830-g8-x360",
+      "description": "HP EliteBook 830 G8 x360",
+      "imageUrl": "https://picsum.photos/seed/hp4/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "laptop-hp-830-g8",
+      "description": "HP EliteBook 830 G8",
+      "imageUrl": "https://picsum.photos/seed/hp5/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "laptop-hp-840-g5",
+      "description": "HP EliteBook 840 G5",
+      "imageUrl": "https://picsum.photos/seed/hp6/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "laptop-hp-840-g7",
+      "description": "HP EliteBook 840 G7",
+      "imageUrl": "https://picsum.photos/seed/hp7/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "laptop-hp-840-g8-i5-10th",
+      "description": "HP EliteBook 840 G8",
+      "imageUrl": "https://picsum.photos/seed/hp8/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "laptop-hp-840-g8-i5-11th",
+      "description": "HP EliteBook 840 G8",
+      "imageUrl": "https://picsum.photos/seed/hp9/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "laptop-hp-1030-g7-16gb",
+      "description": "HP EliteBook 1030 G7 x360",
+      "imageUrl": "https://picsum.photos/seed/hp10/600/400",
+      "imageHint": "hp convertible"
+    },
+    {
+      "id": "laptop-hp-1030-g7-32gb",
+      "description": "HP EliteBook 1030 G7 x360",
+      "imageUrl": "https://picsum.photos/seed/hp11/600/400",
+      "imageHint": "hp convertible"
+    },
+    {
+      "id": "laptop-hp-1030-g8",
+      "description": "HP EliteBook 1030 G8 x360",
+      "imageUrl": "https://picsum.photos/seed/hp12/600/400",
+      "imageHint": "hp convertible"
+    },
+    {
+      "id": "laptop-hp-1040-g8",
+      "description": "HP EliteBook 1040 G8 x360",
+      "imageUrl": "https://picsum.photos/seed/hp13/600/400",
+      "imageHint": "hp convertible"
+    },
+    {
+      "id": "laptop-hp-zbook-15-g8",
+      "description": "HP Zbook Firefly 15 G8",
+      "imageUrl": "https://picsum.photos/seed/hp14/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "laptop-hp-zhan-66-g4",
+      "description": "HP Zhan 66 Pro 14 G4",
+      "imageUrl": "https://picsum.photos/seed/hp15/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "laptop-hp-zbook-16-g9",
+      "description": "HP Zbook Firefly 16 G9",
+      "imageUrl": "https://picsum.photos/seed/hp16/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "laptop-dell-pro-14",
+      "description": "Dell PRO 14 ULTRA 7",
+      "imageUrl": "https://picsum.photos/seed/dell1/600/400",
+      "imageHint": "dell laptop"
+    },
+    {
+      "id": "laptop-dell-5400-512gb",
+      "description": "Dell Latitude 5400",
+      "imageUrl": "https://picsum.photos/seed/dell2/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "laptop-dell-5400-256gb-touch",
+      "description": "Dell Latitude 5400",
+      "imageUrl": "https://picsum.photos/seed/dell3/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "laptop-dell-5400-256gb-nontouch",
+      "description": "Dell Latitude 5400",
+      "imageUrl": "https://picsum.photos/seed/dell4/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "laptop-dell-7320",
+      "description": "Dell Latitude 7320 x360",
+      "imageUrl": "https://picsum.photos/seed/dell5/600/400",
+      "imageHint": "dell convertible"
+    },
+    {
+      "id": "laptop-dell-7490",
+      "description": "Dell Latitude 7490",
+      "imageUrl": "https://picsum.photos/seed/dell6/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "laptop-lenovo-thinkbook-14-g8",
+      "description": "Lenovo ThinkBook 14 G8",
+      "imageUrl": "https://picsum.photos/seed/lenovo1/600/400",
+      "imageHint": "lenovo thinkbook"
+    },
+    {
+      "id": "laptop-lenovo-x13",
+      "description": "Lenovo ThinkPad X13",
+      "imageUrl": "https://picsum.photos/seed/lenovo2/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "laptop-apple-mbp-16-2019",
+      "description": "Apple MacBook Pro 16-inch 2019",
+      "imageUrl": "https://picsum.photos/seed/apple1/600/400",
+      "imageHint": "macbook pro"
+    },
+    {
+      "id": "accessory-dell-mouse",
+      "description": "A wireless Dell mouse",
+      "imageUrl": "https://picsum.photos/seed/mouse1/600/400",
+      "imageHint": "wireless mouse"
     }
   ]
 }

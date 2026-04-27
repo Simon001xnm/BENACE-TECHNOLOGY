@@ -2,111 +2,37 @@ import type { Laptop, Service, PortfolioProject, Accessory } from '@/lib/types';
 import { Code, Brush, ShoppingCart } from 'lucide-react';
 
 export const laptops: Laptop[] = [
-  {
-    id: 'lpt-001',
-    name: 'ZenBook Pro 15',
-    brand: 'Asus',
-    price: 179999,
-    specifications: {
-      processor: 'Intel Core i9',
-      ram: '32GB DDR4',
-      storage: '1TB NVMe SSD',
-      display: '15.6" 4K UHD OLED',
-    },
-    imageId: 'laptop-1',
-  },
-  {
-    id: 'lpt-002',
-    name: 'Spectre x360 14',
-    brand: 'HP',
-    price: 154999,
-    specifications: {
-      processor: 'Intel Core i7',
-      ram: '16GB DDR4',
-      storage: '512GB NVMe SSD',
-      display: '13.5" 3K2K OLED',
-    },
-    imageId: 'laptop-4',
-  },
-  {
-    id: 'lpt-003',
-    name: 'MacBook Air M2',
-    brand: 'Apple',
-    price: 119900,
-    specifications: {
-      processor: 'Apple M2 Chip',
-      ram: '8GB Unified',
-      storage: '256GB SSD',
-      display: '13.6" Liquid Retina',
-    },
-    imageId: 'laptop-3',
-  },
-  {
-    id: 'lpt-004',
-    name: 'Legion 5 Pro',
-    brand: 'Lenovo',
-    price: 199999,
-    specifications: {
-      processor: 'AMD Ryzen 7',
-      ram: '16GB DDR5',
-      storage: '1TB NVMe SSD',
-      display: '16" QHD 165Hz',
-    },
-    imageId: 'laptop-2',
-  },
-  {
-    id: 'lpt-005',
-    name: 'XPS 15',
-    brand: 'Dell',
-    price: 219900,
-    specifications: {
-      processor: 'Intel Core i7',
-      ram: '16GB DDR5',
-      storage: '512GB NVMe SSD',
-      display: '15.6" FHD+',
-    },
-    imageId: 'laptop-5',
-  },
-  {
-    id: 'lpt-006',
-    name: 'Surface Laptop 4',
-    brand: 'Microsoft',
-    price: 129999,
-    specifications: {
-      processor: 'AMD Ryzen 5',
-      ram: '8GB DDR4',
-      storage: '256GB SSD',
-      display: '13.5" PixelSense',
-    },
-    imageId: 'laptop-7',
-  },
-  {
-    id: 'lpt-007',
-    name: 'Gram 17',
-    brand: 'LG',
-    price: 169999,
-    specifications: {
-      processor: 'Intel Core i7',
-      ram: '16GB LPDDR5',
-      storage: '1TB NVMe SSD',
-      display: '17" WQXGA IPS',
-    },
-    imageId: 'laptop-8',
-  },
-  {
-    id: 'lpt-008',
-    name: 'Chromebook Spin 713',
-    brand: 'Acer',
-    price: 64900,
-    specifications: {
-      processor: 'Intel Core i5',
-      ram: '8GB DDR4',
-      storage: '256GB SSD',
-      display: '13.5" 2K VertiView',
-    },
-    imageId: 'laptop-6',
-  },
+  // HP
+  { id: 'lpt-hp-001', name: 'Probook 11 G6', brand: 'HP', price: 17500, specifications: { processor: 'Core i5', ram: '8GB', storage: '128GB SSD', display: '11.6"' }, imageId: 'laptop-hp-probook-11-g6' },
+  { id: 'lpt-hp-002', name: 'Dragonfly x360', brand: 'HP', price: 47500, specifications: { processor: 'Core i5 8th Gen', ram: '8GB', storage: '256GB SSD', display: '13.3" x360 Touch' }, imageId: 'laptop-hp-dragonfly' },
+  { id: 'lpt-hp-003', name: 'EliteBook 830 G7', brand: 'HP', price: 50000, specifications: { processor: 'Core i7 10th Gen', ram: '16GB', storage: '256GB SSD', display: '13.3" Touch' }, imageId: 'laptop-hp-830-g7' },
+  { id: 'lpt-hp-004', name: 'EliteBook 830 G8 x360', brand: 'HP', price: 72500, specifications: { processor: 'Core i7 11th Gen', ram: '16GB', storage: '512GB SSD', display: '13.3" x360 Touch' }, imageId: 'laptop-hp-830-g8-x360' },
+  { id: 'lpt-hp-005', name: 'EliteBook 830 G8', brand: 'HP', price: 60000, specifications: { processor: 'Core i7 11th Gen', ram: '16GB', storage: '512GB SSD', display: '13.3" Touch' }, imageId: 'laptop-hp-830-g8' },
+  { id: 'lpt-hp-006', name: 'EliteBook 840 G5', brand: 'HP', price: 30000, specifications: { processor: 'Core i5 7th Gen', ram: '8GB', storage: '256GB SSD', display: '14"' }, imageId: 'laptop-hp-840-g5' },
+  { id: 'lpt-hp-007', name: 'EliteBook 840 G7', brand: 'HP', price: 37500, specifications: { processor: 'Core i5 10th Gen', ram: '16GB', storage: '256GB SSD', display: '14"' }, imageId: 'laptop-hp-840-g7' },
+  { id: 'lpt-hp-008', name: 'EliteBook 840 G8', brand: 'HP', price: 40625, specifications: { processor: 'Core i5 10th Gen', ram: '8GB', storage: '256GB SSD', display: '14"' }, imageId: 'laptop-hp-840-g8-i5-10th' },
+  { id: 'lpt-hp-009', name: 'EliteBook 840 G8', brand: 'HP', price: 42500, specifications: { processor: 'Core i5 11th Gen', ram: '16GB', storage: '256GB SSD', display: '14"' }, imageId: 'laptop-hp-840-g8-i5-11th' },
+  { id: 'lpt-hp-010', name: 'EliteBook 1030 G7 x360', brand: 'HP', price: 68750, specifications: { processor: 'Core i7 10th Gen', ram: '16GB', storage: '512GB SSD', display: '13.3" x360' }, imageId: 'laptop-hp-1030-g7-16gb' },
+  { id: 'lpt-hp-011', name: 'EliteBook 1030 G7 x360', brand: 'HP', price: 72500, specifications: { processor: 'Core i7 10th Gen', ram: '32GB', storage: '512GB SSD', display: '13.3" x360' }, imageId: 'laptop-hp-1030-g7-32gb' },
+  { id: 'lpt-hp-012', name: 'EliteBook 1030 G8 x360', brand: 'HP', price: 65000, specifications: { processor: 'Core i7 11th Gen', ram: '16GB', storage: '256GB SSD', display: '13.3" x360' }, imageId: 'laptop-hp-1030-g8' },
+  { id: 'lpt-hp-013', name: 'EliteBook 1040 G8 x360', brand: 'HP', price: 72500, specifications: { processor: 'Core i7 11th Gen', ram: '16GB', storage: '512GB SSD', display: '14" x360' }, imageId: 'laptop-hp-1040-g8' },
+  { id: 'lpt-hp-014', name: 'Zbook Firefly 15 G8', brand: 'HP', price: 93750, specifications: { processor: 'Core i7 11th Gen', ram: '32GB', storage: '512GB SSD', display: '15.6", 4GB Graphics' }, imageId: 'laptop-hp-zbook-15-g8' },
+  { id: 'lpt-hp-015', name: 'Zhan 66 Pro 14 G4', brand: 'HP', price: 56250, specifications: { processor: 'Core i7 11th Gen', ram: '8GB', storage: '256GB SSD', display: '14"' }, imageId: 'laptop-hp-zhan-66-g4' },
+  { id: 'lpt-hp-016', name: 'Zbook Firefly 16 G9', brand: 'HP', price: 68750, specifications: { processor: 'Core i7 12th Gen', ram: '16GB', storage: '1TB SSD', display: '16"' }, imageId: 'laptop-hp-zbook-16-g9' },
+  // DELL
+  { id: 'lpt-dell-001', name: 'PRO 14 ULTRA 7', brand: 'Dell', price: 156250, specifications: { processor: 'Ultra 7 256U', ram: '8GB', storage: '512GB SSD', display: '14" Ubuntu' }, imageId: 'laptop-dell-pro-14' },
+  { id: 'lpt-dell-002', name: 'Latitude 5400', brand: 'Dell', price: 31250, specifications: { processor: 'Core i5 8th Gen', ram: '8GB', storage: '512GB SSD', display: '14" Touch' }, imageId: 'laptop-dell-5400-512gb' },
+  { id: 'lpt-dell-003', name: 'Latitude 5400', brand: 'Dell', price: 30000, specifications: { processor: 'Core i5 8th Gen', ram: '8GB', storage: '256GB SSD', display: '14" Touch' }, imageId: 'laptop-dell-5400-256gb-touch' },
+  { id: 'lpt-dell-004', name: 'Latitude 5400', brand: 'Dell', price: 28750, specifications: { processor: 'Core i5 8th Gen', ram: '8GB', storage: '256GB SSD', display: '14"' }, imageId: 'laptop-dell-5400-256gb-nontouch' },
+  { id: 'lpt-dell-005', name: 'Latitude 7320 x360', brand: 'Dell', price: 43750, specifications: { processor: 'Core i7 11th Gen', ram: '16GB', storage: '512GB SSD', display: '13" x360 Touch' }, imageId: 'laptop-dell-7320' },
+  { id: 'lpt-dell-006', name: 'Latitude 7490', brand: 'Dell', price: 30000, specifications: { processor: 'Core i5 8th Gen', ram: '8GB', storage: '256GB SSD', display: '14"' }, imageId: 'laptop-dell-7490' },
+  // LENOVO
+  { id: 'lpt-lenovo-001', name: 'ThinkBook 14 G8', brand: 'Lenovo', price: 137500, specifications: { processor: 'Ultra 7 255H', ram: '16GB', storage: '512GB SSD', display: '14" Arctic Grey' }, imageId: 'laptop-lenovo-thinkbook-14-g8' },
+  { id: 'lpt-lenovo-002', name: 'ThinkPad X13', brand: 'Lenovo', price: 40625, specifications: { processor: 'Core i7 10th Gen', ram: '16GB', storage: '256GB SSD', display: '13.3" Touch' }, imageId: 'laptop-lenovo-x13' },
+  // APPLE
+  { id: 'lpt-apple-001', name: 'MacBook Pro 16" 2019', brand: 'Apple', price: 75000, specifications: { processor: 'Core i7', ram: '16GB', storage: '512GB SSD', display: '16", 4GB Radeon' }, imageId: 'laptop-apple-mbp-16-2019' },
 ];
+
 
 export const services: Service[] = [
   {
@@ -168,36 +94,5 @@ export const portfolioProjects: PortfolioProject[] = [
 ];
 
 export const accessories: Accessory[] = [
-  {
-    id: 'acc-001',
-    name: 'MX Master 3S Wireless Mouse',
-    brand: 'Logitech',
-    price: 9999,
-    imageId: 'accessory-1',
-    category: 'Mouse',
-  },
-  {
-    id: 'acc-002',
-    name: 'Keychron K2 Mechanical Keyboard',
-    brand: 'Keychron',
-    price: 8999,
-    imageId: 'accessory-2',
-    category: 'Keyboard',
-  },
-  {
-    id: 'acc-003',
-    name: 'WH-1000XM5 Wireless Headphones',
-    brand: 'Sony',
-    price: 39999,
-    imageId: 'accessory-3',
-    category: 'Headphones',
-  },
-  {
-    id: 'acc-004',
-    name: 'Anker 737 Power Bank',
-    brand: 'Anker',
-    price: 14999,
-    imageId: 'accessory-4',
-    category: 'Power',
-  },
+  { id: 'acc-dell-001', name: 'Wireless Mouse', brand: 'Dell', price: 2125, category: 'Mouse', imageId: 'accessory-dell-mouse' },
 ];
