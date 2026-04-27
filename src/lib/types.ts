@@ -6,6 +6,9 @@ export type Laptop = {
   name: string;
   brand: string;
   price: number;
+  oldPrice?: number;
+  salePercentage?: number;
+  status?: 'New' | 'Ex-UK' | 'Boxed';
   specifications: {
     processor: string;
     ram: string;
@@ -52,4 +55,7 @@ export type Accessory = {
   price: number;
   category: string;
   imageId: string;
+  oldPrice?: number;
+  salePercentage?: number;
+  status?: 'New' | 'Ex-UK' | 'Boxed';
 };

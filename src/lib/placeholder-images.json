@@ -37,868 +37,160 @@
       "imageHint": "product image"
     },
     {
-      "id": "laptop-hp-zbook-15-g8-1",
-      "description": "HP Zbook 15 G8",
-      "imageUrl": "https://picsum.photos/seed/new101/600/400",
-      "imageHint": "hp zbook"
+      "id": "laptop-dell-pro-14-1",
+      "description": "Dell Pro 14 PC14250",
+      "imageUrl": "https://picsum.photos/seed/ldp141/600/400",
+      "imageHint": "dell laptop"
     },
     {
-      "id": "laptop-hp-zbook-14-g8-1",
-      "description": "HP Zbook 14 G8",
-      "imageUrl": "https://picsum.photos/seed/new102/600/400",
-      "imageHint": "hp zbook"
+      "id": "laptop-lenovo-thinkbook-14-g8-1",
+      "description": "Lenovo ThinkBook 14 G8",
+      "imageUrl": "https://picsum.photos/seed/llt14g81/600/400",
+      "imageHint": "lenovo thinkbook"
     },
     {
-      "id": "laptop-hp-zbook-14-g8-2",
-      "description": "HP Zbook 14 G8",
-      "imageUrl": "https://picsum.photos/seed/new103/600/400",
-      "imageHint": "hp zbook"
+      "id": "laptop-hp-probook-11-g6-1",
+      "description": "Hp Probook 11 g6",
+      "imageUrl": "https://picsum.photos/seed/lhp11g61/600/400",
+      "imageHint": "hp probook"
     },
     {
-      "id": "laptop-hp-zbook-15-g7-1",
-      "description": "HP Zbook 15 G7",
-      "imageUrl": "https://picsum.photos/seed/new104/600/400",
-      "imageHint": "hp zbook"
+      "id": "laptop-hp-dragonfly-1",
+      "description": "Hp Dragonfly",
+      "imageUrl": "https://picsum.photos/seed/lhpdragon1/600/400",
+      "imageHint": "hp dragonfly"
     },
     {
-      "id": "laptop-hp-zbook-14-g7-1",
-      "description": "HP Zbook 14 G7",
-      "imageUrl": "https://picsum.photos/seed/new105/600/400",
-      "imageHint": "hp zbook"
-    },
-    {
-      "id": "laptop-hp-zbook-14-g7-2",
-      "description": "HP Zbook 14 G7",
-      "imageUrl": "https://picsum.photos/seed/new106/600/400",
-      "imageHint": "hp zbook"
-    },
-    {
-      "id": "laptop-hp-zbook-14-g6-1",
-      "description": "HP Zbook 14 G6",
-      "imageUrl": "https://picsum.photos/seed/new107/600/400",
-      "imageHint": "hp zbook"
-    },
-    {
-      "id": "laptop-hp-zbook-14-g5-1",
-      "description": "HP Zbook 14 G5",
-      "imageUrl": "https://picsum.photos/seed/new108/600/400",
-      "imageHint": "hp zbook"
-    },
-    {
-      "id": "laptop-hp-850-g7-1",
-      "description": "HP 850 G7",
-      "imageUrl": "https://picsum.photos/seed/new109/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-850-g6-1",
-      "description": "HP 850 G6",
-      "imageUrl": "https://picsum.photos/seed/new110/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-850-g6-2",
-      "description": "HP 850 G6",
-      "imageUrl": "https://picsum.photos/seed/new111/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-850-g3-g4-1",
-      "description": "HP 850 G3/G4",
-      "imageUrl": "https://picsum.photos/seed/new112/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-845-g7-1",
-      "description": "HP 845 G7",
-      "imageUrl": "https://picsum.photos/seed/new113/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-745-g6-1",
-      "description": "HP 745 G6",
-      "imageUrl": "https://picsum.photos/seed/new114/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-745-g6-2",
-      "description": "HP 745 G6",
-      "imageUrl": "https://picsum.photos/seed/new115/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-745-g6-3",
-      "description": "HP 745 G6",
-      "imageUrl": "https://picsum.photos/seed/new116/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-apple-macbook-pro-15-2019-1",
-      "description": "Apple MacBook Pro 15\" 2019",
-      "imageUrl": "https://picsum.photos/seed/new117/600/400",
-      "imageHint": "macbook pro"
-    },
-    {
-      "id": "laptop-apple-macbook-pro-15-2018-1",
-      "description": "Apple MacBook Pro 15\" 2018",
-      "imageUrl": "https://picsum.photos/seed/new118/600/400",
-      "imageHint": "macbook pro"
-    },
-    {
-      "id": "laptop-apple-macbook-air-2017-1",
-      "description": "Apple MacBook Air 2017",
-      "imageUrl": "https://picsum.photos/seed/new119/600/400",
-      "imageHint": "macbook air"
-    },
-    {
-      "id": "laptop-apple-macbook-air-2015-1",
-      "description": "Apple MacBook Air 2015",
-      "imageUrl": "https://picsum.photos/seed/new120/600/400",
-      "imageHint": "macbook air"
-    },
-    {
-      "id": "laptop-apple-macbook-pro-2012-1",
-      "description": "Apple MacBook Pro 2012",
-      "imageUrl": "https://picsum.photos/seed/new121/600/400",
-      "imageHint": "macbook pro"
-    },
-    {
-      "id": "laptop-hp-1040-g10-1",
-      "description": "HP 1040 G10",
-      "imageUrl": "https://picsum.photos/seed/new122/600/400",
+      "id": "laptop-hp-830-g7-1",
+      "description": "Hp 830 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp830g71/600/400",
       "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1040-g8-1",
-      "description": "HP 1040 G8",
-      "imageUrl": "https://picsum.photos/seed/new123/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1040-g8-2",
-      "description": "HP 1040 G8",
-      "imageUrl": "https://picsum.photos/seed/new124/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1040-g8-3",
-      "description": "HP 1040 G8",
-      "imageUrl": "https://picsum.photos/seed/new125/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1040-g8-4",
-      "description": "HP 1040 G8",
-      "imageUrl": "https://picsum.photos/seed/new126/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1040-g7-1",
-      "description": "HP 1040 G7",
-      "imageUrl": "https://picsum.photos/seed/new127/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1040-g6-1",
-      "description": "HP 1040 G6",
-      "imageUrl": "https://picsum.photos/seed/new128/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1030-g8-1",
-      "description": "HP 1030 G8",
-      "imageUrl": "https://picsum.photos/seed/new129/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1030-g7-1",
-      "description": "HP 1030 G7",
-      "imageUrl": "https://picsum.photos/seed/new130/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1030-g4-1",
-      "description": "HP 1030 G4",
-      "imageUrl": "https://picsum.photos/seed/new131/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1030-g4-2",
-      "description": "HP 1030 G4",
-      "imageUrl": "https://picsum.photos/seed/new132/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1030-g3-1",
-      "description": "HP 1030 G3",
-      "imageUrl": "https://picsum.photos/seed/new133/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1030-g3-2",
-      "description": "HP 1030 G3",
-      "imageUrl": "https://picsum.photos/seed/new134/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-1030-g2-1",
-      "description": "HP 1030 G2",
-      "imageUrl": "https://picsum.photos/seed/new135/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-x2-1012-1",
-      "description": "HP X2 1012",
-      "imageUrl": "https://picsum.photos/seed/new136/600/400",
-      "imageHint": "hp convertible"
-    },
-    {
-      "id": "laptop-hp-x2-1012-2",
-      "description": "HP X2 1012",
-      "imageUrl": "https://picsum.photos/seed/new137/600/400",
-      "imageHint": "hp convertible"
-    },
-    {
-      "id": "laptop-hp-x2-1012-3",
-      "description": "HP X2 1012",
-      "imageUrl": "https://picsum.photos/seed/new138/600/400",
-      "imageHint": "hp convertible"
-    },
-    {
-      "id": "laptop-hp-x2-1012-4",
-      "description": "HP X2 1012",
-      "imageUrl": "https://picsum.photos/seed/new139/600/400",
-      "imageHint": "hp convertible"
-    },
-    {
-      "id": "laptop-hp-840-g8-1",
-      "description": "HP 840 G8",
-      "imageUrl": "https://picsum.photos/seed/new140/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g8-2",
-      "description": "HP 840 G8",
-      "imageUrl": "https://picsum.photos/seed/new141/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g8-3",
-      "description": "HP 840 G8",
-      "imageUrl": "https://picsum.photos/seed/new142/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g7-1",
-      "description": "HP 840 G7",
-      "imageUrl": "https://picsum.photos/seed/new143/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g7-2",
-      "description": "HP 840 G7",
-      "imageUrl": "https://picsum.photos/seed/new144/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g6-1",
-      "description": "HP 840 G6",
-      "imageUrl": "https://picsum.photos/seed/new145/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g6-2",
-      "description": "HP 840 G6",
-      "imageUrl": "https://picsum.photos/seed/new146/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g6-3",
-      "description": "HP 840 G6",
-      "imageUrl": "https://picsum.photos/seed/new147/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g6-4",
-      "description": "HP 840 G6",
-      "imageUrl": "https://picsum.photos/seed/new148/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g5-g6-1",
-      "description": "HP 840 G5/G6",
-      "imageUrl": "https://picsum.photos/seed/new149/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g5-1",
-      "description": "HP 840 G5",
-      "imageUrl": "https://picsum.photos/seed/new150/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g5-2",
-      "description": "HP 840 G5",
-      "imageUrl": "https://picsum.photos/seed/new151/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g3-1",
-      "description": "HP 840 G3",
-      "imageUrl": "https://picsum.photos/seed/new152/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g3-2",
-      "description": "HP 840 G3",
-      "imageUrl": "https://picsum.photos/seed/new153/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g2-1",
-      "description": "HP 840 G2",
-      "imageUrl": "https://picsum.photos/seed/new154/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g2-2",
-      "description": "HP 840 G2",
-      "imageUrl": "https://picsum.photos/seed/new155/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-840-g1-1",
-      "description": "HP 840 G1",
-      "imageUrl": "https://picsum.photos/seed/new156/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-8470-1",
-      "description": "HP 8470",
-      "imageUrl": "https://picsum.photos/seed/new157/600/400",
-      "imageHint": "hp laptop"
     },
     {
       "id": "laptop-hp-830-g8-1",
-      "description": "HP 830 G8",
-      "imageUrl": "https://picsum.photos/seed/new158/600/400",
+      "description": "Hp 830 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp830g81/600/400",
       "imageHint": "hp elitebook"
     },
     {
       "id": "laptop-hp-830-g8-2",
-      "description": "HP 830 G8",
-      "imageUrl": "https://picsum.photos/seed/new159/600/400",
+      "description": "Hp 830 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp830g82/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g8-3",
-      "description": "HP 830 G8",
-      "imageUrl": "https://picsum.photos/seed/new160/600/400",
+      "id": "laptop-hp-840-g5-1",
+      "description": "Hp 840 G5",
+      "imageUrl": "https://picsum.photos/seed/lhp840g51/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g8-4",
-      "description": "HP 830 G8",
-      "imageUrl": "https://picsum.photos/seed/new161/600/400",
+      "id": "laptop-hp-840-g7-1",
+      "description": "Hp 840 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp840g71/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g7-1",
-      "description": "HP 830 G7",
-      "imageUrl": "https://picsum.photos/seed/new162/600/400",
+      "id": "laptop-hp-840-g8-1",
+      "description": "Hp 840 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp840g81/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g6-1",
-      "description": "HP 830 G6",
-      "imageUrl": "https://picsum.photos/seed/new163/600/400",
+      "id": "laptop-hp-840-g8-2",
+      "description": "Hp 840 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp840g82/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g6-2",
-      "description": "HP 830 G6",
-      "imageUrl": "https://picsum.photos/seed/new164/600/400",
+      "id": "laptop-hp-1030-g7-1",
+      "description": "Hp 1030 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g71/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g6-3",
-      "description": "HP 830 G6",
-      "imageUrl": "https://picsum.photos/seed/new165/600/400",
+      "id": "laptop-hp-1030-g7-2",
+      "description": "Hp 1030 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g72/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g5-1",
-      "description": "HP 830 G5",
-      "imageUrl": "https://picsum.photos/seed/new166/600/400",
+      "id": "laptop-hp-1030-g8-1",
+      "description": "Hp 1030 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g81/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-830-g5-2",
-      "description": "HP 830 G5",
-      "imageUrl": "https://picsum.photos/seed/new167/600/400",
+      "id": "laptop-hp-1040-g8-1",
+      "description": "Hp 1040 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g81/600/400",
       "imageHint": "hp elitebook"
     },
     {
-      "id": "laptop-hp-820-g3-1",
-      "description": "HP 820 G3",
-      "imageUrl": "https://picsum.photos/seed/new168/600/400",
-      "imageHint": "hp elitebook"
+      "id": "laptop-hp-zbook-firefly-15-g8-1",
+      "description": "Hp Zbook Firefly 15 G8",
+      "imageUrl": "https://picsum.photos/seed/lhpzbf15g81/600/400",
+      "imageHint": "hp zbook"
     },
     {
-      "id": "laptop-hp-820-g3-2",
-      "description": "HP 820 G3",
-      "imageUrl": "https://picsum.photos/seed/new169/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-820-g3-3",
-      "description": "HP 820 G3",
-      "imageUrl": "https://picsum.photos/seed/new170/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-820-g2-1",
-      "description": "HP 820 G2",
-      "imageUrl": "https://picsum.photos/seed/new171/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-820-g1-1",
-      "description": "HP 820 G1",
-      "imageUrl": "https://picsum.photos/seed/new172/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-820-g1-2",
-      "description": "HP 820 G1",
-      "imageUrl": "https://picsum.photos/seed/new173/600/400",
-      "imageHint": "hp elitebook"
-    },
-    {
-      "id": "laptop-hp-440-g7-1",
-      "description": "HP 440 G7",
-      "imageUrl": "https://picsum.photos/seed/new174/600/400",
+      "id": "laptop-hp-zhan-66-pro-14-g4-1",
+      "description": "Hp Zhan 66 Pro 14 G4",
+      "imageUrl": "https://picsum.photos/seed/lhpzhan66g41/600/400",
       "imageHint": "hp laptop"
     },
     {
-      "id": "laptop-hp-640-g5-1",
-      "description": "HP 640 G5",
-      "imageUrl": "https://picsum.photos/seed/new175/600/400",
-      "imageHint": "hp laptop"
+      "id": "laptop-hp-zbook-firefly-16-g9-1",
+      "description": "Hp Zbook Firefly 16 G9",
+      "imageUrl": "https://picsum.photos/seed/lhpzbf16g91/600/400",
+      "imageHint": "hp zbook"
     },
     {
-      "id": "laptop-hp-640-g5-2",
-      "description": "HP 640 G5",
-      "imageUrl": "https://picsum.photos/seed/new176/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-640-g4-1",
-      "description": "HP 640 G4",
-      "imageUrl": "https://picsum.photos/seed/new177/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-640-g4-2",
-      "description": "HP 640 G4",
-      "imageUrl": "https://picsum.photos/seed/new178/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-640-g3-1",
-      "description": "HP 640 G3",
-      "imageUrl": "https://picsum.photos/seed/new179/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-640-g2-1",
-      "description": "HP 640 G2",
-      "imageUrl": "https://picsum.photos/seed/new180/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-640-g1-1",
-      "description": "HP 640 G1",
-      "imageUrl": "https://picsum.photos/seed/new181/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-11-g6-1",
-      "description": "HP 11 G6",
-      "imageUrl": "https://picsum.photos/seed/new182/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-11-g4-1",
-      "description": "HP 11 G4",
-      "imageUrl": "https://picsum.photos/seed/new183/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-hp-11-g2-1",
-      "description": "HP 11 G2",
-      "imageUrl": "https://picsum.photos/seed/new184/600/400",
-      "imageHint": "hp laptop"
-    },
-    {
-      "id": "laptop-dell-precission-7550-1",
-      "description": "Dell Precission 7550",
-      "imageUrl": "https://picsum.photos/seed/new185/600/400",
-      "imageHint": "dell laptop"
-    },
-    {
-      "id": "laptop-dell-xps-13-7390-1",
-      "description": "Dell XPS 13 7390",
-      "imageUrl": "https://picsum.photos/seed/new186/600/400",
-      "imageHint": "dell xps"
-    },
-    {
-      "id": "laptop-dell-xps-13-9365-1",
-      "description": "Dell XPS 13 9365",
-      "imageUrl": "https://picsum.photos/seed/new187/600/400",
-      "imageHint": "dell xps"
-    },
-    {
-      "id": "laptop-dell-xps-13-9360-1",
-      "description": "Dell XPS 13 9360",
-      "imageUrl": "https://picsum.photos/seed/new188/600/400",
-      "imageHint": "dell xps"
-    },
-    {
-      "id": "laptop-dell-xps-13-9350-1",
-      "description": "Dell XPS 13 9350",
-      "imageUrl": "https://picsum.photos/seed/new189/600/400",
-      "imageHint": "dell xps"
-    },
-    {
-      "id": "laptop-dell-xps-13-9370-1",
-      "description": "Dell XPS 13 9370",
-      "imageUrl": "https://picsum.photos/seed/new190/600/400",
-      "imageHint": "dell xps"
-    },
-    {
-      "id": "laptop-dell-xps-13-9370-2",
-      "description": "Dell XPS 13 9370",
-      "imageUrl": "https://picsum.photos/seed/new191/600/400",
-      "imageHint": "dell xps"
-    },
-    {
-      "id": "laptop-dell-7320-1",
-      "description": "Dell 7320",
-      "imageUrl": "https://picsum.photos/seed/new192/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-7310-1",
-      "description": "Dell 7310",
-      "imageUrl": "https://picsum.photos/seed/new193/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-7310-2",
-      "description": "Dell 7310",
-      "imageUrl": "https://picsum.photos/seed/new194/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-7400-1",
-      "description": "Dell 7400",
-      "imageUrl": "https://picsum.photos/seed/new195/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-7300-1",
-      "description": "Dell 7300",
-      "imageUrl": "https://picsum.photos/seed/new196/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-7300-2",
-      "description": "Dell 7300",
-      "imageUrl": "https://picsum.photos/seed/new197/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-5300-1",
-      "description": "Dell 5300",
-      "imageUrl": "https://picsum.photos/seed/new198/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-5300-2",
-      "description": "Dell 5300",
-      "imageUrl": "https://picsum.photos/seed/new199/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-5300-3",
-      "description": "Dell 5300",
-      "imageUrl": "https://picsum.photos/seed/new200/600/400",
+      "id": "laptop-dell-latitude-5400-1",
+      "description": "Dell latitude 5400",
+      "imageUrl": "https://picsum.photos/seed/ldl54001/600/400",
       "imageHint": "dell latitude"
     },
     {
       "id": "laptop-dell-5400-1",
       "description": "Dell 5400",
-      "imageUrl": "https://picsum.photos/seed/new201/600/400",
+      "imageUrl": "https://picsum.photos/seed/ld54001/600/400",
       "imageHint": "dell latitude"
     },
     {
       "id": "laptop-dell-5400-2",
       "description": "Dell 5400",
-      "imageUrl": "https://picsum.photos/seed/new202/600/400",
+      "imageUrl": "https://picsum.photos/seed/ld54002/600/400",
       "imageHint": "dell latitude"
     },
     {
-      "id": "laptop-dell-5400-3",
-      "description": "Dell 5400",
-      "imageUrl": "https://picsum.photos/seed/new203/600/400",
+      "id": "laptop-dell-7320-1",
+      "description": "Dell 7320",
+      "imageUrl": "https://picsum.photos/seed/ld73201/600/400",
       "imageHint": "dell latitude"
     },
     {
-      "id": "laptop-dell-7390-1",
-      "description": "Dell 7390",
-      "imageUrl": "https://picsum.photos/seed/new204/600/400",
+      "id": "laptop-dell-7490-1",
+      "description": "Dell 7490",
+      "imageUrl": "https://picsum.photos/seed/ld74901/600/400",
       "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-7390-2",
-      "description": "Dell 7390",
-      "imageUrl": "https://picsum.photos/seed/new205/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-7390-3",
-      "description": "Dell 7390",
-      "imageUrl": "https://picsum.photos/seed/new206/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-dell-3120-1",
-      "description": "Dell 3120",
-      "imageUrl": "https://picsum.photos/seed/new207/600/400",
-      "imageHint": "dell latitude"
-    },
-    {
-      "id": "laptop-lenovo-x1-carbon-1",
-      "description": "Lenovo X1 Carbon",
-      "imageUrl": "https://picsum.photos/seed/new208/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-carbon-2",
-      "description": "Lenovo X1 Carbon",
-      "imageUrl": "https://picsum.photos/seed/new209/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-carbon-3",
-      "description": "Lenovo X1 Carbon",
-      "imageUrl": "https://picsum.photos/seed/new210/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-carbon-4",
-      "description": "Lenovo X1 Carbon",
-      "imageUrl": "https://picsum.photos/seed/new211/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-carbon-5",
-      "description": "Lenovo X1 Carbon",
-      "imageUrl": "https://picsum.photos/seed/new212/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-carbon-6",
-      "description": "Lenovo X1 Carbon",
-      "imageUrl": "https://picsum.photos/seed/new213/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-carbon-7",
-      "description": "Lenovo X1 Carbon",
-      "imageUrl": "https://picsum.photos/seed/new214/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-yoga-1",
-      "description": "Lenovo X1 Yoga",
-      "imageUrl": "https://picsum.photos/seed/new215/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-yoga-2",
-      "description": "Lenovo X1 Yoga",
-      "imageUrl": "https://picsum.photos/seed/new216/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-yoga-3",
-      "description": "Lenovo X1 Yoga",
-      "imageUrl": "https://picsum.photos/seed/new217/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x1-yoga-4",
-      "description": "Lenovo X1 Yoga",
-      "imageUrl": "https://picsum.photos/seed/new218/600/400",
-      "imageHint": "lenovo thinkpad"
     },
     {
       "id": "laptop-lenovo-x13-1",
-      "description": "Lenovo X13",
-      "imageUrl": "https://picsum.photos/seed/new219/600/400",
+      "description": "Lenovo x13",
+      "imageUrl": "https://picsum.photos/seed/llx131/600/400",
       "imageHint": "lenovo thinkpad"
     },
     {
-      "id": "laptop-lenovo-yoga-x13-1",
-      "description": "Lenovo Yoga X13",
-      "imageUrl": "https://picsum.photos/seed/new220/600/400",
-      "imageHint": "lenovo thinkpad"
+      "id": "laptop-macbook-pro-2019-1",
+      "description": "Macbook pro 2019",
+      "imageUrl": "https://picsum.photos/seed/lmbp20191/600/400",
+      "imageHint": "macbook pro"
     },
     {
-      "id": "laptop-lenovo-yoga-x13-2",
-      "description": "Lenovo Yoga X13",
-      "imageUrl": "https://picsum.photos/seed/new221/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x390-1",
-      "description": "Lenovo X390",
-      "imageUrl": "https://picsum.photos/seed/new222/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x390-2",
-      "description": "Lenovo X390",
-      "imageUrl": "https://picsum.photos/seed/new223/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-yoga-x390-1",
-      "description": "Lenovo Yoga X390",
-      "imageUrl": "https://picsum.photos/seed/new224/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-x280-1",
-      "description": "Lenovo X280",
-      "imageUrl": "https://picsum.photos/seed/new225/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-p14s-1",
-      "description": "Lenovo P14s",
-      "imageUrl": "https://picsum.photos/seed/new226/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t495s-1",
-      "description": "Lenovo T495s",
-      "imageUrl": "https://picsum.photos/seed/new227/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t495s-2",
-      "description": "Lenovo T495s",
-      "imageUrl": "https://picsum.photos/seed/new228/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t490s-1",
-      "description": "Lenovo T490s",
-      "imageUrl": "https://picsum.photos/seed/new229/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t490s-2",
-      "description": "Lenovo T490s",
-      "imageUrl": "https://picsum.photos/seed/new230/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t490s-3",
-      "description": "Lenovo T490s",
-      "imageUrl": "https://picsum.photos/seed/new231/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t480s-1",
-      "description": "Lenovo T480s",
-      "imageUrl": "https://picsum.photos/seed/new232/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t480s-2",
-      "description": "Lenovo T480s",
-      "imageUrl": "https://picsum.photos/seed/new233/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t480s-3",
-      "description": "Lenovo T480s",
-      "imageUrl": "https://picsum.photos/seed/new234/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t470s-1",
-      "description": "Lenovo T470s",
-      "imageUrl": "https://picsum.photos/seed/new235/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t450-1",
-      "description": "Lenovo T450",
-      "imageUrl": "https://picsum.photos/seed/new236/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-t430-t420-1",
-      "description": "Lenovo T430/T420",
-      "imageUrl": "https://picsum.photos/seed/new237/600/400",
-      "imageHint": "lenovo thinkpad"
-    },
-    {
-      "id": "laptop-lenovo-yoga-11e-1",
-      "description": "Lenovo Yoga 11e",
-      "imageUrl": "https://picsum.photos/seed/new238/600/400",
-      "imageHint": "lenovo yoga"
-    },
-    {
-      "id": "laptop-lenovo-yoga-11e-2",
-      "description": "Lenovo Yoga 11e",
-      "imageUrl": "https://picsum.photos/seed/new239/600/400",
-      "imageHint": "lenovo yoga"
-    },
-    {
-      "id": "laptop-lenovo-yoga-11e-3",
-      "description": "Lenovo Yoga 11e",
-      "imageUrl": "https://picsum.photos/seed/new240/600/400",
-      "imageHint": "lenovo yoga"
-    },
-    {
-      "id": "laptop-lenovo-yoga-11e-4",
-      "description": "Lenovo Yoga 11e",
-      "imageUrl": "https://picsum.photos/seed/new241/600/400",
-      "imageHint": "lenovo yoga"
-    },
-    {
-      "id": "laptop-lenovo-yoga-11e-5",
-      "description": "Lenovo Yoga 11e",
-      "imageUrl": "https://picsum.photos/seed/new242/600/400",
-      "imageHint": "lenovo yoga"
-    },
-    {
-      "id": "laptop-lenovo-yoga-11e-6",
-      "description": "Lenovo Yoga 11e",
-      "imageUrl": "https://picsum.photos/seed/new243/600/400",
-      "imageHint": "lenovo yoga"
-    },
-    {
-      "id": "accessory-dell-mouse",
-      "description": "A wireless Dell mouse",
-      "imageUrl": "https://picsum.photos/seed/mouse1/600/400",
-      "imageHint": "wireless mouse"
+      "id": "accessory-dell-mouse-1",
+      "description": "Original Dell Mouse wireless",
+      "imageUrl": "https://picsum.photos/seed/adm1/600/400",
+      "imageHint": "dell mouse"
     }
   ]
 }

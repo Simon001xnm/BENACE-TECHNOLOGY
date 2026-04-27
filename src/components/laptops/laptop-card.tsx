@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,39 +14,91 @@ import { useCart } from '@/lib/cart-context';
 import type { Laptop } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { ShoppingCart } from 'lucide-react';
+import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 export function LaptopCard({ laptop }: { laptop: Laptop }) {
   const { addToCart } = useCart();
   const laptopImage = PlaceHolderImages.find(img => img.id === laptop.imageId);
 
+  const getStatusClass = () => {
+    if (laptop.status === 'New' || laptop.status === 'Boxed') {
+      return 'bg-green-500';
+    }
+    if (laptop.status === 'Ex-UK') {
+      return 'bg-blue-500';
+    }
+    return 'bg-gray-500';
+  };
+
   return (
-    <Card className="flex h-full transform flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-      <CardHeader className="p-0">
-        <div className="relative h-48 w-full">
-          {laptopImage && (
+    <Card className="flex h-full transform flex-col overflow-hidden rounded-lg border transition-all duration-300 hover:shadow-xl">
+      <CardHeader className="relative p-0">
+        <div className="relative h-48 w-full bg-gray-100">
+          {laptopImage ? (
             <Image
               src={laptopImage.imageUrl}
               alt={laptop.name}
               fill
-              className="object-cover"
+              className="object-contain p-4"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               data-ai-hint={laptopImage.imageHint}
             />
+          ) : (
+             <div className="flex h-full w-full items-center justify-center bg-muted">
+                <ShoppingCart className="h-12 w-12 text-muted-foreground" />
+             </div>
           )}
         </div>
-      </CardHeader>
-      <CardContent className="flex-grow p-4">
-        <CardTitle className="mb-2 text-lg">{laptop.name}</CardTitle>
-        <p className="text-sm text-muted-foreground">{laptop.brand}</p>
-        <div className="mt-2 text-sm text-muted-foreground">
-            <p>{laptop.specifications.processor}</p>
-            <p>{laptop.specifications.ram} / {laptop.specifications.storage}</p>
+        <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
+          {laptop.status && (
+            <Badge
+              className={`${getStatusClass()} text-white shadow-md`}
+            >
+              {laptop.status}
+            </Badge>
+          )}
         </div>
+        {laptop.salePercentage && (
+            <div className="absolute top-2 left-2">
+                <Badge
+                    variant="destructive"
+                    className="flex h-6 w-12 items-center justify-center rounded-md p-0 text-xs"
+                >
+                    -{laptop.salePercentage}%
+                </Badge>
+            </div>
+        )}
+      </CardHeader>
+      <CardContent className="flex flex-grow flex-col p-4">
+        <CardTitle className="mb-1 text-sm font-semibold leading-tight">{laptop.brand} {laptop.name}</CardTitle>
+        <CardDescription className="text-xs text-muted-foreground mb-2">
+          {laptop.specifications.processor} / {laptop.specifications.ram} / {laptop.specifications.storage}
+        </CardDescription>
+        
+        <div className="flex items-center gap-0.5 text-muted-foreground mb-2">
+            <div className="w-3 h-3 border rounded-sm"></div>
+            <div className="w-3 h-3 border rounded-sm"></div>
+            <div className="w-3 h-3 border rounded-sm"></div>
+            <div className="w-3 h-3 border rounded-sm"></div>
+            <div className="w-3 h-3 border rounded-sm"></div>
+        </div>
+
+        <div className="flex flex-col mt-auto">
+            <p className="text-lg font-bold text-primary">KES {laptop.price.toLocaleString()}</p>
+            {laptop.oldPrice && (
+              <p className="text-xs text-muted-foreground line-through">
+                KES {laptop.oldPrice.toLocaleString()}
+              </p>
+            )}
+          </div>
       </CardContent>
-      <CardFooter className="flex items-center justify-between p-4">
-        <p className="text-lg font-bold text-primary">KSH {laptop.price.toFixed(2)}</p>
-        <Button variant="outline" onClick={() => addToCart(laptop)}>
-          <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
+      <CardFooter className="grid grid-cols-2 gap-2 p-2 pt-0">
+        <Button variant="outline" onClick={() => addToCart(laptop)} size="sm" className="text-xs">
+          <ShoppingCart className="mr-2 h-3 w-3" /> Add to Cart
+        </Button>
+        <Button asChild size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 text-xs">
+            <Link href="/checkout">Buy Now</Link>
         </Button>
       </CardFooter>
     </Card>
