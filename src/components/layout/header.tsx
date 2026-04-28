@@ -16,8 +16,8 @@ export function Header() {
           <Image
             src="/use.png"
             alt="Benace Technologies Logo"
-            width={180}
-            height={45}
+            width={140}
+            height={35}
             priority
           />
         </Link>
