@@ -28,7 +28,7 @@ export default function Home() {
                   src={heroImage.imageUrl}
                   alt={featuredHeroLaptop?.name || 'Featured Laptop'}
                   fill
-                  className="rounded-lg object-contain p-4 shadow-2xl"
+                  className="rounded-lg object-contain shadow-2xl"
                   data-ai-hint={heroImage.imageHint}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
