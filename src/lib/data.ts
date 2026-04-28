@@ -174,7 +174,7 @@ export const laptops: Laptop[] = [
     id: 'lpt-lenovo-thinkbook-14-irl-1',
     name: 'ThinkBook 14-IRL',
     brand: 'Lenovo',
-    price: 131250,
+    price: 105000,
     specifications: {
       processor: 'Core 7-240H',
       ram: '8GB DDR5',
