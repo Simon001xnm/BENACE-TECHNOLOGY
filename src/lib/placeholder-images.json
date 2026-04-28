@@ -191,6 +191,870 @@
       "description": "Original Dell Mouse wireless",
       "imageUrl": "https://picsum.photos/seed/adm1/600/400",
       "imageHint": "dell mouse"
+    },
+    {
+      "id": "lpt-hp-zbook-15-g8-1",
+      "description": "HP ZBOOK 15 G8",
+      "imageUrl": "https://picsum.photos/seed/lhpz15g81/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-zbook-14-g8-1",
+      "description": "HP ZBOOK 14 G8",
+      "imageUrl": "https://picsum.photos/seed/lhpz14g81/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-zbook-14-g8-2",
+      "description": "HP ZBOOK 14 G8",
+      "imageUrl": "https://picsum.photos/seed/lhpz14g82/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-zbook-15-g7-1",
+      "description": "HP ZBOOK 15 G7",
+      "imageUrl": "https://picsum.photos/seed/lhpz15g71/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-zbook-14-g7-1",
+      "description": "HP ZBOOK 14 G7",
+      "imageUrl": "https://picsum.photos/seed/lhpz14g71/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-zbook-14-g7-2",
+      "description": "HP ZBOOK 14 G7",
+      "imageUrl": "https://picsum.photos/seed/lhpz14g72/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-zbook-14-g6-1",
+      "description": "HP ZBOOK 14 G6",
+      "imageUrl": "https://picsum.photos/seed/lhpz14g61/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-zbook-14-g5-1",
+      "description": "HP ZBOOK 14 G5",
+      "imageUrl": "https://picsum.photos/seed/lhpz14g51/600/400",
+      "imageHint": "hp zbook"
+    },
+    {
+      "id": "lpt-hp-850-g7-1",
+      "description": "HP 850 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp850g71/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-850-g6-1",
+      "description": "HP 850 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp850g61/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-850-g6-2",
+      "description": "HP 850 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp850g62/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-850-g3-4-1",
+      "description": "HP 850 G3&4",
+      "imageUrl": "https://picsum.photos/seed/lhp850g341/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-845-g7-1",
+      "description": "HP 845 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp845g71/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-745-g6-1",
+      "description": "HP 745 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp745g61/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-745-g6-2",
+      "description": "HP 745 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp745g62/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-745-g6-3",
+      "description": "HP 745 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp745g63/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-apple-macbook-15-pro-2019-1",
+      "description": "APPLE MACBOOK 15 PRO 2019",
+      "imageUrl": "https://picsum.photos/seed/lambp15p191/600/400",
+      "imageHint": "apple macbook"
+    },
+    {
+      "id": "lpt-apple-macbook-15-pro-2018-1",
+      "description": "APPLE MACBOOK 15 PRO 2018",
+      "imageUrl": "https://picsum.photos/seed/lambp15p181/600/400",
+      "imageHint": "apple macbook"
+    },
+    {
+      "id": "lpt-apple-macbook-air-2017-1",
+      "description": "APPLE MACBOOK Air 2017",
+      "imageUrl": "https://picsum.photos/seed/lamba171/600/400",
+      "imageHint": "apple macbook"
+    },
+    {
+      "id": "lpt-apple-macbook-air-2015-1",
+      "description": "APPLE MACBOOK Air 2015",
+      "imageUrl": "https://picsum.photos/seed/lamba151/600/400",
+      "imageHint": "apple macbook"
+    },
+    {
+      "id": "lpt-apple-macbook-pro-2012-1",
+      "description": "Apple Macbook Pro 2012",
+      "imageUrl": "https://picsum.photos/seed/lambp121/600/400",
+      "imageHint": "apple macbook"
+    },
+    {
+      "id": "lpt-hp-1040-g10-1",
+      "description": "HP 1040 G10",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g101/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1040-g8-2",
+      "description": "HP 1040 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g82/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1040-g8-3",
+      "description": "HP 1040 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g83/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1040-g8-4",
+      "description": "HP 1040 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g84/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1040-g8-5",
+      "description": "HP 1040 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g85/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1040-g7-1",
+      "description": "HP 1040 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g71/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1040-g6-1",
+      "description": "HP 1040 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp1040g61/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1030-g8-2",
+      "description": "HP 1030 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g82/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1030-g7-3",
+      "description": "HP 1030 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g73/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1030-g4-1",
+      "description": "HP 1030 G4",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g41/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1030-g4-2",
+      "description": "HP 1030 G4",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g42/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1030-g3-1",
+      "description": "HP 1030 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g31/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1030-g3-2",
+      "description": "HP 1030 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g32/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-1030-g2-1",
+      "description": "HP 1030 G2",
+      "imageUrl": "https://picsum.photos/seed/lhp1030g21/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-x2-1012-1",
+      "description": "HP X2 1012",
+      "imageUrl": "https://picsum.photos/seed/lhpx210121/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-x2-1012-2",
+      "description": "HP X2 1012",
+      "imageUrl": "https://picsum.photos/seed/lhpx210122/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-x2-1012-3",
+      "description": "HP X2 1012",
+      "imageUrl": "https://picsum.photos/seed/lhpx210123/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-x2-1012-4",
+      "description": "HP X2 1012",
+      "imageUrl": "https://picsum.photos/seed/lhpx210124/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-840-g8-3",
+      "description": "HP 840 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp840g83/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g8-4",
+      "description": "HP 840 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp840g84/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g8-5",
+      "description": "HP 840 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp840g85/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g7-2",
+      "description": "HP 840 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp840g72/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g7-3",
+      "description": "HP 840 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp840g73/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g6-1",
+      "description": "HP 840 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp840g61/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g6-2",
+      "description": "HP 840 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp840g62/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g6-3",
+      "description": "HP 840 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp840g63/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g6-4",
+      "description": "HP 840 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp840g64/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g5-6-1",
+      "description": "HP 840 G5&6",
+      "imageUrl": "https://picsum.photos/seed/lhp840g561/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g5-2",
+      "description": "HP 840 G5",
+      "imageUrl": "https://picsum.photos/seed/lhp840g52/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g5-3",
+      "description": "HP 840 G5",
+      "imageUrl": "https://picsum.photos/seed/lhp840g53/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g3-1",
+      "description": "HP 840 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp840g31/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g3-2",
+      "description": "HP 840 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp840g32/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g2-1",
+      "description": "HP 840 G2",
+      "imageUrl": "https://picsum.photos/seed/lhp840g21/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g2-2",
+      "description": "HP 840 G2",
+      "imageUrl": "https://picsum.photos/seed/lhp840g22/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-840-g1-1",
+      "description": "HP 840 G1",
+      "imageUrl": "https://picsum.photos/seed/lhp840g11/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-8470-1",
+      "description": "HP 8470",
+      "imageUrl": "https://picsum.photos/seed/lhp84701/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-830-g8-3",
+      "description": "HP 830 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp830g83/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g8-4",
+      "description": "HP 830 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp830g84/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g8-5",
+      "description": "HP 830 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp830g85/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g8-6",
+      "description": "HP 830 G8",
+      "imageUrl": "https://picsum.photos/seed/lhp830g86/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g7-2",
+      "description": "HP 830 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp830g72/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g6-1",
+      "description": "HP 830 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp830g61/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g6-2",
+      "description": "HP 830 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp830g62/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g6-3",
+      "description": "HP 830 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp830g63/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g5-1",
+      "description": "HP 830 G5",
+      "imageUrl": "https://picsum.photos/seed/lhp830g51/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-830-g5-2",
+      "description": "HP 830 G5",
+      "imageUrl": "https://picsum.photos/seed/lhp830g52/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-820-g3-1",
+      "description": "HP 820 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp820g31/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-820-g3-2",
+      "description": "HP 820 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp820g32/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-820-g3-3",
+      "description": "HP 820 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp820g33/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-820-g2-1",
+      "description": "HP 820 G2",
+      "imageUrl": "https://picsum.photos/seed/lhp820g21/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-820-g1-1",
+      "description": "HP 820 G1",
+      "imageUrl": "https://picsum.photos/seed/lhp820g11/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-820-g1-2",
+      "description": "HP 820 G1",
+      "imageUrl": "https://picsum.photos/seed/lhp820g12/600/400",
+      "imageHint": "hp elitebook"
+    },
+    {
+      "id": "lpt-hp-440-g7-1",
+      "description": "HP 440 G7",
+      "imageUrl": "https://picsum.photos/seed/lhp440g71/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-640-g5-1",
+      "description": "HP 640 G5",
+      "imageUrl": "https://picsum.photos/seed/lhp640g51/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-640-g5-2",
+      "description": "HP 640 G5",
+      "imageUrl": "https://picsum.photos/seed/lhp640g52/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-640-g4-1",
+      "description": "HP 640 G4",
+      "imageUrl": "https://picsum.photos/seed/lhp640g41/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-640-g4-2",
+      "description": "HP 640 G4",
+      "imageUrl": "https://picsum.photos/seed/lhp640g42/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-640-g3-1",
+      "description": "HP 640 G3",
+      "imageUrl": "https://picsum.photos/seed/lhp640g31/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-640-g2-1",
+      "description": "HP 640 G2",
+      "imageUrl": "https://picsum.photos/seed/lhp640g21/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-640-g1-1",
+      "description": "HP 640 G1",
+      "imageUrl": "https://picsum.photos/seed/lhp640g11/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-11-g6-1",
+      "description": "HP 11 G6",
+      "imageUrl": "https://picsum.photos/seed/lhp11g61-2/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-11-g4-1",
+      "description": "HP 11 G4",
+      "imageUrl": "https://picsum.photos/seed/lhp11g41/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-hp-11-g2-1",
+      "description": "HP 11 G2",
+      "imageUrl": "https://picsum.photos/seed/lhp11g21/600/400",
+      "imageHint": "hp laptop"
+    },
+    {
+      "id": "lpt-dell-precission-7550-1",
+      "description": "Dell Precission 7550",
+      "imageUrl": "https://picsum.photos/seed/ldp75501/600/400",
+      "imageHint": "dell precision"
+    },
+    {
+      "id": "lpt-dell-xps-13-7390-1",
+      "description": "Dell XPS 13 7390",
+      "imageUrl": "https://picsum.photos/seed/ldxps1373901/600/400",
+      "imageHint": "dell xps"
+    },
+    {
+      "id": "lpt-dell-xps-13-9365-1",
+      "description": "Dell XPS 13 9365",
+      "imageUrl": "https://picsum.photos/seed/ldxps1393651/600/400",
+      "imageHint": "dell xps"
+    },
+    {
+      "id": "lpt-dell-xps-13-9360-1",
+      "description": "Dell XPS 13 9360",
+      "imageUrl": "https://picsum.photos/seed/ldxps1393601/600/400",
+      "imageHint": "dell xps"
+    },
+    {
+      "id": "lpt-dell-xps-13-9350-1",
+      "description": "Dell XPS 13 9350",
+      "imageUrl": "https://picsum.photos/seed/ldxps1393501/600/400",
+      "imageHint": "dell xps"
+    },
+    {
+      "id": "lpt-dell-xps-13-9370-1",
+      "description": "Dell XPS 13 9370",
+      "imageUrl": "https://picsum.photos/seed/ldxps1393701/600/400",
+      "imageHint": "dell xps"
+    },
+    {
+      "id": "lpt-dell-xps-13-9370-2",
+      "description": "Dell XPS 13 9370",
+      "imageUrl": "https://picsum.photos/seed/ldxps1393702/600/400",
+      "imageHint": "dell xps"
+    },
+    {
+      "id": "lpt-dell-7320-2",
+      "description": "Dell 7320",
+      "imageUrl": "https://picsum.photos/seed/ld73202/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7310-1",
+      "description": "Dell 7310",
+      "imageUrl": "https://picsum.photos/seed/ld73101/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7310-2",
+      "description": "Dell 7310",
+      "imageUrl": "https://picsum.photos/seed/ld73102/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7400-1",
+      "description": "Dell 7400",
+      "imageUrl": "https://picsum.photos/seed/ld74001/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7300-1",
+      "description": "Dell 7300",
+      "imageUrl": "https://picsum.photos/seed/ld73001/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7300-2",
+      "description": "Dell 7300",
+      "imageUrl": "https://picsum.photos/seed/ld73002/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-5300-1",
+      "description": "Dell 5300",
+      "imageUrl": "https://picsum.photos/seed/ld53001/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-5300-2",
+      "description": "Dell 5300",
+      "imageUrl": "https://picsum.photos/seed/ld53002/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-5300-3",
+      "description": "Dell 5300",
+      "imageUrl": "https://picsum.photos/seed/ld53003/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-5400-3",
+      "description": "Dell 5400",
+      "imageUrl": "https://picsum.photos/seed/ld54003/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-5400-4",
+      "description": "Dell 5400",
+      "imageUrl": "https://picsum.photos/seed/ld54004/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-5400-5",
+      "description": "Dell 5400",
+      "imageUrl": "https://picsum.photos/seed/ld54005/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7390-1",
+      "description": "Dell 7390",
+      "imageUrl": "https://picsum.photos/seed/ld73901/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7390-2",
+      "description": "Dell 7390",
+      "imageUrl": "https://picsum.photos/seed/ld73902/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-7390-3",
+      "description": "Dell 7390",
+      "imageUrl": "https://picsum.photos/seed/ld73903/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-dell-3120-1",
+      "description": "Dell 3120",
+      "imageUrl": "https://picsum.photos/seed/ld31201/600/400",
+      "imageHint": "dell latitude"
+    },
+    {
+      "id": "lpt-lenovo-x1-carbon-1",
+      "description": "Lenovo X1 Carbon",
+      "imageUrl": "https://picsum.photos/seed/llx1c1/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x1-carbon-2",
+      "description": "Lenovo X1 Carbon",
+      "imageUrl": "https://picsum.photos/seed/llx1c2/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x1-carbon-3",
+      "description": "Lenovo X1 Carbon",
+      "imageUrl": "https://picsum.photos/seed/llx1c3/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x1-carbon-4",
+      "description": "Lenovo X1 Carbon",
+      "imageUrl": "https://picsum.photos/seed/llx1c4/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x1-carbon-5",
+      "description": "Lenovo X1 Carbon",
+      "imageUrl": "https://picsum.photos/seed/llx1c5/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x1-carbon-6",
+      "description": "Lenovo X1 Carbon",
+      "imageUrl": "https://picsum.photos/seed/llx1c6/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x1-carbon-7",
+      "description": "Lenovo X1 Carbon",
+      "imageUrl": "https://picsum.photos/seed/llx1c7/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x1-yoga-1",
+      "description": "Lenovo X1 Yoga",
+      "imageUrl": "https://picsum.photos/seed/llx1y1/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-x1-yoga-2",
+      "description": "Lenovo X1 Yoga",
+      "imageUrl": "https://picsum.photos/seed/llx1y2/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-x1-yoga-3",
+      "description": "Lenovo X1 Yoga",
+      "imageUrl": "https://picsum.photos/seed/llx1y3/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-x1-yoga-4",
+      "description": "Lenovo X1 Yoga",
+      "imageUrl": "https://picsum.photos/seed/llx1y4/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-x13-2",
+      "description": "Lenovo X13",
+      "imageUrl": "https://picsum.photos/seed/llx132/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-yoga-x13-1",
+      "description": "Lenovo Yoga X13",
+      "imageUrl": "https://picsum.photos/seed/llyx131/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-yoga-x13-2",
+      "description": "Lenovo Yoga X13",
+      "imageUrl": "https://picsum.photos/seed/llyx132/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-x390-1",
+      "description": "Lenovo X390",
+      "imageUrl": "https://picsum.photos/seed/llx3901/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-x390-2",
+      "description": "Lenovo X390",
+      "imageUrl": "https://picsum.photos/seed/llx3902/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-yoga-x390-1",
+      "description": "Lenovo Yoga X390",
+      "imageUrl": "https://picsum.photos/seed/llyx3901/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-x280-1",
+      "description": "Lenovo X280",
+      "imageUrl": "https://picsum.photos/seed/llx2801/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-p14s-1",
+      "description": "Lenovo P14S",
+      "imageUrl": "https://picsum.photos/seed/llp14s1/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t495s-1",
+      "description": "Lenovo T495S",
+      "imageUrl": "https://picsum.photos/seed/llt495s1/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t495s-2",
+      "description": "Lenovo T495S",
+      "imageUrl": "https://picsum.photos/seed/llt495s2/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t490s-1",
+      "description": "Lenovo T490S",
+      "imageUrl": "https://picsum.photos/seed/llt490s1/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t490s-2",
+      "description": "Lenovo T490S",
+      "imageUrl": "https://picsum.photos/seed/llt490s2/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t490s-3",
+      "description": "Lenovo T490S",
+      "imageUrl": "https://picsum.photos/seed/llt490s3/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t480s-1",
+      "description": "Lenovo T480S",
+      "imageUrl": "https://picsum.photos/seed/llt480s1/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t480s-2",
+      "description": "Lenovo T480S",
+      "imageUrl": "https://picsum.photos/seed/llt480s2/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t480s-3",
+      "description": "Lenovo T480S",
+      "imageUrl": "https://picsum.photos/seed/llt480s3/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t470s-1",
+      "description": "Lenovo T470S",
+      "imageUrl": "https://picsum.photos/seed/llt470s1/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t450-1",
+      "description": "Lenovo T450",
+      "imageUrl": "https://picsum.photos/seed/llt4501/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-t430-t420-1",
+      "description": "Lenovo T430&T420",
+      "imageUrl": "https://picsum.photos/seed/llt430t4201/600/400",
+      "imageHint": "lenovo thinkpad"
+    },
+    {
+      "id": "lpt-lenovo-yoga-11e-1",
+      "description": "Lenovo Yoga 11E",
+      "imageUrl": "https://picsum.photos/seed/lly11e1/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-yoga-11e-2",
+      "description": "Lenovo Yoga 11E",
+      "imageUrl": "https://picsum.photos/seed/lly11e2/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-yoga-11e-3",
+      "description": "Lenovo Yoga 11E",
+      "imageUrl": "https://picsum.photos/seed/lly11e3/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-yoga-11e-4",
+      "description": "Lenovo Yoga 11E",
+      "imageUrl": "https://picsum.photos/seed/lly11e4/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-yoga-11e-5",
+      "description": "Lenovo Yoga 11E",
+      "imageUrl": "https://picsum.photos/seed/lly11e5/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "lpt-lenovo-yoga-11e-6",
+      "description": "Lenovo Yoga 11E",
+      "imageUrl": "https://picsum.photos/seed/lly11e6/600/400",
+      "imageHint": "lenovo yoga"
+    },
+    {
+      "id": "laptop-lenovo-thinkbook-14-irl-1",
+      "description": "Lenovo ThinkBook 14-IRL",
+      "imageUrl": "https://picsum.photos/seed/ltb14irl1/600/400",
+      "imageHint": "lenovo thinkbook"
     }
   ]
 }
