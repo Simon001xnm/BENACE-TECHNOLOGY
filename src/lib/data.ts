@@ -247,5 +247,62 @@ export const portfolioProjects: PortfolioProject[] = [
 ];
 
 export const accessories: Accessory[] = [
-  { id: 'acc-dell-mouse-1', name: 'Original Dell Mouse wireless', brand: 'Dell', price: 2125, category: 'Mouse', imageId: 'accessory-dell-mouse-1', status: 'New' },
+  // PRINTERS - CANON
+  { id: 'acc-prn-can-1', name: 'Canon MG2541S Printer', brand: 'Canon', price: 6500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-2', name: 'Canon Pixma TS3640 Printer', brand: 'Canon', price: 7500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-3', name: 'Canon Pixma TS3340', brand: 'Canon', price: 7500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-4', name: 'Canon G2410', brand: 'Canon', price: 16000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-5', name: 'Canon G2430', brand: 'Canon', price: 18000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-6', name: 'Canon G3410 Wireless', brand: 'Canon', price: 16500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-7', name: 'Canon G3430 Printer', brand: 'Canon', price: 18000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-8', name: 'Canon I-Sensys MF3010 Printer', brand: 'Canon', price: 32500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-can-9', name: 'Canon Pixma GX6040 Printer', brand: 'Canon', price: 85000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  
+  // PRINTERS - HP DESKJET
+  { id: 'acc-prn-hp-1', name: 'HP Deskjet 2320 printer', brand: 'HP', price: 7000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-hp-2', name: 'HP Deskjet 2875 printer', brand: 'HP', price: 9500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  
+  // PRINTERS - LASERJET
+  { id: 'acc-prn-hp-3', name: 'HP Laserjet M111a Printer', brand: 'HP', price: 17500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-hp-4', name: 'HP Laserjet M111w Printer', brand: 'HP', price: 18500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-hp-5', name: 'HP Laserjet M141a Printer', brand: 'HP', price: 19000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-hp-6', name: 'HP Laserjet M141w Printer', brand: 'HP', price: 20500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-hp-7', name: 'HP Laserjet mono M236SDW', brand: 'HP', price: 36000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-hp-8', name: 'HP LaserJet 182n color', brand: 'HP', price: 43000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-hp-9', name: 'HP Color LaserJet PRO MFP 3303FDW', brand: 'HP', price: 55000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  
+  // PRINTERS - EPSON
+  { id: 'acc-prn-eps-1', name: 'Epson L3210', brand: 'Epson', price: 20000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-eps-2', name: 'Epson L3250 wireless', brand: 'Epson', price: 22500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  { id: 'acc-prn-eps-3', name: 'Epson L3550 Printer', brand: 'Epson', price: 26000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  
+  // DOT MATRIX
+  { id: 'acc-prn-eps-dm1', name: 'Epson LX350 dot matrix printer', brand: 'Epson', price: 25500, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  
+  // THERMAL
+  { id: 'acc-prn-thr-1', name: 'Xprinter USB', brand: 'Xprinter', price: 6000, category: 'Printers', imageId: 'printer-placeholder', status: 'New' },
+  
+  // INK
+  { id: 'acc-ink-eps-1', name: 'Epson 101 Black Ink', brand: 'Epson', price: 2500, category: 'Ink', imageId: 'ink-placeholder', status: 'New' },
+  { id: 'acc-ink-eps-2', name: 'Epson 103 Series Ink', brand: 'Epson', price: 1800, category: 'Ink', imageId: 'ink-placeholder', status: 'New' },
+  
+  // SCANNERS
+  { id: 'acc-scn-can-1', name: 'Canon Scanner Lide 300', brand: 'Canon', price: 14000, category: 'Scanners', imageId: 'scanner-placeholder', status: 'New' },
+  { id: 'acc-scn-hp-1', name: 'HP Scanjet 2600f1', brand: 'HP', price: 38000, category: 'Scanners', imageId: 'scanner-placeholder', status: 'New' },
+  
+  // PROJECTORS
+  { id: 'acc-prj-phi-1', name: 'Philips projector npx 110 wifi', brand: 'Philips', price: 20000, category: 'Projectors', imageId: 'projector-placeholder', status: 'New' },
+  { id: 'acc-prj-eps-1', name: 'Epson CO -W01 WXGA Projector', brand: 'Epson', price: 45000, category: 'Projectors', imageId: 'projector-placeholder', status: 'New' },
+  
+  // MONITORS
+  { id: 'acc-mon-hp-1', name: 'HP V22 21.5"', brand: 'HP', price: 14000, category: 'Monitors', imageId: 'monitor-placeholder', status: 'New' },
+  { id: 'acc-mon-len-1', name: 'Lenovo D19-10 Monitor 18.5"', brand: 'Lenovo', price: 13500, category: 'Monitors', imageId: 'monitor-placeholder', status: 'New' },
+  
+  // SOFTWARE
+  { id: 'acc-sw-kas-1', name: 'Kaspersky Standard 1 user', brand: 'Kaspersky', price: 2200, category: 'Software', imageId: 'software-placeholder', status: 'New' },
+  
+  // UPS
+  { id: 'acc-ups-apc-1', name: 'APC 650VA UPS', brand: 'APC', price: 8000, category: 'UPS', imageId: 'ups-placeholder', status: 'New' },
+  { id: 'acc-ups-apc-2', name: 'APC 1000VA UPS', brand: 'APC', price: 12500, category: 'UPS', imageId: 'ups-placeholder', status: 'New' },
+  { id: 'acc-ups-apc-3', name: 'APC 2200VA UPS', brand: 'APC', price: 35000, category: 'UPS', imageId: 'ups-placeholder', status: 'New' },
 ];

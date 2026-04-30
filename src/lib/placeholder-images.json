@@ -7,6 +7,48 @@
       "imageHint": "modern desk"
     },
     {
+      "id": "printer-placeholder",
+      "description": "Professional Office Printer",
+      "imageUrl": "https://picsum.photos/seed/printer/600/400",
+      "imageHint": "office printer"
+    },
+    {
+      "id": "ink-placeholder",
+      "description": "Printer Ink Bottles",
+      "imageUrl": "https://picsum.photos/seed/ink/600/400",
+      "imageHint": "ink bottle"
+    },
+    {
+      "id": "scanner-placeholder",
+      "description": "Flatbed Image Scanner",
+      "imageUrl": "https://picsum.photos/seed/scanner/600/400",
+      "imageHint": "image scanner"
+    },
+    {
+      "id": "projector-placeholder",
+      "description": "Multimedia Projector",
+      "imageUrl": "https://picsum.photos/seed/projector/600/400",
+      "imageHint": "multimedia projector"
+    },
+    {
+      "id": "monitor-placeholder",
+      "description": "FHD Computer Monitor",
+      "imageUrl": "https://picsum.photos/seed/monitor/600/400",
+      "imageHint": "computer monitor"
+    },
+    {
+      "id": "software-placeholder",
+      "description": "Antivirus Software Box",
+      "imageUrl": "https://picsum.photos/seed/software/600/400",
+      "imageHint": "software box"
+    },
+    {
+      "id": "ups-placeholder",
+      "description": "Backup UPS System",
+      "imageUrl": "https://picsum.photos/seed/ups/600/400",
+      "imageHint": "backup ups"
+    },
+    {
       "id": "portfolio-1",
       "description": "Homepage of a modern e-commerce website for a fashion brand",
       "imageUrl": "https://picsum.photos/seed/portfolio1/600/400",
