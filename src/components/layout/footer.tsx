@@ -12,7 +12,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="border-t border-black bg-white">
       <div className="container mx-auto max-w-7xl px-4 py-12 md:px-6">
         <div className="grid gap-12 md:grid-cols-3">
           <div className="flex flex-col gap-4">
@@ -25,13 +25,13 @@ export function Footer() {
                     className="object-contain"
                 />
              </Link>
-             <p className="text-sm text-muted-foreground">
+             <p className="text-sm font-medium text-black/70">
                 Your partner in innovation. Providing high-quality tech solutions to power your digital life.
              </p>
           </div>
            <div className="flex flex-col gap-4">
-            <h3 className="text-lg font-bold text-primary">Contact Us</h3>
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <h3 className="text-lg font-black uppercase tracking-widest text-black border-b-2 border-primary w-fit pb-1">Contact Us</h3>
+            <div className="space-y-2 text-sm font-bold text-black/80">
                 <p>Location: Old Nation, 2nd Flr, Shop D1</p>
                 <p>Email: benacetechnologies@gmail.com</p>
                 <p>Contact: 0714210957</p>
@@ -39,13 +39,13 @@ export function Footer() {
             </div>
            </div>
            <div className="flex flex-col gap-4">
-             <h3 className="text-lg font-bold text-primary">Quick Links</h3>
+             <h3 className="text-lg font-black uppercase tracking-widest text-black border-b-2 border-primary w-fit pb-1">Quick Links</h3>
              <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
                     <Link 
                         key={link.href}
                         href={link.href} 
-                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                        className="text-sm font-bold text-black/60 transition-colors hover:text-primary"
                     >
                         {link.name}
                     </Link>
@@ -53,8 +53,8 @@ export function Footer() {
              </div>
            </div>
         </div>
-        <div className="mt-12 border-t pt-8 text-center">
-             <p className="text-sm text-muted-foreground">
+        <div className="mt-12 border-t border-black/10 pt-8 text-center">
+             <p className="text-xs font-bold text-black/40 uppercase tracking-widest">
                 &copy; {new Date().getFullYear()} Benace Tech Hub. All rights reserved.
              </p>
         </div>
