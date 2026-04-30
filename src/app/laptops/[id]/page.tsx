@@ -9,7 +9,7 @@ import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { LaptopCard } from '@/components/laptops/laptop-card';
-import { ShoppingCart, ArrowLeft, Cpu, HardDrive, Monitor, Layers } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Cpu, HardDrive, Monitor, Layers, Info } from 'lucide-react';
 import { useMemo } from 'react';
 
 export default function LaptopDetailPage() {
@@ -94,31 +94,42 @@ export default function LaptopDetailPage() {
             )}
           </div>
 
+          {laptop.description && (
+            <div className="mb-8 rounded-lg bg-primary/5 p-4 border-l-4 border-primary">
+              <div className="flex items-center gap-2 font-bold mb-2">
+                <Info className="h-4 w-4 text-primary" /> Product Overview
+              </div>
+              <p className="text-muted-foreground leading-relaxed italic">
+                {laptop.description}
+              </p>
+            </div>
+          )}
+
           <div className="mb-10 space-y-6">
-            <h2 className="text-lg font-bold">Key Specifications</h2>
+            <h2 className="text-lg font-bold">Technical Specifications</h2>
             <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 rounded-lg border bg-card p-4">
+              <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
                 <Cpu className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-xs text-muted-foreground">Processor</p>
                   <p className="text-sm font-medium">{laptop.specifications.processor}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-lg border bg-card p-4">
+              <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
                 <Layers className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-xs text-muted-foreground">Memory</p>
                   <p className="text-sm font-medium">{laptop.specifications.ram}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-lg border bg-card p-4">
+              <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
                 <HardDrive className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-xs text-muted-foreground">Storage</p>
                   <p className="text-sm font-medium">{laptop.specifications.storage}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-lg border bg-card p-4">
+              <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
                 <Monitor className="h-5 w-5 text-primary" />
                 <div>
                   <p className="text-xs text-muted-foreground">Display</p>
@@ -142,9 +153,14 @@ export default function LaptopDetailPage() {
       {/* Related Products Section */}
       {relatedLaptops.length > 0 && (
         <section className="mt-24 border-t pt-16">
-          <h2 className="mb-8 font-headline text-2xl font-bold text-primary">
-            Similar Products
-          </h2>
+          <div className="mb-8 flex items-end justify-between">
+            <h2 className="font-headline text-2xl font-bold text-primary">
+              Similar Products
+            </h2>
+            <Link href="/laptops" className="text-sm font-medium text-primary hover:underline">
+              View all laptops
+            </Link>
+          </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {relatedLaptops.map((related) => (
               <LaptopCard key={related.id} laptop={related} />
