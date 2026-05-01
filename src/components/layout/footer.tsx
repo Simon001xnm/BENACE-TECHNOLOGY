@@ -12,40 +12,51 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-black bg-white">
-      <div className="container mx-auto max-w-7xl px-4 py-12 md:px-6">
-        <div className="grid gap-12 md:grid-cols-3">
-          <div className="flex flex-col gap-4">
-             <Link href="/">
+    <footer className="border-t-4 border-black bg-white">
+      <div className="container mx-auto max-w-7xl px-4 py-16 md:px-6">
+        <div className="grid gap-16 md:grid-cols-3">
+          <div className="flex flex-col gap-6">
+             <Link href="/" className="w-fit">
                 <Image
                     src="/use.png"
                     alt="Benace Technologies Logo"
-                    width={140}
-                    height={35}
+                    width={160}
+                    height={40}
                     className="object-contain"
                 />
              </Link>
-             <p className="text-sm font-medium text-black/70">
-                Your partner in innovation. Providing high-quality tech solutions to power your digital life.
+             <p className="text-sm font-bold leading-relaxed text-zinc-600">
+                Benace Tech Hub is Nairobi's premier partner in innovation. We provide high-quality laptops, professional repairs, and custom digital craftsmanship.
              </p>
+             <div className="flex gap-4">
+               <div className="h-10 w-10 border-2 border-black bg-primary"></div>
+               <div className="h-10 w-10 border-2 border-black bg-black"></div>
+               <div className="h-10 w-10 border-2 border-black bg-zinc-200"></div>
+             </div>
           </div>
-           <div className="flex flex-col gap-4">
-            <h3 className="text-lg font-black uppercase tracking-widest text-black border-b-2 border-primary w-fit pb-1">Contact Us</h3>
-            <div className="space-y-2 text-sm font-bold text-black/80">
-                <p>Location: Old Nation, 2nd Flr, Shop D1</p>
-                <p>Email: benacetechnologies@gmail.com</p>
-                <p>Contact: 0714210957</p>
-                <p>P.O. Box 709, Nairobi</p>
+           <div className="flex flex-col gap-6">
+            <h3 className="text-xl font-black uppercase tracking-widest text-black">Visit Us</h3>
+            <div className="space-y-4 text-sm font-black text-zinc-800">
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase text-primary tracking-widest mb-1">Location</span>
+                  <span>Old Nation House, 2nd Flr, Shop D1</span>
+                  <span>Nairobi, Kenya</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase text-primary tracking-widest mb-1">Contact</span>
+                  <span>0714210957</span>
+                  <span>benacetechnologies@gmail.com</span>
+                </div>
             </div>
            </div>
-           <div className="flex flex-col gap-4">
-             <h3 className="text-lg font-black uppercase tracking-widest text-black border-b-2 border-primary w-fit pb-1">Quick Links</h3>
-             <div className="flex flex-col gap-2">
+           <div className="flex flex-col gap-6">
+             <h3 className="text-xl font-black uppercase tracking-widest text-black">Navigation</h3>
+             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {navLinks.map((link) => (
                     <Link 
                         key={link.href}
                         href={link.href} 
-                        className="text-sm font-bold text-black/60 transition-colors hover:text-primary"
+                        className="text-sm font-bold text-zinc-500 transition-all hover:text-primary hover:translate-x-1"
                     >
                         {link.name}
                     </Link>
@@ -53,10 +64,13 @@ export function Footer() {
              </div>
            </div>
         </div>
-        <div className="mt-12 border-t border-black/10 pt-8 text-center">
-             <p className="text-xs font-bold text-black/40 uppercase tracking-widest">
-                &copy; {new Date().getFullYear()} Benace Tech Hub. All rights reserved.
+        <div className="mt-16 border-t-2 border-zinc-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+             <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
+                &copy; {new Date().getFullYear()} Benace Tech Hub. Engineered for Excellence.
              </p>
+             <div className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
+               Old Nation, Nairobi • Kenya
+             </div>
         </div>
       </div>
     </footer>
