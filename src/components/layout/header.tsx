@@ -9,6 +9,8 @@ import Image from 'next/image';
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useState } from 'react';
@@ -73,6 +75,11 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
+              <SheetHeader>
+                <SheetTitle className="text-left font-black uppercase tracking-widest text-primary">
+                  Navigation
+                </SheetTitle>
+              </SheetHeader>
               <div className="mt-8 flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <Link
