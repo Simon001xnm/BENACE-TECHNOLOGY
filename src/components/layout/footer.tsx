@@ -28,11 +28,6 @@ export function Footer() {
              <p className="text-sm font-bold leading-relaxed text-zinc-600">
                 Benace Tech Hub is Nairobi's premier partner in innovation. We provide high-quality laptops, professional repairs, and custom digital craftsmanship.
              </p>
-             <div className="flex gap-4">
-               <div className="h-10 w-10 border-2 border-black bg-primary"></div>
-               <div className="h-10 w-10 border-2 border-black bg-black"></div>
-               <div className="h-10 w-10 border-2 border-black bg-zinc-200"></div>
-             </div>
           </div>
            <div className="flex flex-col gap-6">
             <h3 className="text-xl font-black uppercase tracking-widest text-black">Visit Us</h3>
