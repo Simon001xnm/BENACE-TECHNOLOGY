@@ -42,7 +42,7 @@ export default function RepairsPage() {
           Professional Repair & Support
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          Benace Tech Hub provides Naivasha's most reliable repair services. We don't just fix devices; we ensure they perform better than ever.
+          Benace Tech Hub provides Nairobi's most reliable repair services. We don't just fix devices; we ensure they perform better than ever.
         </p>
       </div>
 

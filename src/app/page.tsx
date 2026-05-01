@@ -19,8 +19,8 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 lg:gap-16">
             <div className="space-y-8 animate-in fade-in slide-in-from-left duration-700">
-              <div className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-black uppercase tracking-widest text-primary border-2 border-primary/20">
-                Naivasha's Tech Leader
+              <div className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-black uppercase tracking-widest text-zinc-900 border-2 border-primary/20">
+                Nairobi's Tech Leader
               </div>
               <h1 className="font-headline text-4xl font-black tracking-tighter text-black md:text-5xl lg:text-7xl leading-[0.9]">
                 Empowering Your <span className="text-primary">Digital Future</span> at Benace Tech Hub.
@@ -76,7 +76,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-xs font-black uppercase text-zinc-400">Visit Us Today</p>
-                      <p className="font-bold text-black">Old Nation, 2nd Flr, Naivasha</p>
+                      <p className="font-bold text-black">Old Nation, 2nd Flr, Nairobi</p>
                     </div>
                   </div>
                 </div>

@@ -12,7 +12,7 @@ export default function AboutPage() {
             About Benace Tech Hub
           </h1>
           <p className="mt-6 text-lg text-muted-foreground">
-            Benace Tech Hub is a premier technology solution provider based in Naivasha. We specialize in high-quality laptops, desktops, professional repair services, and bespoke web development.
+            Benace Tech Hub is a premier technology solution provider based in Nairobi. We specialize in high-quality laptops, desktops, professional repair services, and bespoke web development.
           </p>
           <p className="mt-4 text-lg text-muted-foreground">
             Our mission is to empower individuals and businesses with the right technology tools and services to thrive in a digital world. Whether you're a student looking for an affordable Ex-UK laptop or a business needing a complete digital makeover, we are here to serve you.

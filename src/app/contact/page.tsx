@@ -22,7 +22,7 @@ export default function ContactPage() {
             <div>
               <h3 className="font-bold text-lg">Our Location</h3>
               <p className="text-muted-foreground">Old Nation, 2nd Flr, Shop D1</p>
-              <p className="text-muted-foreground">Naivasha, Kenya</p>
+              <p className="text-muted-foreground">Nairobi, Kenya</p>
             </div>
           </div>
 

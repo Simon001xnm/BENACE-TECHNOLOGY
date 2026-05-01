@@ -60,7 +60,7 @@ export default function LaptopHirePage() {
                 'Pristine condition devices from HP, Dell, and Lenovo',
                 'Optional software pre-loading (Office, Design tools)',
                 'On-call technical support included in every hire',
-                'Free local delivery in Naivasha for bulk orders',
+                'Free local delivery in Nairobi for bulk orders',
                 'Comprehensive device insurance coverage'
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">

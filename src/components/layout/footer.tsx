@@ -35,7 +35,7 @@ export function Footer() {
                 <p>Location: Old Nation, 2nd Flr, Shop D1</p>
                 <p>Email: benacetechnologies@gmail.com</p>
                 <p>Contact: 0714210957</p>
-                <p>P.O. Box 709, Naivasha</p>
+                <p>P.O. Box 709, Nairobi</p>
             </div>
            </div>
            <div className="flex flex-col gap-4">
