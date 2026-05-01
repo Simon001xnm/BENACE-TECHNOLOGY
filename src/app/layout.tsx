@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/lib/cart-context';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import { GoogleMap } from '@/components/layout/google-map';
 
 export const metadata: Metadata = {
   title: 'Benace Tech Hub',
@@ -25,7 +26,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </head>
@@ -34,6 +35,7 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-grow">{children}</main>
+            <GoogleMap />
             <Footer />
           </div>
           <Toaster />
