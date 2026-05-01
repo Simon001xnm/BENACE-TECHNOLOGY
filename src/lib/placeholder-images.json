@@ -1,6 +1,12 @@
 {
   "placeholderImages": [
     {
+      "id": "shop-hero",
+      "description": "Benace Tech Hub Shop Front",
+      "imageUrl": "/FB_IMG_1753445965146.jpg",
+      "imageHint": "tech shop"
+    },
+    {
       "id": "hero-1",
       "description": "Featured Laptop Hero Image",
       "imageUrl": "/FB_IMG_1753445965146.jpg",
