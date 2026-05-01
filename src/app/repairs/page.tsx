@@ -65,7 +65,7 @@ export default function RepairsPage() {
       <div className="mt-16 rounded-2xl bg-primary/5 border border-primary/10 p-10 text-center">
         <h2 className="text-2xl font-bold text-primary">Free Technical Diagnosis</h2>
         <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-          Not sure what's wrong? Bring your device to our shop at Old Nation, 2nd Floor. Our technicians will perform a comprehensive check and provide a transparent quote before any work begins.
+          Not sure what's wrong? Bring your device to our shop at Old Nation, 2nd Floor, Shop D1. Our technicians will perform a comprehensive check and provide a transparent quote before any work begins.
         </p>
         <div className="mt-8 flex justify-center gap-4">
            <div className="flex items-center gap-2 text-sm font-medium">

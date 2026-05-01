@@ -46,7 +46,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-4 pt-4 sm:flex-row">
-                <Button asChild size="lg" className="h-14 bg-black px-8 font-black uppercase tracking-widest text-white border-2 border-black hover:bg-primary hover:text-black hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all">
+                <Button asChild size="lg" className="h-14 bg-black px-8 font-black uppercase tracking-widest text-white border-2 border-black hover:bg-primary hover:text-black hover:shadow-[6px_6px_0px_0px_rgba(0,186,242,1)] transition-all">
                   <Link href="/laptops">Shop Laptops</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="h-14 border-2 border-black px-8 font-black uppercase tracking-widest hover:bg-zinc-100">
@@ -76,7 +76,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-xs font-black uppercase text-zinc-400">Visit Us Today</p>
-                      <p className="font-bold text-black">Old Nation, 2nd Flr, Nairobi</p>
+                      <p className="font-bold text-black">Old Nation, 2nd Flr, Shop D1</p>
                     </div>
                   </div>
                 </div>
