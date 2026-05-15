@@ -1,0 +1,55 @@
+
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A laptop or accessory available for sale.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "brand": { "type": "string" },
+        "price": { "type": "number" },
+        "oldPrice": { "type": "number" },
+        "category": { "type": "string" },
+        "status": { "type": "string", "enum": ["New", "Ex-UK", "Boxed"] },
+        "description": { "type": "string" },
+        "specifications": {
+          "type": "object",
+          "properties": {
+            "processor": { "type": "string" },
+            "ram": { "type": "string" },
+            "storage": { "type": "string" },
+            "display": { "type": "string" }
+          }
+        },
+        "imageId": { "type": "string" },
+        "inStock": { "type": "boolean" },
+        "salePercentage": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "brand", "price", "category"]
+    },
+    "AdminUser": {
+      "title": "Admin User",
+      "description": "Authorized staff with access to the dashboard.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "editor"] }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["password"]
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "#/entities/Product",
+      "description": "Collection of products in the store."
+    },
+    "/admins/{adminId}": {
+      "schema": "#/entities/AdminUser",
+      "description": "List of authorized admin users."
+    }
+  }
+}
