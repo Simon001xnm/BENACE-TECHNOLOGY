@@ -7,7 +7,7 @@ import { useAuth } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { ShieldCheck, flaskConical as FlaskIcon } from 'lucide-react';
+import { ShieldCheck, FlaskConical as FlaskIcon } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
