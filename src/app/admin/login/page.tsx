@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { ShieldCheck, FlaskConical as FlaskIcon, Mail, Lock, LogIn, AlertCircle, UserPlus, ArrowRight } from 'lucide-react';
+import { ShieldCheck, FlaskConical as FlaskIcon, Mail, Lock, LogIn, AlertCircle, UserPlus } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { cn } from '@/lib/utils';
 
@@ -54,7 +54,12 @@ export default function AdminLoginPage() {
       toast({ title: 'Access Granted', description: 'Redirecting to Benace Hub...' });
       router.push('/admin/dashboard');
     } catch (error: any) {
-      toast({ variant: 'destructive', title: 'Authentication Error', description: error.message });
+      let description = error.message;
+      if (error.code === 'auth/unauthorized-domain') {
+        const domain = typeof window !== 'undefined' ? window.location.hostname : 'this domain';
+        description = `Domain not authorized. Add "${domain}" to "Authorized domains" in Firebase Console > Authentication > Settings.`;
+      }
+      toast({ variant: 'destructive', title: 'Authentication Error', description });
     } finally {
       setLoading(false);
     }
