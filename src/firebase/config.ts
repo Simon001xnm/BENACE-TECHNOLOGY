@@ -1,22 +1,17 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 
 /**
- * FIREBASE CONFIGURATION GUIDE
+ * FIREBASE CONFIGURATION
  * 
- * To get your production keys:
- * 1. Go to https://console.firebase.google.com
- * 2. Select your project.
- * 3. Click the Gear Icon (⚙️) > Project Settings.
- * 4. Scroll down to "Your apps" -> select your Web App (</>).
- * 5. Choose "Config" and copy the values below.
+ * Updated with production keys provided by the user.
  */
 const firebaseConfig = {
-  apiKey: "REPLACE_WITH_YOUR_API_KEY",
-  authDomain: "REPLACE_WITH_YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
-  storageBucket: "REPLACE_WITH_YOUR_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
-  appId: "REPLACE_WITH_YOUR_APP_ID"
+  apiKey: "AIzaSyB31s6fzqKwj2g8O2w-9JWIWLOGUyLr8dM",
+  authDomain: "studio-7563060614-14793.firebaseapp.com",
+  projectId: "studio-7563060614-14793",
+  storageBucket: "studio-7563060614-14793.firebasestorage.app",
+  messagingSenderId: "102223625731",
+  appId: "1:102223625731:web:2a217e30b4b14101bf5836"
 };
 
 export const getFirebaseConfig = () => firebaseConfig;
