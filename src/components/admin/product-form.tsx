@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFirestore, useStorage } from '@/firebase';
 import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 import { useForm } from 'react-hook-form';
@@ -31,9 +31,8 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { ImageIcon, Loader2, X, Upload } from 'lucide-react';
+import { ImageIcon, Loader2, X, Upload, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
-import { Progress } from '@/components/ui/progress';
 
 const productSchema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -64,7 +63,6 @@ interface ProductFormProps {
 export function ProductForm({ initialData, productId }: ProductFormProps) {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -136,41 +134,42 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     }
 
     setUploading(true);
-    setUploadProgress(0);
 
     try {
-      const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
-        (error) => {
-          console.error("Upload error:", error);
-          toast({ 
-            variant: 'destructive', 
-            title: 'Upload Failed', 
-            description: error.message || "Please check your storage permissions in Firebase Console." 
-          });
-          setUploading(false);
-          setUploadProgress(0);
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          const current = form.getValues('imageUrls') || [];
-          form.setValue('imageUrls', [...current, downloadURL]);
-          setUploading(false);
-          setUploadProgress(0);
-          toast({ title: 'Image Uploaded', description: 'The photo has been added to the gallery.' });
-        }
-      );
+      // Create a unique path for the image
+      const imagePath = `products/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+      const storageRef = ref(storage, imagePath);
+      
+      // Upload the file
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      
+      // Update form state
+      const current = form.getValues('imageUrls') || [];
+      form.setValue('imageUrls', [...current, downloadURL]);
+      
+      toast({ 
+        title: 'Success', 
+        description: 'Image uploaded successfully.' 
+      });
     } catch (err: any) {
-      console.error("Initialization error:", err);
-      toast({ variant: 'destructive', title: 'Upload Error', description: 'Could not start upload task.' });
+      console.error("Storage Error:", err);
+      
+      let errorMessage = "Could not upload image.";
+      if (err.code === 'storage/unauthorized') {
+        errorMessage = "Permission denied. Please ensure Storage Rules are set to allow authenticated writes in the Firebase Console.";
+      } else if (err.code === 'storage/retry-limit-exceeded') {
+        errorMessage = "Network timeout. Please check your internet connection.";
+      }
+
+      toast({ 
+        variant: 'destructive', 
+        title: 'Upload Failed', 
+        description: errorMessage 
+      });
+    } finally {
       setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
@@ -376,17 +375,11 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                 className="bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]"
               >
                 {uploading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : <Upload className="mr-2 h-3 w-3" />}
-                {uploading ? `Uploading ${Math.round(uploadProgress)}%` : 'Upload from Device'}
+                {uploading ? `Uploading...` : 'Upload from Device'}
               </Button>
             </div>
           </div>
           
-          {uploading && (
-            <div className="space-y-2">
-              <Progress value={uploadProgress} className="h-2 border-2 border-black" />
-            </div>
-          )}
-
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {watchedImageUrls.map((url, i) => (
               <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1">
@@ -408,6 +401,15 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">No media attached yet</p>
               </div>
             )}
+          </div>
+          
+          <div className="rounded-lg bg-zinc-100 p-4 border-2 border-dashed border-zinc-300">
+             <div className="flex items-start gap-3">
+                <AlertCircle className="h-4 w-4 text-zinc-500 mt-0.5" />
+                <div className="text-[10px] font-bold uppercase text-zinc-500 tracking-tight leading-normal">
+                   If upload hangs at 0%, please ensure your <strong>Firebase Storage Rules</strong> in the console allow <code>write</code> access to authenticated users.
+                </div>
+             </div>
           </div>
         </div>
 
