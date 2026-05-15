@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useUser, useAuth } from '@/firebase';
 import { signOut } from 'firebase/auth';
 import { useRouter, usePathname } from 'next/navigation';
-import { LayoutDashboard, Laptop, ShoppingCart, LogOut, Settings, Menu } from 'lucide-react';
+import { LayoutDashboard, Laptop, ShoppingCart, LogOut, Settings, Menu, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useState, useEffect } from 'react';
@@ -60,9 +60,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const SidebarContent = () => (
     <div className="flex h-full flex-col bg-black text-white p-6">
       <div className="mb-10">
-        <Link href="/admin/dashboard" className="flex flex-col">
+        <Link href="/" className="flex flex-col group transition-transform hover:scale-[1.02]">
           <span className="text-2xl font-black uppercase tracking-tighter text-primary">Benace</span>
           <span className="text-2xl font-black uppercase tracking-tighter">Admin Hub</span>
+          <span className="mt-1 flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 group-hover:text-primary transition-colors">
+            <Globe className="h-2 w-2" /> Back to Website
+          </span>
         </Link>
       </div>
       
@@ -107,7 +110,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="flex-grow flex flex-col min-w-0">
         {/* Mobile Header */}
         <header className="flex items-center justify-between border-b bg-white p-4 lg:hidden">
-          <span className="font-black uppercase tracking-tighter">Benace Admin</span>
+          <Link href="/" className="font-black uppercase tracking-tighter">Benace Admin</Link>
           <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
