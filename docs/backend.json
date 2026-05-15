@@ -22,12 +22,18 @@
             "display": { "type": "string" }
           }
         },
-        "imageId": { "type": "string" },
+        "imageUrls": { 
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Array of product image URLs."
+        },
+        "mainImageId": { "type": "string" },
         "inStock": { "type": "boolean" },
         "salePercentage": { "type": "number" },
-        "createdAt": { "type": "string", "format": "date-time" }
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["name", "brand", "price", "category"]
+      "required": ["name", "brand", "price", "category", "inStock"]
     },
     "AdminUser": {
       "title": "Admin User",
