@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -130,9 +129,11 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
   };
 
   const removeImage = (index: number) => {
-    const current = form.getValues('imageUrls');
+    const current = form.getValues('imageUrls') || [];
     form.setValue('imageUrls', current.filter((_, i) => i !== index));
   };
+
+  const watchedImageUrls = form.watch('imageUrls') || [];
 
   return (
     <Form {...form}>
@@ -319,7 +320,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {form.watch('imageUrls').map((url, i) => (
+            {watchedImageUrls.map((url, i) => (
               <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1">
                 <Image src={url} alt={`Product View ${i + 1}`} fill className="object-contain p-2" />
                 <button
@@ -331,7 +332,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                 </button>
               </div>
             ))}
-            {form.watch('imageUrls').length === 0 && (
+            {watchedImageUrls.length === 0 && (
               <div className="flex h-32 flex-col items-center justify-center rounded-xl border-4 border-dashed border-zinc-200 bg-zinc-50 col-span-full">
                 <ImageIcon className="mb-2 h-8 w-8 text-zinc-300" />
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">No media attached yet</p>
