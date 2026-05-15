@@ -19,7 +19,11 @@ import { Badge } from '@/components/ui/badge';
 
 export function LaptopCard({ laptop }: { laptop: Laptop }) {
   const { addToCart } = useCart();
-  const laptopImage = PlaceHolderImages.find(img => img.id === laptop.imageId);
+  
+  // Prioritize uploaded images over placeholders
+  const displayImage = laptop.imageUrls && laptop.imageUrls.length > 0 
+    ? laptop.imageUrls[0] 
+    : PlaceHolderImages.find(img => img.id === laptop.imageId)?.imageUrl;
 
   const getStatusClass = () => {
     switch (laptop.status) {
@@ -44,14 +48,13 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
       {/* Image Container */}
       <CardHeader className="relative aspect-[4/3] p-0 overflow-hidden bg-zinc-50">
         <Link href={`/laptops/${laptop.id}`} className="block h-full w-full">
-          {laptopImage ? (
+          {displayImage ? (
             <Image
-              src={laptopImage.imageUrl}
+              src={displayImage}
               alt={laptop.name}
               fill
               className="object-contain p-6 transition-transform duration-700 group-hover:scale-110"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              data-ai-hint={laptopImage.imageHint}
             />
           ) : (
              <div className="flex h-full w-full items-center justify-center">

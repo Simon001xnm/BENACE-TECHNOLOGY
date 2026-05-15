@@ -1,16 +1,55 @@
+'use client';
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
-import { laptops, accessories } from '@/lib/data';
-import { ArrowRight, CheckCircle, Wrench, Laptop, Globe, Cpu } from 'lucide-react';
+import { laptops as staticLaptops, accessories as staticAccessories } from '@/lib/data';
+import { ArrowRight, CheckCircle, Wrench, Laptop, Globe, Cpu, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { AccessoryCard } from '@/components/accessories/accessory-card';
+import { useCollection, useFirestore } from '@/firebase';
+import { collection, query, orderBy, limit, where } from 'firebase/firestore';
+import { useMemo } from 'react';
 
 export default function Home() {
-  const featuredLaptops = laptops.slice(0, 4);
-  const featuredAccessories = accessories.slice(0, 4);
+  const db = useFirestore();
   const shopHeroImage = PlaceHolderImages.find(img => img.id === 'shop-hero');
+
+  // Fetch Featured Laptops
+  const featuredLaptopsQuery = useMemo(() => {
+    if (!db) return null;
+    return query(
+      collection(db, 'products'), 
+      where('type', '==', 'laptop'),
+      orderBy('createdAt', 'desc'), 
+      limit(4)
+    );
+  }, [db]);
+  const { data: liveLaptops, loading: laptopsLoading } = useCollection(featuredLaptopsQuery);
+
+  // Fetch Featured Accessories
+  const featuredAccessoriesQuery = useMemo(() => {
+    if (!db) return null;
+    return query(
+      collection(db, 'products'), 
+      where('type', '==', 'accessory'),
+      orderBy('createdAt', 'desc'), 
+      limit(4)
+    );
+  }, [db]);
+  const { data: liveAccessories, loading: accessoriesLoading } = useCollection(featuredAccessoriesQuery);
+
+  // Fallback to static if live data is empty
+  const featuredLaptops = useMemo(() => {
+    if (liveLaptops && liveLaptops.length > 0) return liveLaptops;
+    return staticLaptops.slice(0, 4);
+  }, [liveLaptops]);
+
+  const featuredAccessories = useMemo(() => {
+    if (liveAccessories && liveAccessories.length > 0) return liveAccessories;
+    return staticAccessories.slice(0, 4);
+  }, [liveAccessories]);
 
   return (
     <div className="flex flex-col">
@@ -64,7 +103,6 @@ export default function Home() {
                     alt="Benace Tech Hub Shop"
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    data-ai-hint="modern electronics shop interior"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority
                   />
@@ -104,11 +142,17 @@ export default function Home() {
               </Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredLaptops.map(laptop => (
-              <LaptopCard key={laptop.id} laptop={laptop} />
-            ))}
-          </div>
+          {laptopsLoading ? (
+             <div className="flex h-48 items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+             </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                {featuredLaptops.map(laptop => (
+                <LaptopCard key={laptop.id} laptop={laptop} />
+                ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -163,11 +207,17 @@ export default function Home() {
               Printers, UPS systems, genuine chargers, and professional software to keep your workflow uninterrupted.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredAccessories.map(accessory => (
-              <AccessoryCard key={accessory.id} accessory={accessory} />
-            ))}
-          </div>
+          {accessoriesLoading ? (
+            <div className="flex h-48 items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                {featuredAccessories.map(accessory => (
+                <AccessoryCard key={accessory.id} accessory={accessory} />
+                ))}
+            </div>
+          )}
           <div className="mt-16 text-center">
             <Button asChild variant="outline" size="lg" className="h-14 border-2 border-black px-12 font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
               <Link href="/accessories">

@@ -19,7 +19,11 @@ import { Badge } from '@/components/ui/badge';
 
 export function AccessoryCard({ accessory }: { accessory: Accessory }) {
   const { addToCart } = useCart();
-  const accessoryImage = PlaceHolderImages.find(img => img.id === accessory.imageId);
+  
+  // Prioritize uploaded images over placeholders
+  const displayImage = accessory.imageUrls && accessory.imageUrls.length > 0 
+    ? accessory.imageUrls[0] 
+    : PlaceHolderImages.find(img => img.id === accessory.imageId)?.imageUrl;
 
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden rounded-xl border-2 border-black bg-white transition-all duration-500 hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,186,242,1)]">
@@ -34,14 +38,13 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
 
       {/* Image */}
       <CardHeader className="relative aspect-square p-0 overflow-hidden bg-zinc-50 border-b-2 border-black">
-        {accessoryImage ? (
+        {displayImage ? (
           <Image
-            src={accessoryImage.imageUrl}
+            src={displayImage}
             alt={accessory.name}
             fill
             className="object-contain p-6 transition-transform duration-700 group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            data-ai-hint={accessoryImage.imageHint}
           />
         ) : (
            <div className="flex h-full w-full items-center justify-center">

@@ -17,6 +17,8 @@ export type Laptop = {
     display: string;
   };
   imageId: string;
+  imageUrls?: string[];
+  type?: 'laptop' | 'accessory';
 };
 
 export type Service = {
@@ -40,6 +42,7 @@ export type CartItem = {
   price: number;
   quantity: number;
   imageId: string;
+  imageUrls?: string[];
 };
 
 export type CartableProduct = {
@@ -47,6 +50,7 @@ export type CartableProduct = {
   name: string;
   price: number;
   imageId: string;
+  imageUrls?: string[];
 };
 
 export type Accessory = {
@@ -56,8 +60,10 @@ export type Accessory = {
   price: number;
   category: string;
   imageId: string;
+  imageUrls?: string[];
   description?: string;
   oldPrice?: number;
   salePercentage?: number;
   status?: 'New' | 'Ex-UK' | 'Boxed';
+  type?: 'laptop' | 'accessory';
 };
