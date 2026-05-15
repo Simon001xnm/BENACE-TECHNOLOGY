@@ -31,18 +31,9 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { ImageIcon, Loader2, X, PlusCircle, Upload, Sparkles, Wand2 } from 'lucide-react';
+import { ImageIcon, Loader2, X, Upload } from 'lucide-react';
 import Image from 'next/image';
 import { Progress } from '@/components/ui/progress';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { editProductImage } from '@/ai/flows/edit-image-flow';
 
 const productSchema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -74,10 +65,6 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [aiEditing, setAiEditing] = useState(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-  const [aiPrompt, setAiPrompt] = useState('');
-  const [isAiDialogOpen, setIsAiDialogOpen] = useState(false);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -180,339 +167,247 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     form.setValue('imageUrls', current.filter((_, i) => i !== index));
   };
 
-  const handleAiEdit = async () => {
-    if (selectedImageIndex === null || !aiPrompt.trim()) return;
-    
-    setAiEditing(true);
-    const imageUrl = form.getValues('imageUrls')[selectedImageIndex];
-
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const reader = new FileReader();
-      
-      const base64 = await new Promise<string>((resolve) => {
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(blob);
-      });
-
-      const { editedImageDataUri } = await editProductImage({
-        imageDataUri: base64,
-        prompt: aiPrompt,
-      });
-
-      if (!storage) throw new Error('Storage not initialized');
-      
-      const res = await fetch(editedImageDataUri);
-      const editedBlob = await res.blob();
-      const storageRef = ref(storage, `products/ai_edit_${Date.now()}.png`);
-      const uploadTask = await uploadBytesResumable(storageRef, editedBlob);
-      const finalUrl = await getDownloadURL(uploadTask.ref);
-
-      const current = form.getValues('imageUrls');
-      current[selectedImageIndex] = finalUrl;
-      form.setValue('imageUrls', [...current]);
-
-      toast({ title: 'Magic Applied!', description: 'Your image has been updated by AI.' });
-      setIsAiDialogOpen(false);
-      setAiPrompt('');
-    } catch (error: any) {
-      toast({ variant: 'destructive', title: 'AI Edit Failed', description: error.message });
-    } finally {
-      setAiEditing(false);
-    }
-  };
-
   const watchedImageUrls = form.watch('imageUrls') || [];
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-          <div className="grid gap-8 md:grid-cols-2">
-             <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Product Class</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                        <SelectValue placeholder="Select Class" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="font-black border-2 border-black">
-                      <SelectItem value="laptop">LAPTOP</SelectItem>
-                      <SelectItem value="accessory">ACCESSORY / PERIPHERAL</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Stock Group</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                        <SelectValue placeholder="Select Group" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="font-black border-2 border-black shadow-lg">
-                      {['Laptops', 'Desktops', 'Accessories', 'Printers', 'Networking', 'Software', 'Mouse', 'UPS'].map(cat => (
-                        <SelectItem key={cat} value={cat} className="uppercase tracking-widest text-[10px]">{cat}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="md:col-span-2">
-                  <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Full Model Name</FormLabel>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+        <div className="grid gap-8 md:grid-cols-2">
+           <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Product Class</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <Input placeholder="e.g. Lenovo ThinkBook 14-IRL" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
+                    <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                      <SelectValue placeholder="Select Class" />
+                    </SelectTrigger>
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="brand"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Manufacturer</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g. Lenovo, Dell, HP" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Listing Price (KES)</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="space-y-6">
-            <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
-              Status <span className="h-px flex-1 bg-black"></span>
-            </h3>
-            <div className="grid gap-8 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Device Condition</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                          <SelectValue placeholder="Condition" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="font-black border-2 border-black">
-                        <SelectItem value="New">BRAND NEW</SelectItem>
-                        <SelectItem value="Boxed">BOXED (OPENED)</SelectItem>
-                        <SelectItem value="Ex-UK">EX-UK (PRE-OWNED)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="inStock"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-xl border-4 border-black p-6 bg-zinc-50 shadow-[4px_4px_0px_0px_rgba(0,186,242,1)]">
-                    <div className="space-y-0.5">
-                      <FormLabel className="font-black uppercase text-[10px] tracking-widest">Inventory Availability</FormLabel>
-                      <FormDescription className="text-[10px] font-bold text-zinc-400 uppercase">Is this item ready for sale?</FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
-              Specifications <span className="h-px flex-1 bg-black"></span>
-            </h3>
-            <div className="grid gap-6 md:grid-cols-2">
-              {['processor', 'ram', 'storage', 'display'].map((spec) => (
-                <FormField
-                  key={spec}
-                  control={form.control}
-                  name={`specifications.${spec}` as any}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">{spec}</FormLabel>
-                      <FormControl>
-                        <Input {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              ))}
-            </div>
-          </div>
+                  <SelectContent className="font-black border-2 border-black">
+                    <SelectItem value="laptop">LAPTOP</SelectItem>
+                    <SelectItem value="accessory">ACCESSORY / PERIPHERAL</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <FormField
             control={form.control}
-            name="description"
+            name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Marketing Description</FormLabel>
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Stock Group</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                      <SelectValue placeholder="Select Group" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="font-black border-2 border-black shadow-lg">
+                    {['Laptops', 'Desktops', 'Accessories', 'Printers', 'Networking', 'Software', 'Mouse', 'UPS'].map(cat => (
+                      <SelectItem key={cat} value={cat} className="uppercase tracking-widest text-[10px]">{cat}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="md:col-span-2">
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Full Model Name</FormLabel>
                 <FormControl>
-                  <Textarea {...field} className="min-h-[160px] border-4 border-black font-bold p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
+                  <Input placeholder="e.g. Lenovo ThinkBook 14-IRL" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black uppercase tracking-tight">Visuals</h3>
-              <div className="flex items-center gap-4">
-                <input
-                  type="file"
-                  className="hidden"
-                  ref={fileInputRef}
-                  accept="image/*"
-                  onChange={handleFileUpload}
-                />
-                <Button 
-                  type="button" 
-                  disabled={uploading}
-                  onClick={() => fileInputRef.current?.click()} 
-                  className="bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]"
-                >
-                  {uploading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : <Upload className="mr-2 h-3 w-3" />}
-                  {uploading ? `Uploading ${Math.round(uploadProgress)}%` : 'Upload from Device'}
-                </Button>
-              </div>
+          <FormField
+            control={form.control}
+            name="brand"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Manufacturer</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. Lenovo, Dell, HP" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Listing Price (KES)</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
+            Status <span className="h-px flex-1 bg-black"></span>
+          </h3>
+          <div className="grid gap-8 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Device Condition</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        <SelectValue placeholder="Condition" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="font-black border-2 border-black">
+                      <SelectItem value="New">BRAND NEW</SelectItem>
+                      <SelectItem value="Boxed">BOXED (OPENED)</SelectItem>
+                      <SelectItem value="Ex-UK">EX-UK (PRE-OWNED)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="inStock"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-xl border-4 border-black p-6 bg-zinc-50 shadow-[4px_4px_0px_0px_rgba(0,186,242,1)]">
+                  <div className="space-y-0.5">
+                    <FormLabel className="font-black uppercase text-[10px] tracking-widest">Inventory Availability</FormLabel>
+                    <FormDescription className="text-[10px] font-bold text-zinc-400 uppercase">Is this item ready for sale?</FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
+            Specifications <span className="h-px flex-1 bg-black"></span>
+          </h3>
+          <div className="grid gap-6 md:grid-cols-2">
+            {['processor', 'ram', 'storage', 'display'].map((spec) => (
+              <FormField
+                key={spec}
+                control={form.control}
+                name={`specifications.${spec}` as any}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">{spec}</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            ))}
+          </div>
+        </div>
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Marketing Description</FormLabel>
+              <FormControl>
+                <Textarea {...field} className="min-h-[160px] border-4 border-black font-bold p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-black uppercase tracking-tight">Visuals</h3>
+            <div className="flex items-center gap-4">
+              <input
+                type="file"
+                className="hidden"
+                ref={fileInputRef}
+                accept="image/*"
+                onChange={handleFileUpload}
+              />
+              <Button 
+                type="button" 
+                disabled={uploading}
+                onClick={() => fileInputRef.current?.click()} 
+                className="bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]"
+              >
+                {uploading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : <Upload className="mr-2 h-3 w-3" />}
+                {uploading ? `Uploading ${Math.round(uploadProgress)}%` : 'Upload from Device'}
+              </Button>
             </div>
-            
-            {uploading && (
-              <div className="space-y-2">
-                <Progress value={uploadProgress} className="h-2 border-2 border-black" />
+          </div>
+          
+          {uploading && (
+            <div className="space-y-2">
+              <Progress value={uploadProgress} className="h-2 border-2 border-black" />
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {watchedImageUrls.map((url, i) => (
+              <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1">
+                <Image src={url} alt={`Product View ${i + 1}`} fill className="object-contain p-2" />
+                <div className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100">
+                  <button
+                    type="button"
+                    onClick={() => removeImage(i)}
+                    className="rounded-lg bg-red-600 p-2 text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-red-700"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+            {!watchedImageUrls.length && !uploading && (
+              <div className="flex h-32 flex-col items-center justify-center rounded-xl border-4 border-dashed border-zinc-200 bg-zinc-50 col-span-full">
+                <ImageIcon className="mb-2 h-8 w-8 text-zinc-300" />
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">No media attached yet</p>
               </div>
             )}
-
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {watchedImageUrls.map((url, i) => (
-                <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1">
-                  <Image src={url} alt={`Product View ${i + 1}`} fill className="object-contain p-2" />
-                  <div className="absolute right-2 top-2 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                    <button
-                      type="button"
-                      onClick={() => removeImage(i)}
-                      className="rounded-lg bg-red-600 p-2 text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-red-700"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedImageIndex(i);
-                        setIsAiDialogOpen(true);
-                      }}
-                      className="rounded-lg bg-primary p-2 text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:scale-105"
-                    >
-                      <Wand2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-              {!watchedImageUrls.length && !uploading && (
-                <div className="flex h-32 flex-col items-center justify-center rounded-xl border-4 border-dashed border-zinc-200 bg-zinc-50 col-span-full">
-                  <ImageIcon className="mb-2 h-8 w-8 text-zinc-300" />
-                  <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">No media attached yet</p>
-                </div>
-              )}
-            </div>
           </div>
+        </div>
 
-          <Button 
-            type="submit" 
-            disabled={loading || uploading}
-            className="h-16 w-full bg-black font-black uppercase tracking-widest text-white border-4 border-black hover:bg-primary hover:text-black shadow-[10px_10px_0px_0px_rgba(0,186,242,1)] active:translate-y-2 active:shadow-none transition-all"
-          >
-            {loading ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}
-            {productId ? 'Update Listing' : 'Publish to Shop'}
-          </Button>
-        </form>
-      </Form>
-
-      <Dialog open={isAiDialogOpen} onOpenChange={setIsAiDialogOpen}>
-        <DialogContent className="border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <DialogHeader>
-            <DialogTitle className="font-black uppercase tracking-tight flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" /> Magic Edit
-            </DialogTitle>
-            <DialogDescription className="font-bold text-zinc-500">
-              Describe how you want to enhance or modify this product image.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4 space-y-4">
-             {selectedImageIndex !== null && (
-               <div className="relative aspect-video w-full overflow-hidden rounded-lg border-2 border-black bg-zinc-100">
-                  <Image src={watchedImageUrls[selectedImageIndex]} alt="Editing" fill className="object-contain" />
-               </div>
-             )}
-             <Textarea
-              placeholder="e.g. Remove background and place on a professional office desk..."
-              value={aiPrompt}
-              onChange={(e) => setAiPrompt(e.target.value)}
-              className="border-2 border-black font-bold h-24"
-             />
-          </div>
-          <DialogFooter>
-            <Button variant="ghost" className="font-black uppercase" onClick={() => setIsAiDialogOpen(false)}>Cancel</Button>
-            <Button 
-              className="bg-black text-white font-black uppercase border-2 border-black hover:bg-primary hover:text-black"
-              disabled={aiEditing || !aiPrompt.trim()}
-              onClick={handleAiEdit}
-            >
-              {aiEditing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
-              {aiEditing ? 'Applying Magic...' : 'Apply Changes'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+        <Button 
+          type="submit" 
+          disabled={loading || uploading}
+          className="h-16 w-full bg-black font-black uppercase tracking-widest text-white border-4 border-black hover:bg-primary hover:text-black shadow-[10px_10px_0px_0px_rgba(0,186,242,1)] active:translate-y-2 active:shadow-none transition-all"
+        >
+          {loading ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}
+          {productId ? 'Update Listing' : 'Publish to Shop'}
+        </Button>
+      </form>
+    </Form>
   );
 }
