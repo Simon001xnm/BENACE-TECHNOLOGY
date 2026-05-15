@@ -407,7 +407,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
              <div className="flex items-start gap-3">
                 <AlertCircle className="h-4 w-4 text-zinc-500 mt-0.5" />
                 <div className="text-[10px] font-bold uppercase text-zinc-500 tracking-tight leading-normal">
-                   If upload hangs at 0%, please ensure your <strong>Firebase Storage Rules</strong> in the console allow <code>write</code> access to authenticated users.
+                   Using bucket: <strong>mybucketfg</strong>. Ensure <strong>Storage Rules</strong> in the Firebase Console allow <code>write</code> access to authenticated users for this bucket.
                 </div>
              </div>
           </div>
