@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFirestore } from '@/firebase';
 import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -84,32 +86,36 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     if (!db) return;
     setLoading(true);
 
-    try {
-      const productData = {
-        ...values,
-        updatedAt: serverTimestamp(),
-        createdAt: initialData?.createdAt || serverTimestamp(),
-      };
+    const productData = {
+      ...values,
+      updatedAt: serverTimestamp(),
+      createdAt: initialData?.createdAt || serverTimestamp(),
+    };
 
-      if (productId) {
-        await setDoc(doc(db, 'products', productId), productData);
-        toast({ title: 'System Updated', description: 'Product changes published successfully.' });
-      } else {
-        await addDoc(collection(db, 'products'), productData);
-        toast({ title: 'New Arrival Published', description: 'The product is now live on the shop.' });
-      }
+    const targetRef = productId ? doc(db, 'products', productId) : collection(db, 'products');
 
-      router.push('/admin/products');
-      router.refresh();
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Publishing Error',
-        description: 'Failed to save product. Please try again.',
-      });
-    } finally {
-      setLoading(false);
-    }
+    const operation = productId ? 
+      setDoc(doc(db, 'products', productId), productData, { merge: true }) : 
+      addDoc(collection(db, 'products'), productData);
+
+    operation
+      .then(() => {
+        toast({ 
+          title: productId ? 'System Updated' : 'New Arrival Published', 
+          description: productId ? 'Product changes published successfully.' : 'The product is now live.' 
+        });
+        router.push('/admin/products');
+        router.refresh();
+      })
+      .catch(async (error) => {
+        const permissionError = new FirestorePermissionError({
+          path: productId ? `products/${productId}` : 'products',
+          operation: productId ? 'update' : 'create',
+          requestResourceData: productData,
+        } satisfies SecurityRuleContext);
+        errorEmitter.emit('permission-error', permissionError);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleAddImageUrl = () => {

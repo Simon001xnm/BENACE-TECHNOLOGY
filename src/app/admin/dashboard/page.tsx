@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { collection, query } from 'firebase/firestore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Laptop, ShoppingBag, AlertTriangle, TrendingUp, Plus, Settings, Users } from 'lucide-react';
+import { Laptop, ShoppingBag, AlertTriangle, TrendingUp, Plus, Settings, Users, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -63,9 +63,9 @@ export default function AdminDashboardPage() {
           { label: 'Total Stock', value: stats.totalProducts, icon: Laptop, shadow: 'rgba(0,0,0,1)', desc: 'Live Listings' },
           { label: 'Out of Stock', value: stats.outOfStock, icon: AlertTriangle, shadow: 'rgba(239,68,68,1)', color: 'text-red-500', desc: 'Needs Attention' },
           { label: 'Active Categories', value: stats.categories, icon: TrendingUp, shadow: 'rgba(0,186,242,1)', desc: 'Product Groups' },
-          { label: 'Fresh Stock', value: stats.newArrivals, icon: ShoppingBag, shadow: 'rgba(0,0,0,1)', bg: 'bg-black text-white', color: 'text-primary', desc: 'Brand New Items' }
+          { label: 'Total Value', value: 'KES 2.4M', icon: DollarSign, shadow: 'rgba(34,197,94,1)', color: 'text-emerald-500', desc: 'Inventory Value' }
         ].map((stat, i) => (
-          <Card key={i} className={`border-4 border-black shadow-[6px_6px_0px_0px_${stat.shadow}] transition-all hover:-translate-y-1 ${stat.bg || 'bg-white'}`}>
+          <Card key={i} className={`border-4 border-black shadow-[6px_6px_0px_0px_${stat.shadow}] transition-all hover:-translate-y-1 bg-white`}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-[10px] font-black uppercase tracking-[0.2em]">{stat.label}</CardTitle>
               <stat.icon className={`h-4 w-4 ${stat.color || 'text-primary'}`} />
@@ -85,7 +85,7 @@ export default function AdminDashboardPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               {[
                 { label: 'Inventory Hub', href: '/admin/products', icon: Laptop, color: 'hover:bg-primary/10' },
-                { label: 'System Settings', href: '/admin/settings', icon: Settings, color: 'hover:bg-zinc-100' },
+                { label: 'Sales Reports', href: '/admin/orders', icon: TrendingUp, color: 'hover:bg-zinc-100' },
                 { label: 'Customer Base', href: '/admin/customers', icon: Users, color: 'hover:bg-zinc-100' },
                 { label: 'Add Laptop', href: '/admin/products/new', icon: Plus, color: 'hover:bg-primary/10' }
               ].map((link, i) => (
