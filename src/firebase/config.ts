@@ -1,18 +1,22 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 
 /**
- * Firebase configuration for Benace Tech Hub.
+ * FIREBASE CONFIGURATION GUIDE
  * 
- * IMPORTANT: Replace these placeholders with your actual project credentials 
- * from the Firebase Console (Project Settings > Your Apps > Web App).
+ * To get your production keys:
+ * 1. Go to https://console.firebase.google.com
+ * 2. Select your project.
+ * 3. Click the Gear Icon (⚙️) > Project Settings.
+ * 4. Scroll down to "Your apps" -> select your Web App (</>).
+ * 5. Choose "Config" and copy the values below.
  */
 const firebaseConfig = {
-  apiKey: "AIzaSyAs-placeholder-api-key",
-  authDomain: "placeholder-project-id.firebaseapp.com",
-  projectId: "placeholder-project-id",
-  storageBucket: "placeholder-project-id.firebasestorage.app",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef1234567890"
+  apiKey: "REPLACE_WITH_YOUR_API_KEY",
+  authDomain: "REPLACE_WITH_YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
+  storageBucket: "REPLACE_WITH_YOUR_PROJECT_ID.firebasestorage.app",
+  messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
+  appId: "REPLACE_WITH_YOUR_APP_ID"
 };
 
 export const getFirebaseConfig = () => firebaseConfig;
@@ -25,7 +29,6 @@ export function initializeFirebaseApp() {
     return initializeApp(firebaseConfig);
   } catch (error) {
     console.error("Firebase initialization failed:", error);
-    // Return a dummy app object if initialization fails to prevent total crash
     return getApps().length > 0 ? getApp() : {} as any;
   }
 }
