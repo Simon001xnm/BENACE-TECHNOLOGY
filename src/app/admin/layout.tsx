@@ -8,7 +8,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { LayoutDashboard, Laptop, ShoppingCart, LogOut, Settings, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useUser();
@@ -17,6 +17,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+  useEffect(() => {
+    if (!loading && !user && pathname !== '/admin/login') {
+      router.push('/admin/login');
+    }
+  }, [user, loading, pathname, router]);
+
   const handleLogout = async () => {
     if (auth) {
       await signOut(auth);
@@ -24,9 +30,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   };
 
-  if (loading) return null;
-  if (!user && pathname !== '/admin/login') return null;
-  if (pathname === '/admin/login') return <>{children}</>;
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-zinc-50">
+        <div className="text-center font-black uppercase tracking-widest animate-pulse">
+          Authenticating...
+        </div>
+      </div>
+    );
+  }
+
+  // If not logged in and not on login page, don't render content (useEffect will redirect)
+  if (!user && pathname !== '/admin/login') {
+    return null;
+  }
+
+  // Login page doesn't get the sidebar layout
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
 
   const navItems = [
     { label: 'Overview', href: '/admin/dashboard', icon: LayoutDashboard },
@@ -38,8 +60,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const SidebarContent = () => (
     <div className="flex h-full flex-col bg-black text-white p-6">
       <div className="mb-10">
-        <span className="text-2xl font-black uppercase tracking-tighter text-primary">Benace</span>
-        <span className="text-2xl font-black uppercase tracking-tighter ml-1">Admin</span>
+        <Link href="/admin/dashboard" className="flex flex-col">
+          <span className="text-2xl font-black uppercase tracking-tighter text-primary">Benace</span>
+          <span className="text-2xl font-black uppercase tracking-tighter">Admin Hub</span>
+        </Link>
       </div>
       
       <nav className="flex-grow space-y-2">
@@ -76,11 +100,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-screen bg-zinc-50">
       {/* Desktop Sidebar */}
-      <aside className="hidden w-64 lg:block">
+      <aside className="hidden w-64 lg:block flex-shrink-0">
         <SidebarContent />
       </aside>
 
-      <div className="flex-grow">
+      <div className="flex-grow flex flex-col min-w-0">
         {/* Mobile Header */}
         <header className="flex items-center justify-between border-b bg-white p-4 lg:hidden">
           <span className="font-black uppercase tracking-tighter">Benace Admin</span>
@@ -90,13 +114,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="p-0 border-none">
+            <SheetContent side="left" className="p-0 border-none w-64">
                 <SidebarContent />
             </SheetContent>
           </Sheet>
         </header>
 
-        <main className="min-h-screen">
+        <main className="flex-grow">
           {children}
         </main>
       </div>
