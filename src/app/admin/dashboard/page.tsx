@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { collection, query } from 'firebase/firestore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Laptop, ShoppingBag, AlertTriangle, TrendingUp, Plus, Settings, Users, DollarSign } from 'lucide-react';
+import { Laptop, ShoppingBag, AlertTriangle, TrendingUp, Plus, DatabaseBackup, DollarSign, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { ImportDataButton } from '@/components/admin/import-data-button';
 
 export default function AdminDashboardPage() {
   const { user, loading: authLoading } = useUser();
@@ -37,7 +38,6 @@ export default function AdminDashboardPage() {
     totalProducts: products?.length || 0,
     outOfStock: products?.filter(p => !p.inStock).length || 0,
     categories: [...new Set(products?.map(p => p.category))].length,
-    newArrivals: products?.filter(p => p.status === 'New').length || 0,
   };
 
   return (
@@ -49,8 +49,9 @@ export default function AdminDashboardPage() {
             Real-time status of Benace Tech Hub
           </p>
         </div>
-        <div className="flex gap-4">
-          <Button asChild className="bg-primary text-black font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+        <div className="flex flex-wrap gap-4">
+          <ImportDataButton />
+          <Button asChild className="bg-black text-white font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
             <Link href="/admin/products/new">
               <Plus className="mr-2 h-4 w-4" /> New Product
             </Link>
@@ -102,10 +103,10 @@ export default function AdminDashboardPage() {
 
         <div className="space-y-6">
           <div className="rounded-2xl border-4 border-black bg-primary p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-black font-black uppercase tracking-tight mb-2">Need Help?</h3>
-            <p className="text-sm font-bold text-black/70 mb-6 leading-tight">Access technical support or view your website analytics directly.</p>
-            <Button className="w-full bg-black text-white font-black uppercase tracking-widest border-2 border-black hover:bg-white hover:text-black transition-colors">
-              Contact Tech
+            <h3 className="text-black font-black uppercase tracking-tight mb-2">Inventory Sync</h3>
+            <p className="text-sm font-bold text-black/70 mb-6 leading-tight">If your live inventory is empty, use the button above to import the default catalog into Firestore.</p>
+            <Button asChild className="w-full bg-black text-white font-black uppercase tracking-widest border-2 border-black hover:bg-white hover:text-black transition-colors">
+              <Link href="/admin/products">View Inventory</Link>
             </Button>
           </div>
           
