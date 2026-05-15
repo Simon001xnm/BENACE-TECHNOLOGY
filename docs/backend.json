@@ -1,4 +1,3 @@
-
 {
   "entities": {
     "Product": {
@@ -46,7 +45,7 @@
     }
   },
   "auth": {
-    "providers": ["google.com"]
+    "providers": ["google.com", "password", "anonymous"]
   },
   "firestore": {
     "/products/{productId}": {
