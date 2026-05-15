@@ -1,14 +1,13 @@
-
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, signInAnonymously } from 'firebase/auth';
 import { useAuth } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, flaskConical as FlaskIcon } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +16,14 @@ export default function AdminLoginPage() {
   const { toast } = useToast();
 
   const handleGoogleLogin = async () => {
-    if (!auth) return;
+    if (!auth) {
+      toast({
+        variant: 'destructive',
+        title: 'Configuration Error',
+        description: 'Firebase Auth is not initialized. Please check your config.',
+      });
+      return;
+    }
 
     setLoading(true);
     const provider = new GoogleAuthProvider();
@@ -30,11 +36,36 @@ export default function AdminLoginPage() {
       });
       router.push('/admin/dashboard');
     } catch (error: any) {
-      console.error(error);
+      console.error("Google Login Error:", error);
       toast({
         variant: 'destructive',
         title: 'Authentication Failed',
-        description: error.message || 'Please try again with your authorized Google account.',
+        description: error.message || 'Please check if Google Sign-In is enabled in Firebase Console.',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * TEST MODE: Allows anonymous login for development purposes.
+   * Ensure "Anonymous" provider is enabled in Firebase Console for this to work.
+   */
+  const handleTestModeLogin = async () => {
+    if (!auth) return;
+    setLoading(true);
+    try {
+      await signInAnonymously(auth);
+      toast({
+        title: 'Test Mode Active',
+        description: 'Logged in as a temporary guest admin.',
+      });
+      router.push('/admin/dashboard');
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Test Mode Failed',
+        description: 'Please enable Anonymous Auth in Firebase Console to use Test Mode.',
       });
     } finally {
       setLoading(false);
@@ -57,7 +88,7 @@ export default function AdminLoginPage() {
             <CardTitle className="text-xl font-black uppercase tracking-tight">Admin Gateway</CardTitle>
             <CardDescription className="font-bold text-zinc-500">Sign in to manage inventory and shop services.</CardDescription>
           </CardHeader>
-          <CardContent className="pt-10 pb-12 flex flex-col items-center">
+          <CardContent className="pt-10 pb-12 flex flex-col items-center gap-4">
             <Button
               onClick={handleGoogleLogin}
               disabled={loading}
@@ -73,9 +104,25 @@ export default function AdminLoginPage() {
                 {loading ? 'Authorizing...' : 'Continue with Google'}
               </span>
             </Button>
+
+            <div className="flex w-full items-center gap-2 px-4 py-2">
+              <div className="h-px flex-1 bg-zinc-200"></div>
+              <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Or Use Test Mode</span>
+              <div className="h-px flex-1 bg-zinc-200"></div>
+            </div>
+
+            <Button
+              variant="outline"
+              onClick={handleTestModeLogin}
+              disabled={loading}
+              className="flex w-full h-12 items-center justify-center gap-3 border-2 border-black font-black uppercase text-[10px] tracking-widest hover:bg-zinc-100 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+            >
+              <FlaskIcon className="h-4 w-4" />
+              Bypass to Dashboard
+            </Button>
             
-            <p className="mt-8 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center max-w-[250px]">
-              Use your official @benace.com or authorized manager account.
+            <p className="mt-6 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center max-w-[250px]">
+              Use your official @benace.com account or enable Test Mode for development.
             </p>
           </CardContent>
         </Card>
