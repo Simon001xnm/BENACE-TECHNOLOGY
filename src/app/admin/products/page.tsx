@@ -21,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, Plus, Search, Edit2, Trash2, ExternalLink } from 'lucide-react';
+import { MoreHorizontal, Plus, Search, Edit2, Trash2, ExternalLink, DatabaseBackup } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -35,6 +35,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { ImportDataButton } from '@/components/admin/import-data-button';
 
 export default function AdminProductsPage() {
   const db = useFirestore();
@@ -87,11 +88,14 @@ export default function AdminProductsPage() {
           <h1 className="text-3xl font-black uppercase tracking-tight text-black">Inventory Management</h1>
           <p className="text-muted-foreground font-medium">Manage your laptops and accessories</p>
         </div>
-        <Button asChild className="bg-primary text-black font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
-          <Link href="/admin/products/new">
-            <Plus className="mr-2 h-4 w-4" /> Add Product
-          </Link>
-        </Button>
+        <div className="flex gap-4">
+          <ImportDataButton />
+          <Button asChild className="bg-primary text-black font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+            <Link href="/admin/products/new">
+              <Plus className="mr-2 h-4 w-4" /> Add Product
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="flex items-center gap-2 rounded-lg border-2 border-black bg-white px-3 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
@@ -175,8 +179,14 @@ export default function AdminProductsPage() {
             ))}
             {filteredProducts.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center font-bold text-muted-foreground">
-                  No products found.
+                <TableCell colSpan={6} className="h-48 text-center font-bold text-muted-foreground">
+                  <div className="flex flex-col items-center gap-4">
+                    <DatabaseBackup className="h-12 w-12 text-zinc-200" />
+                    <div>
+                      <p className="text-black uppercase font-black">No products in your live database.</p>
+                      <p className="text-xs text-zinc-400 mt-1">Use the "Import Catalog" button above to populate the inventory.</p>
+                    </div>
+                  </div>
                 </TableCell>
               </TableRow>
             )}
