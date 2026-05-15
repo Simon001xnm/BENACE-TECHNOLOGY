@@ -11,6 +11,7 @@
         "price": { "type": "number" },
         "oldPrice": { "type": "number" },
         "category": { "type": "string" },
+        "type": { "type": "string", "enum": ["laptop", "accessory"] },
         "status": { "type": "string", "enum": ["New", "Ex-UK", "Boxed"] },
         "description": { "type": "string" },
         "specifications": {
@@ -28,12 +29,13 @@
           "description": "Array of product image URLs."
         },
         "mainImageId": { "type": "string" },
+        "imageId": { "type": "string" },
         "inStock": { "type": "boolean" },
         "salePercentage": { "type": "number" },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["name", "brand", "price", "category", "inStock"]
+      "required": ["name", "brand", "price", "category", "inStock", "type"]
     },
     "AdminUser": {
       "title": "Admin User",
@@ -51,7 +53,7 @@
   "firestore": {
     "/products/{productId}": {
       "schema": "#/entities/Product",
-      "description": "Collection of products in the store."
+      "description": "Collection of products (laptops and accessories) in the store."
     },
     "/admins/{adminId}": {
       "schema": "#/entities/AdminUser",

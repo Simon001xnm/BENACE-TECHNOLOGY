@@ -1,8 +1,11 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
 import { AccessoryCard } from '@/components/accessories/accessory-card';
-import { accessories } from '@/lib/data';
+import { accessories as staticAccessories } from '@/lib/data';
+import { useCollection, useFirestore } from '@/firebase';
+import { collection, query, where } from 'firebase/firestore';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -12,15 +15,29 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-
-const categories = ['all', ...new Set(accessories.map(a => a.category))];
+import { Loader2 } from 'lucide-react';
 
 export default function AccessoriesPage() {
+  const db = useFirestore();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
+  const accessoriesQuery = useMemo(() => {
+    if (!db) return null;
+    return query(collection(db, 'products'), where('type', '==', 'accessory'));
+  }, [db]);
+
+  const { data: dbAccessories, loading } = useCollection(accessoriesQuery);
+
+  const allAccessories = useMemo(() => {
+    if (dbAccessories && dbAccessories.length > 0) return dbAccessories;
+    return staticAccessories;
+  }, [dbAccessories]);
+
+  const categories = useMemo(() => ['all', ...new Set(allAccessories.map(a => a.category))], [allAccessories]);
+
   const filteredAccessories = useMemo(() => {
-    return accessories
+    return allAccessories
       .filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.brand.toLowerCase().includes(searchTerm.toLowerCase())
@@ -28,33 +45,43 @@ export default function AccessoriesPage() {
       .filter(item =>
         selectedCategory === 'all' ? true : item.category === selectedCategory
       );
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, allAccessories]);
+
+  if (loading && (!dbAccessories || dbAccessories.length === 0)) {
+    return (
+      <div className="flex h-[60vh] flex-col items-center justify-center font-black">
+        <Loader2 className="mb-4 h-8 w-8 animate-spin text-primary" />
+        <p className="uppercase tracking-widest">Loading specialized gear...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
       <div className="mb-8 text-center">
-        <h1 className="font-headline text-4xl font-bold tracking-tight text-primary">
-          Computer Accessories & Peripherals
+        <h1 className="font-headline text-4xl font-black tracking-tight text-primary uppercase italic">
+          Tech Peripherals
         </h1>
-        <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
-          Everything from printers and scanners to monitors and backup power solutions.
+        <p className="mt-4 max-w-3xl mx-auto text-lg font-medium text-muted-foreground">
+          Printers, scanners, monitors, and backup power solutions.
         </p>
       </div>
 
-      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between rounded-lg border bg-card p-4">
+      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between rounded-xl border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
         <div className="flex-grow max-w-md">
           <Input
             placeholder="Search accessories..."
             value={searchTerm}
+            className="border-2 border-black font-bold h-12"
             onChange={e => setSearchTerm(e.target.value)}
           />
         </div>
         <div className="flex gap-4 items-center">
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="w-[200px] border-2 border-black font-bold h-12">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="font-bold">
               {categories.map(cat => (
                 <SelectItem key={cat} value={cat}>
                   {cat === 'all' ? 'All Categories' : cat}
@@ -62,22 +89,22 @@ export default function AccessoriesPage() {
               ))}
             </SelectContent>
           </Select>
-          <Button variant="ghost" onClick={() => { setSearchTerm(''); setSelectedCategory('all'); }}>
+          <Button variant="ghost" className="font-black uppercase text-xs" onClick={() => { setSearchTerm(''); setSelectedCategory('all'); }}>
             Reset
           </Button>
         </div>
       </div>
 
       {filteredAccessories.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredAccessories.map(accessory => (
             <AccessoryCard key={accessory.id} accessory={accessory} />
           ))}
         </div>
       ) : (
-        <div className="py-20 text-center">
-          <h3 className="text-xl font-medium">No accessories found</h3>
-          <p className="text-muted-foreground mt-2">Try adjusting your filters or search term.</p>
+        <div className="py-20 text-center border-4 border-dashed border-zinc-200 rounded-3xl">
+          <h3 className="text-2xl font-black uppercase">No gear found</h3>
+          <p className="text-muted-foreground mt-2 font-medium">Try adjusting your filters or search term.</p>
         </div>
       )}
     </div>

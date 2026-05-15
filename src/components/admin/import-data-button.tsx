@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -70,7 +71,7 @@ export function ImportDataButton() {
       ) : (
         <DatabaseBackup className="mr-2 h-4 w-4" />
       )}
-      {loading ? 'Migrating...' : 'Import Static Data'}
+      {loading ? 'Migrating...' : 'Import Catalog'}
     </Button>
   );
 }

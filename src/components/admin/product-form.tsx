@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -39,6 +40,7 @@ const productSchema = z.object({
   price: z.coerce.number().min(0),
   oldPrice: z.coerce.number().optional(),
   category: z.string().min(1, 'Category is required'),
+  type: z.enum(['laptop', 'accessory']).default('laptop'),
   status: z.enum(['New', 'Ex-UK', 'Boxed']).optional(),
   description: z.string().optional(),
   inStock: z.boolean().default(true),
@@ -71,6 +73,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       brand: '',
       price: 0,
       category: 'Laptops',
+      type: 'laptop',
       inStock: true,
       specifications: {
         processor: '',
@@ -91,8 +94,6 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       updatedAt: serverTimestamp(),
       createdAt: initialData?.createdAt || serverTimestamp(),
     };
-
-    const targetRef = productId ? doc(db, 'products', productId) : collection(db, 'products');
 
     const operation = productId ? 
       setDoc(doc(db, 'products', productId), productData, { merge: true }) : 
@@ -137,12 +138,57 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
         <div className="grid gap-8 md:grid-cols-2">
+           <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Product Class</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                      <SelectValue placeholder="Select Class" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="font-black border-2 border-black">
+                    <SelectItem value="laptop">LAPTOP</SelectItem>
+                    <SelectItem value="accessory">ACCESSORY / PERIPHERAL</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Stock Group</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                      <SelectValue placeholder="Select Group" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="font-black border-2 border-black shadow-lg">
+                    {['Laptops', 'Desktops', 'Accessories', 'Printers', 'Networking', 'Software', 'Mouse', 'UPS'].map(cat => (
+                      <SelectItem key={cat} value={cat} className="uppercase tracking-widest text-[10px]">{cat}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Model Name</FormLabel>
+              <FormItem className="md:col-span-2">
+                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Full Model Name</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. Lenovo ThinkBook 14-IRL" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
                 </FormControl>
@@ -174,29 +220,6 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                 <FormControl>
                   <Input type="number" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Stock Group</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                      <SelectValue placeholder="Select Group" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="font-black border-2 border-black shadow-lg">
-                    {['Laptops', 'Desktops', 'Accessories', 'Printers', 'Networking', 'Software'].map(cat => (
-                      <SelectItem key={cat} value={cat} className="uppercase tracking-widest text-[10px]">{cat}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
                 <FormMessage />
               </FormItem>
             )}
