@@ -19,6 +19,7 @@ export function FirebaseClientProvider({ children }: { children: React.ReactNode
       app={firebase.app}
       db={firebase.db}
       auth={firebase.auth}
+      storage={firebase.storage}
     >
       <FirebaseErrorListener />
       {children}

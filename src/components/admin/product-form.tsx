@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { useFirestore } from '@/firebase';
+import { useFirestore, useStorage } from '@/firebase';
 import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 import { useForm } from 'react-hook-form';
@@ -30,8 +31,9 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { ImageIcon, Loader2, X, PlusCircle } from 'lucide-react';
+import { ImageIcon, Loader2, X, PlusCircle, Upload } from 'lucide-react';
 import Image from 'next/image';
+import { Progress } from '@/components/ui/progress';
 
 const productSchema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -61,7 +63,12 @@ interface ProductFormProps {
 
 export function ProductForm({ initialData, productId }: ProductFormProps) {
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const db = useFirestore();
+  const storage = useStorage();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -118,14 +125,42 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       .finally(() => setLoading(false));
   };
 
-  const handleAddImageUrl = () => {
-    const url = prompt('Enter the absolute Image URL (e.g. from Unsplash or cloud storage):');
-    if (url && url.startsWith('http')) {
-      const current = form.getValues('imageUrls') || [];
-      form.setValue('imageUrls', [...current, url]);
-    } else if (url) {
-      alert('Please enter a valid URL starting with http:// or https://');
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !storage) return;
+
+    // Check file size (optional, e.g., 5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ variant: 'destructive', title: 'File too large', description: 'Maximum image size is 5MB.' });
+      return;
     }
+
+    setUploading(true);
+    setUploadProgress(0);
+
+    const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(progress);
+      },
+      (error) => {
+        console.error('Upload error:', error);
+        toast({ variant: 'destructive', title: 'Upload Failed', description: error.message });
+        setUploading(false);
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        const current = form.getValues('imageUrls') || [];
+        form.setValue('imageUrls', [...current, downloadURL]);
+        setUploading(false);
+        setUploadProgress(0);
+        toast({ title: 'Image Uploaded', description: 'The photo has been added to the gallery.' });
+      }
+    );
   };
 
   const removeImage = (index: number) => {
@@ -315,10 +350,32 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-black uppercase tracking-tight">Visuals</h3>
-            <Button type="button" onClick={handleAddImageUrl} className="bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]">
-              <PlusCircle className="mr-2 h-3 w-3" /> Insert Photo URL
-            </Button>
+            <div className="flex items-center gap-4">
+              <input
+                type="file"
+                className="hidden"
+                ref={fileInputRef}
+                accept="image/*"
+                onChange={handleFileUpload}
+              />
+              <Button 
+                type="button" 
+                disabled={uploading}
+                onClick={() => fileInputRef.current?.click()} 
+                className="bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]"
+              >
+                {uploading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : <Upload className="mr-2 h-3 w-3" />}
+                {uploading ? `Uploading ${Math.round(uploadProgress)}%` : 'Upload from Device'}
+              </Button>
+            </div>
           </div>
+          
+          {uploading && (
+            <div className="space-y-2">
+              <Progress value={uploadProgress} className="h-2 border-2 border-black" />
+            </div>
+          )}
+
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {watchedImageUrls.map((url, i) => (
               <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1">
@@ -326,13 +383,13 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                 <button
                   type="button"
                   onClick={() => removeImage(i)}
-                  className="absolute right-2 top-2 rounded-lg bg-red-600 p-2 text-white opacity-0 transition-opacity group-hover:opacity-100 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                  className="absolute right-2 top-2 rounded-lg bg-red-600 p-2 text-white opacity-0 transition-opacity group-hover:opacity-100 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
             ))}
-            {watchedImageUrls.length === 0 && (
+            {!watchedImageUrls.length && !uploading && (
               <div className="flex h-32 flex-col items-center justify-center rounded-xl border-4 border-dashed border-zinc-200 bg-zinc-50 col-span-full">
                 <ImageIcon className="mb-2 h-8 w-8 text-zinc-300" />
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">No media attached yet</p>
@@ -343,7 +400,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
         <Button 
           type="submit" 
-          disabled={loading}
+          disabled={loading || uploading}
           className="h-16 w-full bg-black font-black uppercase tracking-widest text-white border-4 border-black hover:bg-primary hover:text-black shadow-[10px_10px_0px_0px_rgba(0,186,242,1)] active:translate-y-2 active:shadow-none transition-all"
         >
           {loading ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}
