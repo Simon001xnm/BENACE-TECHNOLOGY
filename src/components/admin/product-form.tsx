@@ -126,40 +126,47 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !storage) return;
+    if (!file || !storage) {
+        console.error("Storage not initialized or no file selected.");
+        return;
+    }
 
-    if (file.size > 5 * 1024 * 1024) {
-      toast({ variant: 'destructive', title: 'File too large', description: 'Maximum image size is 5MB.' });
+    if (file.size > 10 * 1024 * 1024) {
+      toast({ variant: 'destructive', title: 'File too large', description: 'Maximum image size is 10MB.' });
       return;
     }
 
     setUploading(true);
 
     try {
-      // Create a unique path for the image
-      const imagePath = `products/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+      const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+      const imagePath = `products/${fileName}`;
       const storageRef = ref(storage, imagePath);
       
-      // Upload the file
+      console.log(`Starting upload to: ${imagePath}`);
       const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
+      console.log("Upload snapshot:", snapshot);
       
-      // Update form state
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      console.log("Download URL generated:", downloadURL);
+      
       const current = form.getValues('imageUrls') || [];
-      form.setValue('imageUrls', [...current, downloadURL]);
+      form.setValue('imageUrls', [...current, downloadURL], { shouldDirty: true });
       
       toast({ 
-        title: 'Success', 
-        description: 'Image uploaded successfully.' 
+        title: 'Upload Successful', 
+        description: `${file.name} is now part of the gallery.` 
       });
     } catch (err: any) {
-      console.error("Storage Error:", err);
+      console.error("Firebase Storage Error Detail:", err);
       
       let errorMessage = "Could not upload image.";
       if (err.code === 'storage/unauthorized') {
-        errorMessage = "Permission denied. Please ensure Storage Rules are set to allow authenticated writes in the Firebase Console.";
-      } else if (err.code === 'storage/retry-limit-exceeded') {
-        errorMessage = "Network timeout. Please check your internet connection.";
+        errorMessage = "Permission denied. Please check your Storage Security Rules in the Firebase Console.";
+      } else if (err.code === 'storage/canceled') {
+        errorMessage = "Upload was canceled.";
+      } else if (err.code === 'storage/unknown') {
+        errorMessage = "An unknown error occurred. Check browser console for network details.";
       }
 
       toast({ 
@@ -175,7 +182,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
   const removeImage = (index: number) => {
     const current = form.getValues('imageUrls') || [];
-    form.setValue('imageUrls', current.filter((_, i) => i !== index));
+    form.setValue('imageUrls', current.filter((_, i) => i !== index), { shouldDirty: true });
   };
 
   const watchedImageUrls = form.watch('imageUrls') || [];
@@ -407,7 +414,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
              <div className="flex items-start gap-3">
                 <AlertCircle className="h-4 w-4 text-zinc-500 mt-0.5" />
                 <div className="text-[10px] font-bold uppercase text-zinc-500 tracking-tight leading-normal">
-                   Using bucket: <strong>mybucketfg</strong>. Ensure <strong>Storage Rules</strong> in the Firebase Console allow <code>write</code> access to authenticated users for this bucket.
+                   Using bucket: <strong>studio-7563060614-14793.firebasestorage.app</strong>. Ensure <strong>Storage Rules</strong> in the Firebase Console allow <code>write</code> access to authenticated users.
                 </div>
              </div>
           </div>
