@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -9,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Lock } from 'lucide-react';
+import { Lock, ShieldCheck } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
@@ -26,12 +25,16 @@ export default function AdminLoginPage() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      toast({
+        title: 'Access Granted',
+        description: 'Welcome to the Benace Admin Portal.',
+      });
       router.push('/admin/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
-        title: 'Login Failed',
-        description: 'Invalid credentials or access denied.',
+        title: 'Authentication Failed',
+        description: 'Please check your credentials and try again.',
       });
     } finally {
       setLoading(false);
@@ -40,46 +43,59 @@ export default function AdminLoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
-      <Card className="w-full max-w-md border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-        <CardHeader className="space-y-1 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-            <Lock className="h-6 w-6 text-primary" />
+      <div className="w-full max-w-md">
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <ShieldCheck className="h-8 w-8 text-white" />
           </div>
-          <CardTitle className="text-2xl font-black uppercase tracking-tight">Admin Portal</CardTitle>
-          <CardDescription>Enter your credentials to manage Benace Tech Hub</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
-              <Input
-                type="email"
-                placeholder="Admin Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="border-2 border-black font-bold focus-visible:ring-0"
-              />
-            </div>
-            <div className="space-y-2">
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="border-2 border-black font-bold focus-visible:ring-0"
-              />
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-black font-black uppercase tracking-widest text-white hover:bg-primary hover:text-black"
-              disabled={loading}
-            >
-              {loading ? 'Authenticating...' : 'Sign In'}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+          <h1 className="text-3xl font-black uppercase tracking-tighter text-black">Benace Admin</h1>
+          <p className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] mt-1">Authorized Access Only</p>
+        </div>
+
+        <Card className="border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden">
+          <CardHeader className="bg-zinc-50 border-b-4 border-black">
+            <CardTitle className="text-xl font-black uppercase tracking-tight">Login</CardTitle>
+            <CardDescription className="font-bold text-zinc-500">Manage your shop inventory and services.</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-8">
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest ml-1">Admin Email</label>
+                <Input
+                  type="email"
+                  placeholder="admin@benace.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="h-12 border-2 border-black font-bold focus-visible:ring-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest ml-1">Password</label>
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="h-12 border-2 border-black font-bold focus-visible:ring-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full h-14 bg-black font-black uppercase tracking-widest text-white hover:bg-primary hover:text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,186,242,1)] active:translate-y-1 active:shadow-none transition-all"
+                disabled={loading}
+              >
+                {loading ? 'Verifying...' : 'Sign Into Hub'}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+        
+        <p className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">
+          Benace Tech Hub &copy; {new Date().getFullYear()}
+        </p>
+      </div>
     </div>
   );
 }
