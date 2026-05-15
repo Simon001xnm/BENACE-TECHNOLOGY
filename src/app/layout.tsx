@@ -2,10 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/lib/cart-context';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { GoogleMap } from '@/components/layout/google-map';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { PublicLayoutWrapper } from '@/components/layout/public-layout-wrapper';
 
 export const metadata: Metadata = {
   title: 'Benace Tech Hub',
@@ -34,12 +32,9 @@ export default function RootLayout({
       <body className="font-body antialiased" suppressHydrationWarning>
         <FirebaseClientProvider>
           <CartProvider>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-grow">{children}</main>
-              <GoogleMap />
-              <Footer />
-            </div>
+            <PublicLayoutWrapper>
+              {children}
+            </PublicLayoutWrapper>
             <Toaster />
           </CartProvider>
         </FirebaseClientProvider>

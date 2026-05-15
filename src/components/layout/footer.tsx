@@ -33,12 +33,12 @@ export function Footer() {
             <h3 className="text-xl font-black uppercase tracking-widest text-black">Visit Us</h3>
             <div className="space-y-4 text-sm font-black text-zinc-800">
                 <div className="flex flex-col">
-                  <span className="text-[10px] uppercase text-primary tracking-widest mb-1">Location</span>
-                  <span>Old Nation House, 2nd Flr, Shop D1</span>
+                  <span className="text-[10px] uppercase text-zinc-400 tracking-widest mb-1">Location</span>
+                  <span>Old Nation, 2nd Flr, Shop D1</span>
                   <span>Nairobi, Kenya</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] uppercase text-primary tracking-widest mb-1">Contact</span>
+                  <span className="text-[10px] uppercase text-zinc-400 tracking-widest mb-1">Contact</span>
                   <span>0714210957</span>
                   <span>benacetechnologies@gmail.com</span>
                 </div>
@@ -51,7 +51,7 @@ export function Footer() {
                     <Link 
                         key={link.href}
                         href={link.href} 
-                        className="text-sm font-bold text-zinc-500 transition-all hover:text-primary hover:translate-x-1"
+                        className="text-sm font-bold text-zinc-500 transition-all hover:text-black"
                     >
                         {link.name}
                     </Link>
