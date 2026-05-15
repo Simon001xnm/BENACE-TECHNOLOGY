@@ -138,28 +138,40 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     setUploading(true);
     setUploadProgress(0);
 
-    const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    try {
+      const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadProgress(progress);
-      },
-      (error) => {
-        toast({ variant: 'destructive', title: 'Upload Failed', description: error.message });
-        setUploading(false);
-      },
-      async () => {
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-        const current = form.getValues('imageUrls') || [];
-        form.setValue('imageUrls', [...current, downloadURL]);
-        setUploading(false);
-        setUploadProgress(0);
-        toast({ title: 'Image Uploaded', description: 'The photo has been added to the gallery.' });
-      }
-    );
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+        },
+        (error) => {
+          console.error("Upload error:", error);
+          toast({ 
+            variant: 'destructive', 
+            title: 'Upload Failed', 
+            description: error.message || "Please check your storage permissions in Firebase Console." 
+          });
+          setUploading(false);
+          setUploadProgress(0);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          const current = form.getValues('imageUrls') || [];
+          form.setValue('imageUrls', [...current, downloadURL]);
+          setUploading(false);
+          setUploadProgress(0);
+          toast({ title: 'Image Uploaded', description: 'The photo has been added to the gallery.' });
+        }
+      );
+    } catch (err: any) {
+      console.error("Initialization error:", err);
+      toast({ variant: 'destructive', title: 'Upload Error', description: 'Could not start upload task.' });
+      setUploading(false);
+    }
   };
 
   const removeImage = (index: number) => {
@@ -339,7 +351,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             <FormItem>
               <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Marketing Description</FormLabel>
               <FormControl>
-                <Textarea {...field} className="min-h-[160px] border-4 border-black font-bold p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
+                <Textarea {...field} className="min-h-[160px] border-4 border-black font-bold p-4 shadow-[4px_4px_0px_0px_rgba(0,186,242,1)] focus-visible:ring-0" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -359,7 +371,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
               />
               <Button 
                 type="button" 
-                disabled={uploading}
+                disabled={uploading || !storage}
                 onClick={() => fileInputRef.current?.click()} 
                 className="bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]"
               >
@@ -383,7 +395,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                   <button
                     type="button"
                     onClick={() => removeImage(i)}
-                    className="rounded-lg bg-red-600 p-2 text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-red-700"
+                    className="rounded-lg bg-red-600 p-2 text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)] hover:bg-red-700"
                   >
                     <X className="h-4 w-4" />
                   </button>
