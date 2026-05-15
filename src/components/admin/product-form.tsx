@@ -49,7 +49,7 @@ const productSchema = z.object({
     ram: z.string().optional(),
     storage: z.string().optional(),
     display: z.string().optional(),
-  }),
+  }).optional(),
   imageUrls: z.array(z.string()).default([]),
 });
 
@@ -58,6 +58,28 @@ type ProductFormValues = z.infer<typeof productSchema>;
 interface ProductFormProps {
   initialData?: any;
   productId?: string;
+}
+
+/**
+ * Recursively removes undefined values from an object to make it Firestore-compatible.
+ */
+function sanitizeFirestoreData(data: any): any {
+  if (Array.isArray(data)) {
+    return data.map(sanitizeFirestoreData);
+  }
+  if (data !== null && typeof data === 'object' && !(data instanceof Date)) {
+    // Check if it's a Firestore sentinel like serverTimestamp()
+    if (data._methodName === 'serverTimestamp' || data.constructor?.name === 'FieldValueImpl') {
+      return data;
+    }
+    
+    return Object.fromEntries(
+      Object.entries(data)
+        .filter(([_, v]) => v !== undefined)
+        .map(([k, v]) => [k, sanitizeFirestoreData(v)])
+    );
+  }
+  return data;
 }
 
 export function ProductForm({ initialData, productId }: ProductFormProps) {
@@ -94,11 +116,11 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     if (!db) return;
     setLoading(true);
 
-    const productData = {
+    const productData = sanitizeFirestoreData({
       ...values,
       updatedAt: serverTimestamp(),
       createdAt: initialData?.createdAt || serverTimestamp(),
-    };
+    });
 
     const operation = productId ? 
       setDoc(doc(db, 'products', productId), productData, { merge: true }) : 
@@ -114,6 +136,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
         router.refresh();
       })
       .catch(async (error) => {
+        console.error("Firestore Write Error:", error);
         const permissionError = new FirestorePermissionError({
           path: productId ? `products/${productId}` : 'products',
           operation: productId ? 'update' : 'create',
@@ -126,10 +149,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !storage) {
-        console.error("Storage not initialized or no file selected.");
-        return;
-    }
+    if (!file || !storage) return;
 
     if (file.size > 10 * 1024 * 1024) {
       toast({ variant: 'destructive', title: 'File too large', description: 'Maximum image size is 10MB.' });
@@ -143,12 +163,8 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       const imagePath = `products/${fileName}`;
       const storageRef = ref(storage, imagePath);
       
-      console.log(`Starting upload to: ${imagePath}`);
       const snapshot = await uploadBytes(storageRef, file);
-      console.log("Upload snapshot:", snapshot);
-      
       const downloadURL = await getDownloadURL(snapshot.ref);
-      console.log("Download URL generated:", downloadURL);
       
       const current = form.getValues('imageUrls') || [];
       form.setValue('imageUrls', [...current, downloadURL], { shouldDirty: true });
@@ -158,21 +174,11 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
         description: `${file.name} is now part of the gallery.` 
       });
     } catch (err: any) {
-      console.error("Firebase Storage Error Detail:", err);
-      
-      let errorMessage = "Could not upload image.";
-      if (err.code === 'storage/unauthorized') {
-        errorMessage = "Permission denied. Please check your Storage Security Rules in the Firebase Console.";
-      } else if (err.code === 'storage/canceled') {
-        errorMessage = "Upload was canceled.";
-      } else if (err.code === 'storage/unknown') {
-        errorMessage = "An unknown error occurred. Check browser console for network details.";
-      }
-
+      console.error("Firebase Storage Error:", err);
       toast({ 
         variant: 'destructive', 
         title: 'Upload Failed', 
-        description: errorMessage 
+        description: err.message || "Could not upload image." 
       });
     } finally {
       setUploading(false);
@@ -414,7 +420,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
              <div className="flex items-start gap-3">
                 <AlertCircle className="h-4 w-4 text-zinc-500 mt-0.5" />
                 <div className="text-[10px] font-bold uppercase text-zinc-500 tracking-tight leading-normal">
-                   Using bucket: <strong>studio-7563060614-14793.firebasestorage.app</strong>. Ensure <strong>Storage Rules</strong> in the Firebase Console allow <code>write</code> access to authenticated users.
+                   Using official bucket. Ensure <strong>Storage Rules</strong> in the Firebase Console allow <code>write</code> access to authenticated users.
                 </div>
              </div>
           </div>

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -8,6 +7,28 @@ import { laptops, accessories } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { DatabaseBackup, Loader2, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+
+/**
+ * Recursively removes undefined values from an object to make it Firestore-compatible.
+ */
+function sanitizeFirestoreData(data: any): any {
+  if (Array.isArray(data)) {
+    return data.map(sanitizeFirestoreData);
+  }
+  if (data !== null && typeof data === 'object' && !(data instanceof Date)) {
+    // Check if it's a Firestore sentinel like serverTimestamp()
+    if (data._methodName === 'serverTimestamp' || data.constructor?.name === 'FieldValueImpl') {
+      return data;
+    }
+    
+    return Object.fromEntries(
+      Object.entries(data)
+        .filter(([_, v]) => v !== undefined)
+        .map(([k, v]) => [k, sanitizeFirestoreData(v)])
+    );
+  }
+  return data;
+}
 
 export function ImportDataButton() {
   const [loading, setLoading] = useState(false);
@@ -27,12 +48,15 @@ export function ImportDataButton() {
 
       for (const item of allItems) {
         const productRef = doc(db, 'products', item.id);
-        await setDoc(productRef, {
+        
+        const productData = sanitizeFirestoreData({
           ...item,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
           inStock: true
-        }, { merge: true });
+        });
+
+        await setDoc(productRef, productData, { merge: true });
       }
 
       toast({
@@ -41,7 +65,7 @@ export function ImportDataButton() {
       });
       setDone(true);
     } catch (error) {
-      console.error(error);
+      console.error("Import Data Error:", error);
       toast({
         variant: "destructive",
         title: "Import Failed",
