@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   signInWithPopup, 
@@ -14,23 +15,32 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { ShieldCheck, FlaskConical as FlaskIcon, Mail, Lock, LogIn } from 'lucide-react';
+import { ShieldCheck, FlaskConical as FlaskIcon, Mail, Lock, LogIn, AlertCircle } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [configError, setConfigError] = useState(false);
   const auth = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
+  useEffect(() => {
+    // Check if Firebase is using placeholder values
+    if (auth?.app.options.apiKey?.includes('placeholder')) {
+      setConfigError(true);
+    }
+  }, [auth]);
+
   const handleGoogleLogin = async () => {
-    if (!auth) {
+    if (!auth || configError) {
       toast({
         variant: 'destructive',
-        title: 'Configuration Error',
-        description: 'Firebase Auth is not initialized.',
+        title: 'Config Error',
+        description: 'Update your Firebase API key in config.ts first.',
       });
       return;
     }
@@ -40,17 +50,10 @@ export default function AdminLoginPage() {
     
     try {
       await signInWithPopup(auth, provider);
-      toast({
-        title: 'Access Granted',
-        description: 'Welcome to the Benace Admin Portal.',
-      });
+      toast({ title: 'Access Granted', description: 'Welcome to the Benace Admin Hub.' });
       router.push('/admin/dashboard');
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Authentication Failed',
-        description: error.message || 'Please check your Firebase configuration.',
-      });
+      toast({ variant: 'destructive', title: 'Auth Failed', description: error.message });
     } finally {
       setLoading(false);
     }
@@ -58,29 +61,18 @@ export default function AdminLoginPage() {
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!auth) return;
-    if (!email || !password) {
-      toast({
-        variant: 'destructive',
-        title: 'Input Required',
-        description: 'Please enter both email and password.',
-      });
-      return;
-    }
-
+    if (!auth || configError) return;
+    
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast({
-        title: 'Access Granted',
-        description: 'Welcome back to the Admin Hub.',
-      });
+      toast({ title: 'Access Granted', description: 'Redirecting to dashboard...' });
       router.push('/admin/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: error.message || 'Invalid email or password.',
+        description: 'Invalid credentials or user not found.',
       });
     } finally {
       setLoading(false);
@@ -88,20 +80,17 @@ export default function AdminLoginPage() {
   };
 
   const handleTestModeLogin = async () => {
-    if (!auth) return;
+    if (!auth || configError) return;
     setLoading(true);
     try {
       await signInAnonymously(auth);
-      toast({
-        title: 'Test Mode Active',
-        description: 'Logged in as a temporary guest admin.',
-      });
+      toast({ title: 'Test Mode Active', description: 'Logged in as guest admin.' });
       router.push('/admin/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Test Mode Failed',
-        description: 'Please enable Anonymous Auth in Firebase Console.',
+        description: 'Enable Anonymous Auth in Firebase Console.',
       });
     } finally {
       setLoading(false);
@@ -109,7 +98,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
@@ -118,6 +107,16 @@ export default function AdminLoginPage() {
           <h1 className="text-3xl font-black uppercase tracking-tighter text-black">Benace Admin</h1>
           <p className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] mt-1">Authorized Access Only</p>
         </div>
+
+        {configError && (
+          <Alert variant="destructive" className="mb-6 border-2 border-red-600 bg-red-50 text-red-900">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle className="font-black uppercase text-xs">Action Required</AlertTitle>
+            <AlertDescription className="text-xs font-bold">
+              Your Firebase API key is missing or invalid. Update <code className="bg-red-100 px-1">src/firebase/config.ts</code> to continue.
+            </AlertDescription>
+          </Alert>
+        )}
 
         <Card className="border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden">
           <CardHeader className="bg-zinc-50 border-b-4 border-black text-center">
@@ -128,14 +127,14 @@ export default function AdminLoginPage() {
             <Tabs defaultValue="google" className="w-full">
               <TabsList className="grid w-full grid-cols-2 h-12 border-2 border-black bg-zinc-100 p-1 mb-8">
                 <TabsTrigger value="google" className="font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-black data-[state=active]:text-white">Google</TabsTrigger>
-                <TabsTrigger value="email" className="font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-black data-[state=active]:text-white">Password</TabsTrigger>
+                <TabsTrigger value="email" className="font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-black data-[state=active]:text-white">Email</TabsTrigger>
               </TabsList>
 
               <TabsContent value="google" className="space-y-4">
                 <Button
                   onClick={handleGoogleLogin}
-                  disabled={loading}
-                  className="group relative flex w-full h-16 items-center justify-center gap-4 bg-white text-black border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                  disabled={loading || configError}
+                  className="group relative flex w-full h-16 items-center justify-center gap-4 bg-white text-black border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all disabled:opacity-50"
                 >
                   <svg className="h-6 w-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -179,8 +178,8 @@ export default function AdminLoginPage() {
                   </div>
                   <Button
                     type="submit"
-                    disabled={loading}
-                    className="w-full h-12 bg-black text-white font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,186,242,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                    disabled={loading || configError}
+                    className="w-full h-12 bg-black text-white font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,186,242,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all disabled:opacity-50"
                   >
                     <LogIn className="mr-2 h-4 w-4" />
                     {loading ? 'Signing In...' : 'Access Hub'}
@@ -198,15 +197,15 @@ export default function AdminLoginPage() {
             <Button
               variant="outline"
               onClick={handleTestModeLogin}
-              disabled={loading}
-              className="mt-4 flex w-full h-12 items-center justify-center gap-3 border-2 border-black font-black uppercase text-[10px] tracking-widest hover:bg-zinc-100 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+              disabled={loading || configError}
+              className="mt-4 flex w-full h-12 items-center justify-center gap-3 border-2 border-black font-black uppercase text-[10px] tracking-widest hover:bg-zinc-100 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50"
             >
               <FlaskIcon className="h-4 w-4" />
               Bypass to Dashboard
             </Button>
             
             <p className="mt-8 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center max-w-[250px] mx-auto">
-              Please ensure your API key is correctly configured in Firebase Console.
+              Test mode requires Anonymous Auth to be enabled in Firebase Console.
             </p>
           </CardContent>
         </Card>
