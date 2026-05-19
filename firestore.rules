@@ -2,15 +2,20 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Products rules: Public read access, authenticated write access
+    // Authorized Admin Email
+    function isGodAdmin() {
+      return request.auth != null && request.auth.token.email == "benacetechnologies@gmail.com";
+    }
+
+    // Products rules: Public read access, only God Admin can write
     match /products/{productId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isGodAdmin();
     }
     
-    // Admin profiles: Only accessible by the specific admin
+    // Admin settings: Only God Admin can access
     match /admins/{adminId} {
-      allow read, write: if request.auth != null && request.auth.uid == adminId;
+      allow read, write: if isGodAdmin();
     }
 
     // Default deny for all other collections

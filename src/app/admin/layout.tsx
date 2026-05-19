@@ -8,19 +8,35 @@ import { LayoutDashboard, Laptop, ShoppingCart, LogOut, Settings, Menu, Globe } 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState, useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
+
+const AUTHORIZED_ADMIN_EMAIL = "benacetechnologies@gmail.com";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useUser();
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const { toast } = useToast();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user && pathname !== '/admin/login') {
-      router.push('/admin/login');
+    if (!loading) {
+      if (!user && pathname !== '/admin/login') {
+        router.push('/admin/login');
+      } else if (user && user.email !== AUTHORIZED_ADMIN_EMAIL) {
+        // Double check on every route change in the admin section
+        signOut(auth!).then(() => {
+           toast({
+             variant: 'destructive',
+             title: 'Unauthorized',
+             description: 'You do not have access to this portal.',
+           });
+           router.push('/admin/login');
+        });
+      }
     }
-  }, [user, loading, pathname, router]);
+  }, [user, loading, pathname, router, auth, toast]);
 
   const handleLogout = async () => {
     if (auth) {
@@ -33,18 +49,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="flex h-screen items-center justify-center bg-zinc-50">
         <div className="text-center font-black uppercase tracking-widest animate-pulse">
-          Authenticating...
+          Authenticating Master Account...
         </div>
       </div>
     );
   }
 
-  // If not logged in and not on login page, don't render content (useEffect will redirect)
-  if (!user && pathname !== '/admin/login') {
+  // If not logged in or wrong email and not on login page, don't render content
+  if ((!user || user.email !== AUTHORIZED_ADMIN_EMAIL) && pathname !== '/admin/login') {
     return null;
   }
 
-  // Login page doesn't get the sidebar layout
   if (pathname === '/admin/login') {
     return <>{children}</>;
   }
@@ -87,6 +102,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </nav>
 
       <div className="mt-auto pt-6 border-t border-zinc-800">
+        <div className="mb-4 px-4 py-2 bg-zinc-900 rounded-lg">
+          <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Signed in as</p>
+          <p className="text-[10px] font-bold truncate text-primary">{user?.email}</p>
+        </div>
         <Button 
           variant="ghost" 
           className="w-full justify-start gap-3 font-bold text-red-400 hover:text-red-300 hover:bg-red-950/20"
@@ -101,13 +120,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex min-h-screen bg-zinc-50">
-      {/* Desktop Sidebar */}
       <aside className="hidden w-64 lg:block flex-shrink-0">
         <SidebarContent />
       </aside>
 
       <div className="flex-grow flex flex-col min-w-0">
-        {/* Mobile Header */}
         <header className="flex items-center justify-between border-b bg-white p-4 lg:hidden">
           <Link href="/" className="font-black uppercase tracking-tighter">Benace Admin</Link>
           <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
