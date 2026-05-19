@@ -2,19 +2,18 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow public read access to products
+    // Products rules: Public read access, authenticated write access
     match /products/{productId} {
       allow read: if true;
-      // Allow writes if the user is authenticated (Test Mode)
       allow write: if request.auth != null;
     }
     
-    // Allow users to manage their own admin profiles
+    // Admin profiles: Only accessible by the specific admin
     match /admins/{adminId} {
       allow read, write: if request.auth != null && request.auth.uid == adminId;
     }
 
-    // Default deny for all other collections to maintain security
+    // Default deny for all other collections
     match /{document=**} {
       allow read, write: if false;
     }

@@ -30,15 +30,23 @@ export function useDoc<T = DocumentData>(ref: DocumentReference<T> | null) {
           setData(null);
         }
         setLoading(false);
+        setError(null);
       },
-      async (serverError) => {
-        const permissionError = new FirestorePermissionError({
-          path: ref.path,
-          operation: 'get',
-        });
-        errorEmitter.emit('permission-error', permissionError);
+      async (serverError: any) => {
+        // Only emit permission-error if it's actually a permission issue
+        if (serverError.code === 'permission-denied') {
+          const permissionError = new FirestorePermissionError({
+            path: ref.path,
+            operation: 'get',
+          });
+          errorEmitter.emit('permission-error', permissionError);
+        }
+        
         setError(serverError);
         setLoading(false);
+        
+        // Log the actual error for debugging
+        console.error("Firestore useDoc error:", serverError);
       }
     );
 
