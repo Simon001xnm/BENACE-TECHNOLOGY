@@ -28,7 +28,7 @@ export default function AdminDashboardPage() {
     return (
       <div className="flex h-screen items-center justify-center bg-zinc-50">
         <div className="text-center font-black uppercase tracking-widest animate-pulse">
-          Synchronizing Data...
+          Synchronizing Hub Data...
         </div>
       </div>
     );
@@ -46,14 +46,14 @@ export default function AdminDashboardPage() {
         <div>
           <h1 className="text-4xl font-black uppercase tracking-tighter text-black">Hub Overview</h1>
           <p className="font-bold text-muted-foreground uppercase tracking-widest text-xs mt-1">
-            Real-time status of Benace Tech Hub
+            Live Control Panel for Benace Tech Hub
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
           <ImportDataButton />
           <Button asChild className="bg-black text-white font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
             <Link href="/admin/products/new">
-              <Plus className="mr-2 h-4 w-4" /> New Product
+              <Plus className="mr-2 h-4 w-4" /> Add Product
             </Link>
           </Button>
         </div>
@@ -61,10 +61,10 @@ export default function AdminDashboardPage() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: 'Total Stock', value: stats.totalProducts, icon: Laptop, shadow: 'rgba(0,0,0,1)', desc: 'Live Listings' },
-          { label: 'Out of Stock', value: stats.outOfStock, icon: AlertTriangle, shadow: 'rgba(239,68,68,1)', color: 'text-red-500', desc: 'Needs Attention' },
+          { label: 'Live Stock', value: stats.totalProducts, icon: Laptop, shadow: 'rgba(0,0,0,1)', desc: 'Active Listings' },
+          { label: 'Out of Stock', value: stats.outOfStock, icon: AlertTriangle, shadow: 'rgba(239,68,68,1)', color: 'text-red-500', desc: 'Action Required' },
           { label: 'Active Categories', value: stats.categories, icon: TrendingUp, shadow: 'rgba(0,186,242,1)', desc: 'Product Groups' },
-          { label: 'Total Value', value: 'KES 2.4M', icon: DollarSign, shadow: 'rgba(34,197,94,1)', color: 'text-emerald-500', desc: 'Inventory Value' }
+          { label: 'User Rating', value: '4.9/5', icon: DollarSign, shadow: 'rgba(34,197,94,1)', color: 'text-emerald-500', desc: 'Trust Factor' }
         ].map((stat, i) => (
           <Card key={i} className={`border-4 border-black shadow-[6px_6px_0px_0px_${stat.shadow}] transition-all hover:-translate-y-1 bg-white`}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -82,13 +82,13 @@ export default function AdminDashboardPage() {
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <div className="rounded-2xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <h2 className="text-xl font-black uppercase tracking-tight mb-8">Management Shortcuts</h2>
+            <h2 className="text-xl font-black uppercase tracking-tight mb-8">Management Hub</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                { label: 'Inventory Hub', href: '/admin/products', icon: Laptop, color: 'hover:bg-primary/10' },
-                { label: 'Sales Reports', href: '/admin/orders', icon: TrendingUp, color: 'hover:bg-zinc-100' },
-                { label: 'Customer Base', href: '/admin/customers', icon: Users, color: 'hover:bg-zinc-100' },
-                { label: 'Add Laptop', href: '/admin/products/new', icon: Plus, color: 'hover:bg-primary/10' }
+                { label: 'Manage Inventory', href: '/admin/products', icon: Laptop, color: 'hover:bg-primary/10' },
+                { label: 'WhatsApp Inquiries', href: '/admin/orders', icon: TrendingUp, color: 'hover:bg-zinc-100' },
+                { label: 'Hub Settings', href: '/admin/settings', icon: Users, color: 'hover:bg-zinc-100' },
+                { label: 'Publish New Item', href: '/admin/products/new', icon: Plus, color: 'hover:bg-primary/10' }
               ].map((link, i) => (
                 <Button key={i} variant="outline" asChild className={`h-20 border-2 border-black font-black uppercase flex items-center justify-start gap-4 px-6 transition-all ${link.color}`}>
                   <Link href={link.href}>
@@ -103,19 +103,19 @@ export default function AdminDashboardPage() {
 
         <div className="space-y-6">
           <div className="rounded-2xl border-4 border-black bg-primary p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-black font-black uppercase tracking-tight mb-2">Inventory Sync</h3>
-            <p className="text-sm font-bold text-black/70 mb-6 leading-tight">If your live inventory is empty, use the button above to import the default catalog into Firestore.</p>
+            <h3 className="text-black font-black uppercase tracking-tight mb-2">Live Storefront</h3>
+            <p className="text-sm font-bold text-black/70 mb-6 leading-tight">Every change you make here is pushed instantly to your customers around the world.</p>
             <Button asChild className="w-full bg-black text-white font-black uppercase tracking-widest border-2 border-black hover:bg-white hover:text-black transition-colors">
-              <Link href="/admin/products">View Inventory</Link>
+              <Link href="/" target="_blank">View Live Website</Link>
             </Button>
           </div>
           
           <div className="rounded-2xl border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,186,242,1)]">
              <div className="flex items-center justify-between mb-4">
-               <span className="text-xs font-black uppercase tracking-widest">Server Status</span>
+               <span className="text-xs font-black uppercase tracking-widest">Database Status</span>
                <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
              </div>
-             <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Synced with Firebase Live</p>
+             <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Fully Synchronized</p>
           </div>
         </div>
       </div>
