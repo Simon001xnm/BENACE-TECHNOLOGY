@@ -23,10 +23,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       if (!user && pathname !== '/admin/login') {
         router.push('/admin/login');
       } else if (user && user.email !== AUTHORIZED_ADMIN_EMAIL) {
-        // Silent sign out if account is unauthorized
-        signOut(auth!).then(() => {
-           router.push('/admin/login');
-        });
+        // Silently sign out unauthorized users
+        if (auth) {
+          signOut(auth).then(() => {
+             router.push('/admin/login');
+          });
+        }
       }
     }
   }, [user, loading, pathname, router, auth]);
@@ -42,7 +44,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="flex h-screen items-center justify-center bg-zinc-50">
         <div className="text-center font-black uppercase tracking-widest animate-pulse">
-          Authenticating Master Account...
+          Synchronizing Admin Privileges...
         </div>
       </div>
     );
@@ -59,7 +61,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navItems = [
     { label: 'Overview', href: '/admin/dashboard', icon: LayoutDashboard },
-    { label: 'Products', href: '/admin/products', icon: Laptop },
+    { label: 'Inventory', href: '/admin/products', icon: Laptop },
     { label: 'Orders', href: '/admin/orders', icon: ShoppingCart },
     { label: 'Settings', href: '/admin/settings', icon: Settings },
   ];
@@ -71,7 +73,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <span className="text-2xl font-black uppercase tracking-tighter text-primary">Benace</span>
           <span className="text-2xl font-black uppercase tracking-tighter">Admin Hub</span>
           <span className="mt-1 flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 group-hover:text-primary transition-colors">
-            <Globe className="h-2 w-2" /> Back to Website
+            <Globe className="h-2 w-2" /> View Live Website
           </span>
         </Link>
       </div>
@@ -96,7 +98,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <div className="mt-auto pt-6 border-t border-zinc-800">
         <div className="mb-4 px-4 py-2 bg-zinc-900 rounded-lg">
-          <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Signed in as</p>
+          <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Master Account</p>
           <p className="text-[10px] font-bold truncate text-primary">{user?.email}</p>
         </div>
         <Button 
@@ -105,7 +107,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           onClick={handleLogout}
         >
           <LogOut className="h-5 w-5" />
-          Logout
+          Logout Hub
         </Button>
       </div>
     </div>
@@ -119,7 +121,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <div className="flex-grow flex flex-col min-w-0">
         <header className="flex items-center justify-between border-b bg-white p-4 lg:hidden">
-          <Link href="/" className="font-black uppercase tracking-tighter">Benace Admin</Link>
+          <Link href="/" className="font-black uppercase tracking-tighter">Benace Hub</Link>
           <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -128,7 +130,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </SheetTrigger>
             <SheetContent side="left" className="p-0 border-none w-64">
                 <SheetHeader className="sr-only">
-                  <SheetTitle>Navigation Menu</SheetTitle>
+                  <SheetTitle>Admin Navigation Menu</SheetTitle>
                 </SheetHeader>
                 <SidebarContent />
             </SheetContent>

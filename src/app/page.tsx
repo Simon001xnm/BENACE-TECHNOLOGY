@@ -4,10 +4,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
 import { laptops as staticLaptops, accessories as staticAccessories } from '@/lib/data';
-import { ArrowRight, CheckCircle, Wrench, Laptop, Globe, Cpu, Loader2 } from 'lucide-react';
+import { ArrowRight, Laptop, Wrench, Globe, Cpu, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { AccessoryCard } from '@/components/accessories/accessory-card';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
@@ -17,18 +16,19 @@ export default function Home() {
   const shopHeroImage = PlaceHolderImages.find(img => img.id === 'shop-hero');
 
   // Unified real-time query for all products
+  // We use a simple query to avoid manual index requirements for complex filters
   const productsQuery = useMemo(() => {
     if (!db) return null;
     return query(
       collection(db, 'products'), 
       orderBy('createdAt', 'desc'), 
-      limit(20)
+      limit(24)
     );
   }, [db]);
 
   const { data: allLiveProducts, loading } = useCollection(productsQuery);
 
-  // In-memory filtering to avoid manual Firestore indexing requirements
+  // Filter products in memory to ensure instant visibility without complex Firestore indexing
   const featuredLaptops = useMemo(() => {
     const live = allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 4);
     return (live && live.length > 0) ? live : staticLaptops.slice(0, 4);
@@ -77,7 +77,7 @@ export default function Home() {
                   <Link href="/laptops">Shop Collection</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="h-14 border-2 border-black px-8 font-black uppercase tracking-widest hover:bg-zinc-100">
-                  <Link href="/services">Our Hub</Link>
+                  <Link href="/services">Our Services</Link>
                 </Button>
               </div>
             </div>
@@ -115,7 +115,7 @@ export default function Home() {
             </div>
             <Button asChild variant="ghost" className="font-black uppercase tracking-widest text-primary hover:bg-primary/10">
               <Link href="/laptops">
-                Browse Full Catalog <ArrowRight className="ml-2 h-4 w-4" />
+                Full Collection <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -141,10 +141,10 @@ export default function Home() {
             <div>
               <h2 className="text-4xl font-black tracking-tighter sm:text-6xl mb-6">
                 BUILT FOR <span className="text-primary">SPEED.</span><br/>
-                TRUSTED BY <span className="text-primary">THOUSANDS.</span>
+                TRUSTED BY <span className="text-primary">CLIENTS.</span>
               </h2>
               <p className="text-xl text-zinc-400 font-medium mb-8">
-                The most reliable tech partner in the region. Real people, real solutions, real fast.
+                The most reliable tech partner in the region. Every update you make in the Admin Hub goes live instantly for all visitors.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -152,7 +152,7 @@ export default function Home() {
                 { label: 'Repairs', count: '1k+', desc: 'Happy Clients' },
                 { label: 'Projects', count: '100+', desc: 'Live Designs' },
                 { label: 'Stock', count: '250+', desc: 'Units Ready' },
-                { label: 'Uptime', count: '100%', desc: 'Cloud Sync' }
+                { label: 'Database', count: 'Live', desc: 'Real-time Sync' }
               ].map((stat, i) => (
                 <div key={i} className="border-2 border-zinc-800 p-6 rounded-xl bg-zinc-900/50 backdrop-blur-sm">
                   <p className="text-3xl font-black text-primary mb-1">{stat.count}</p>

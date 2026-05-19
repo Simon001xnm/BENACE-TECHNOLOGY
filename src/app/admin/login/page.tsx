@@ -38,8 +38,14 @@ export default function AdminLoginPage() {
 
   const validateUser = async (user: any) => {
     if (user.email !== AUTHORIZED_ADMIN_EMAIL) {
-      await signOut(auth!);
-      // Silent fail for unauthorized emails
+      if (auth) {
+        await signOut(auth);
+      }
+      toast({
+        variant: 'destructive',
+        title: 'Unauthorized Access',
+        description: 'Only the master account can access the Hub.'
+      });
       return false;
     }
     return true;
@@ -55,7 +61,6 @@ export default function AdminLoginPage() {
       const result = await signInWithPopup(auth, provider);
       const isAllowed = await validateUser(result.user);
       if (isAllowed) {
-        toast({ title: 'God Mode Active', description: 'Welcome back, Administrator.' });
         router.push('/admin/dashboard');
       }
     } catch (error: any) {
@@ -74,7 +79,6 @@ export default function AdminLoginPage() {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const isAllowed = await validateUser(result.user);
       if (isAllowed) {
-        toast({ title: 'Welcome Back', description: 'Authenticated successfully.' });
         router.push('/admin/dashboard');
       }
     } catch (error: any) {
@@ -99,7 +103,7 @@ export default function AdminLoginPage() {
             Benace <span className="text-primary">Master</span>
           </h1>
           <p className="mt-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">
-            God Account Privileges Only
+            Secure Entry Only
           </p>
         </div>
 
@@ -108,7 +112,7 @@ export default function AdminLoginPage() {
             <AlertCircle className="h-4 w-4" />
             <AlertTitle className="text-[10px] font-black uppercase tracking-widest">Setup Required</AlertTitle>
             <AlertDescription className="text-xs font-bold">
-              Check Firebase Configuration.
+              Check Firebase Configuration in the console.
             </AlertDescription>
           </Alert>
         )}
@@ -117,7 +121,7 @@ export default function AdminLoginPage() {
           <CardHeader className="space-y-1 pb-8 pt-8 text-center">
             <CardTitle className="text-2xl font-black tracking-tight uppercase">Admin Login</CardTitle>
             <CardDescription className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">
-              Only {AUTHORIZED_ADMIN_EMAIL} can enter
+              Access limited to {AUTHORIZED_ADMIN_EMAIL}
             </CardDescription>
           </CardHeader>
           
@@ -134,7 +138,7 @@ export default function AdminLoginPage() {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              Master Google Access
+              Master Account Login
             </Button>
 
             <div className="relative">
@@ -142,7 +146,7 @@ export default function AdminLoginPage() {
                 <span className="w-full border-t-2 border-zinc-100" />
               </div>
               <div className="relative flex justify-center text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300">
-                <span className="bg-white px-2">OR SECURE PASS</span>
+                <span className="bg-white px-2">OR USE CREDENTIALS</span>
               </div>
             </div>
 
@@ -162,7 +166,7 @@ export default function AdminLoginPage() {
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Passphrase</Label>
+                <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Hub Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3.5 h-4 w-4 text-zinc-300" />
                   <Input
@@ -180,14 +184,14 @@ export default function AdminLoginPage() {
                 disabled={loading || configError}
                 className="w-full h-12 bg-black text-white font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all"
               >
-                {loading ? 'Verifying...' : <><LogIn className="mr-2 h-4 w-4" /> Authorize Entry</>}
+                {loading ? 'Authorizing...' : <><LogIn className="mr-2 h-4 w-4" /> Secure Login</>}
               </Button>
             </form>
           </CardContent>
 
           <CardFooter className="bg-zinc-50/50 p-6 flex justify-center">
              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400 text-center">
-                Security Enforced by Firebase Auth & Rules
+                Restricted to benacetechnologies@gmail.com
              </span>
           </CardFooter>
         </Card>
