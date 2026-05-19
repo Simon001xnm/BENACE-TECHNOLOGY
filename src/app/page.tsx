@@ -26,7 +26,7 @@ export default function Home() {
 
   const { data: allLiveProducts, loading } = useCollection(productsQuery);
 
-  // Filter products in memory - No static fallback, strictly live database
+  // Filter products in memory - strictly live database
   const featuredLaptops = useMemo(() => {
     return allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 4) || [];
   }, [allLiveProducts]);
@@ -145,7 +145,7 @@ export default function Home() {
                 TRUSTED BY <span className="text-primary">CLIENTS.</span>
               </h2>
               <p className="text-xl text-zinc-400 font-medium mb-8">
-                The most reliable tech partner in the region. Every update you make in the Admin Hub goes live instantly for all visitors.
+                Nairobi&apos;s most reliable technology partner. Delivering high-performance hardware and professional digital craftsmanship to empower your business.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
