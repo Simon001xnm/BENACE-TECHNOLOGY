@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -15,8 +14,7 @@ import {
 } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
-import { laptops as staticLaptops } from '@/lib/data';
+import { ChevronLeft, ChevronRight, Loader2, DatabaseBackup } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -24,7 +22,7 @@ export function LaptopsGrid() {
   const db = useFirestore();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('all');
-  const [priceRange, setPriceRange] = useState([0, 500000]);
+  const [priceRange, setPriceRange] = useState([0, 1000000]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const laptopsQuery = useMemo(() => {
@@ -34,10 +32,9 @@ export function LaptopsGrid() {
 
   const { data: dbLaptops, loading } = useCollection(laptopsQuery);
 
-  // Fallback to static data if Firestore is empty or loading
+  // Filter products in memory - strictly live database
   const allLaptops = useMemo(() => {
-    if (dbLaptops && dbLaptops.length > 0) return dbLaptops;
-    return staticLaptops;
+    return dbLaptops?.filter(p => p.type === 'laptop') || [];
   }, [dbLaptops]);
 
   const brands = useMemo(() => [...new Set(allLaptops.map(l => l.brand))], [allLaptops]);
@@ -80,7 +77,7 @@ export function LaptopsGrid() {
     }
   };
 
-  if (loading && (!dbLaptops || dbLaptops.length === 0)) {
+  if (loading) {
     return (
       <div className="flex h-64 flex-col items-center justify-center font-black">
         <Loader2 className="mb-4 h-8 w-8 animate-spin text-primary" />
@@ -174,9 +171,10 @@ export function LaptopsGrid() {
           )}
         </>
       ) : (
-        <div className="py-24 text-center">
-            <h3 className="text-3xl font-black uppercase tracking-tight">No Laptops Found</h3>
-            <p className="text-zinc-500 font-medium mt-2">Try adjusting your search or filters.</p>
+        <div className="py-24 text-center border-4 border-dashed rounded-3xl border-zinc-100">
+            <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-200 mb-4" />
+            <h3 className="text-3xl font-black uppercase tracking-tight">Catalog Empty</h3>
+            <p className="text-zinc-500 font-medium mt-2">Check back soon for new arrivals.</p>
             <Button onClick={resetFilters} variant="link" className="mt-4 font-black uppercase text-primary">Clear all filters</Button>
         </div>
       )}

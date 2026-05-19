@@ -1,9 +1,7 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
 import { AccessoryCard } from '@/components/accessories/accessory-card';
-import { accessories as staticAccessories } from '@/lib/data';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, where } from 'firebase/firestore';
 import { Input } from '@/components/ui/input';
@@ -15,7 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Loader2, DatabaseBackup } from 'lucide-react';
 
 export default function AccessoriesPage() {
   const db = useFirestore();
@@ -30,8 +28,7 @@ export default function AccessoriesPage() {
   const { data: dbAccessories, loading } = useCollection(accessoriesQuery);
 
   const allAccessories = useMemo(() => {
-    if (dbAccessories && dbAccessories.length > 0) return dbAccessories;
-    return staticAccessories;
+    return dbAccessories || [];
   }, [dbAccessories]);
 
   const categories = useMemo(() => ['all', ...new Set(allAccessories.map(a => a.category))], [allAccessories]);
@@ -47,7 +44,7 @@ export default function AccessoriesPage() {
       );
   }, [searchTerm, selectedCategory, allAccessories]);
 
-  if (loading && (!dbAccessories || dbAccessories.length === 0)) {
+  if (loading) {
     return (
       <div className="flex h-[60vh] flex-col items-center justify-center font-black">
         <Loader2 className="mb-4 h-8 w-8 animate-spin text-primary" />
@@ -102,9 +99,10 @@ export default function AccessoriesPage() {
           ))}
         </div>
       ) : (
-        <div className="py-20 text-center border-4 border-dashed border-zinc-200 rounded-3xl">
+        <div className="py-20 text-center border-4 border-dashed border-zinc-100 rounded-3xl">
+          <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-200 mb-4" />
           <h3 className="text-2xl font-black uppercase">No gear found</h3>
-          <p className="text-muted-foreground mt-2 font-medium">Try adjusting your filters or search term.</p>
+          <p className="text-muted-foreground mt-2 font-medium">Your specialized inventory is currently empty.</p>
         </div>
       )}
     </div>

@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
-import { laptops as staticLaptops, accessories as staticAccessories } from '@/lib/data';
-import { ArrowRight, Laptop, Wrench, Globe, Cpu, Loader2 } from 'lucide-react';
+import { ArrowRight, Laptop, Wrench, Globe, Cpu, Loader2, DatabaseBackup } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useCollection, useFirestore } from '@/firebase';
@@ -15,8 +14,7 @@ export default function Home() {
   const db = useFirestore();
   const shopHeroImage = PlaceHolderImages.find(img => img.id === 'shop-hero');
 
-  // Unified real-time query for all products
-  // We use a simple query to avoid manual index requirements for complex filters
+  // Real-time query for all products
   const productsQuery = useMemo(() => {
     if (!db) return null;
     return query(
@@ -28,15 +26,13 @@ export default function Home() {
 
   const { data: allLiveProducts, loading } = useCollection(productsQuery);
 
-  // Filter products in memory to ensure instant visibility without complex Firestore indexing
+  // Filter products in memory - No static fallback, strictly live database
   const featuredLaptops = useMemo(() => {
-    const live = allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 4);
-    return (live && live.length > 0) ? live : staticLaptops.slice(0, 4);
+    return allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 4) || [];
   }, [allLiveProducts]);
 
   const featuredAccessories = useMemo(() => {
-    const live = allLiveProducts?.filter(p => p.type === 'accessory').slice(0, 4);
-    return (live && live.length > 0) ? live : staticAccessories.slice(0, 4);
+    return allLiveProducts?.filter(p => p.type === 'accessory').slice(0, 4) || [];
   }, [allLiveProducts]);
 
   return (
@@ -124,11 +120,16 @@ export default function Home() {
              <div className="flex h-48 items-center justify-center">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
              </div>
-          ) : (
+          ) : featuredLaptops.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {featuredLaptops.map(laptop => (
                 <LaptopCard key={laptop.id} laptop={laptop} />
                 ))}
+            </div>
+          ) : (
+            <div className="py-20 text-center border-4 border-dashed rounded-3xl border-zinc-100">
+               <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-200 mb-4" />
+               <p className="font-black uppercase text-zinc-400">Inventory is currently empty</p>
             </div>
           )}
         </div>

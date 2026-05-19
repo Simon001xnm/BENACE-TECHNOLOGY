@@ -1,8 +1,7 @@
-
 'use client';
 
 import { useCollection, useFirestore } from '@/firebase';
-import { collection, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { collection, deleteDoc, doc, query, orderBy, getDocs } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -21,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, Plus, Search, Edit2, Trash2, ExternalLink, DatabaseBackup } from 'lucide-react';
+import { MoreHorizontal, Plus, Search, Edit2, Trash2, ExternalLink, DatabaseBackup, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -42,6 +41,7 @@ export default function AdminProductsPage() {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
+  const [isClearingAll, setIsClearingAll] = useState(false);
 
   const productsQuery = useMemo(() => {
     if (!db) return null;
@@ -79,6 +79,21 @@ export default function AdminProductsPage() {
     }
   };
 
+  const handleClearAll = async () => {
+    if (!db) return;
+    setIsClearingAll(true);
+    try {
+      const snapshot = await getDocs(collection(db, 'products'));
+      const deletions = snapshot.docs.map(d => deleteDoc(doc(db, 'products', d.id)));
+      await Promise.all(deletions);
+      toast({ title: 'Inventory Purged', description: 'All products have been deleted.' });
+    } catch (error) {
+      toast({ variant: 'destructive', title: 'Clear Failed', description: 'Could not empty the database.' });
+    } finally {
+      setIsClearingAll(false);
+    }
+  };
+
   if (loading) return <div className="p-8">Loading products...</div>;
 
   return (
@@ -88,7 +103,16 @@ export default function AdminProductsPage() {
           <h1 className="text-3xl font-black uppercase tracking-tight text-black">Inventory Management</h1>
           <p className="text-muted-foreground font-medium">Manage your laptops and accessories</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
+          <Button 
+            variant="destructive" 
+            onClick={handleClearAll} 
+            disabled={isClearingAll || !products?.length}
+            className="border-2 border-black font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+          >
+            {isClearingAll ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4 mr-2" />}
+            Clear All
+          </Button>
           <ImportDataButton />
           <Button asChild className="bg-primary text-black font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
             <Link href="/admin/products/new">
@@ -183,8 +207,8 @@ export default function AdminProductsPage() {
                   <div className="flex flex-col items-center gap-4">
                     <DatabaseBackup className="h-12 w-12 text-zinc-200" />
                     <div>
-                      <p className="text-black uppercase font-black">No products in your live database.</p>
-                      <p className="text-xs text-zinc-400 mt-1">Use the "Import Catalog" button above to populate the inventory.</p>
+                      <p className="text-black uppercase font-black">Inventory Clear</p>
+                      <p className="text-xs text-zinc-400 mt-1">Add new products or import the sample catalog to begin.</p>
                     </div>
                   </div>
                 </TableCell>
