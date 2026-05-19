@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -11,7 +10,6 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { LaptopCard } from '@/components/laptops/laptop-card';
 import { ShoppingCart, ArrowLeft, Cpu, HardDrive, Monitor, Layers, Info, Loader2 } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -49,7 +47,7 @@ export default function LaptopDetailPage() {
     );
   }
 
-  const laptopImage = laptop.imageUrls?.[0] || laptop.imageId ? (PlaceHolderImages.find((img) => img.id === laptop.imageId)?.imageUrl) : null;
+  const laptopImage = laptop.imageUrls?.[0] || (laptop.imageId ? PlaceHolderImages.find((img) => img.id === laptop.imageId)?.imageUrl : null);
 
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
@@ -120,10 +118,10 @@ export default function LaptopDetailPage() {
             <h2 className="text-lg font-black uppercase tracking-widest">Master Specs</h2>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: 'Processor', value: laptop.specifications.processor, icon: Cpu },
-                { label: 'Memory', value: laptop.specifications.ram, icon: Layers },
-                { label: 'Storage', value: laptop.specifications.storage, icon: HardDrive },
-                { label: 'Display', value: laptop.specifications.display || 'Standard', icon: Monitor }
+                { label: 'Processor', value: laptop.specifications?.processor, icon: Cpu },
+                { label: 'Memory', value: laptop.specifications?.ram, icon: Layers },
+                { label: 'Storage', value: laptop.specifications?.storage, icon: HardDrive },
+                { label: 'Display', value: laptop.specifications?.display || 'Standard', icon: Monitor }
               ].map((spec, i) => (
                 <div key={i} className="flex items-center gap-3 rounded-lg border-2 border-black bg-white p-4 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                   <spec.icon className="h-5 w-5 text-primary" />
@@ -140,7 +138,7 @@ export default function LaptopDetailPage() {
             <Button 
               size="lg" 
               className="flex-1 h-14 bg-black text-white font-black uppercase tracking-widest border-2 border-black hover:bg-primary hover:text-black shadow-[6px_6px_0px_0px_rgba(0,186,242,1)]" 
-              onClick={() => addToCart(laptop)}
+              onClick={() => addToCart(laptop as any)}
             >
               <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
             </Button>

@@ -100,7 +100,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </Link>
 
         <CardDescription className="mb-4 line-clamp-2 text-xs font-bold leading-relaxed text-zinc-600">
-          {laptop.specifications.processor} • {laptop.specifications.ram} • {laptop.specifications.storage}
+          {laptop.specifications?.processor || 'Standard Processor'} • {laptop.specifications?.ram || 'N/A RAM'} • {laptop.specifications?.storage || 'N/A Storage'}
         </CardDescription>
         
         <div className="mt-auto flex flex-col">
