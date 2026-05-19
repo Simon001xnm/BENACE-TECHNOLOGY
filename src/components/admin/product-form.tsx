@@ -122,29 +122,27 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       createdAt: initialData?.createdAt || serverTimestamp(),
     });
 
-    const operation = productId ? 
-      setDoc(doc(db, 'products', productId), productData, { merge: true }) : 
-      addDoc(collection(db, 'products'), productData);
-
-    operation
-      .then(() => {
-        toast({ 
-          title: productId ? 'System Updated' : 'New Arrival Published', 
-          description: productId ? 'Product changes published successfully.' : 'The product is now live.' 
-        });
-        router.push('/admin/products');
-        router.refresh();
-      })
-      .catch(async (error) => {
-        console.error("Firestore Write Error:", error);
-        const permissionError = new FirestorePermissionError({
-          path: productId ? `products/${productId}` : 'products',
-          operation: productId ? 'update' : 'create',
-          requestResourceData: productData,
-        } satisfies SecurityRuleContext);
-        errorEmitter.emit('permission-error', permissionError);
-      })
-      .finally(() => setLoading(false));
+    try {
+      if (productId) {
+        await setDoc(doc(db, 'products', productId), productData, { merge: true });
+        toast({ title: 'Success', description: 'Product updated successfully.' });
+      } else {
+        await addDoc(collection(db, 'products'), productData);
+        toast({ title: 'Success', description: 'New product added to catalog.' });
+      }
+      router.push('/admin/products');
+      router.refresh();
+    } catch (error: any) {
+      console.error("Firestore Write Error:", error);
+      const permissionError = new FirestorePermissionError({
+        path: productId ? `products/${productId}` : 'products',
+        operation: productId ? 'update' : 'create',
+        requestResourceData: productData,
+      } satisfies SecurityRuleContext);
+      errorEmitter.emit('permission-error', permissionError);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -203,7 +201,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Product Class</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                       <SelectValue placeholder="Select Class" />
@@ -225,7 +223,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Stock Group</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                       <SelectValue placeholder="Select Group" />
@@ -296,7 +294,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Device Condition</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                         <SelectValue placeholder="Condition" />

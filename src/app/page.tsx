@@ -9,47 +9,35 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { AccessoryCard } from '@/components/accessories/accessory-card';
 import { useCollection, useFirestore } from '@/firebase';
-import { collection, query, orderBy, limit, where } from 'firebase/firestore';
+import { collection, query, orderBy, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
 
 export default function Home() {
   const db = useFirestore();
   const shopHeroImage = PlaceHolderImages.find(img => img.id === 'shop-hero');
 
-  // Fetch Featured Laptops
-  const featuredLaptopsQuery = useMemo(() => {
+  // Unified query for all products to avoid composite index requirements (type + createdAt)
+  const productsQuery = useMemo(() => {
     if (!db) return null;
     return query(
       collection(db, 'products'), 
-      where('type', '==', 'laptop'),
       orderBy('createdAt', 'desc'), 
-      limit(4)
+      limit(20) // Fetch enough to filter in-memory
     );
   }, [db]);
-  const { data: liveLaptops, loading: laptopsLoading } = useCollection(featuredLaptopsQuery);
 
-  // Fetch Featured Accessories
-  const featuredAccessoriesQuery = useMemo(() => {
-    if (!db) return null;
-    return query(
-      collection(db, 'products'), 
-      where('type', '==', 'accessory'),
-      orderBy('createdAt', 'desc'), 
-      limit(4)
-    );
-  }, [db]);
-  const { data: liveAccessories, loading: accessoriesLoading } = useCollection(featuredAccessoriesQuery);
+  const { data: allLiveProducts, loading } = useCollection(productsQuery);
 
-  // Fallback to static if live data is empty
+  // Filter products in memory to bypass Firestore Index requirements
   const featuredLaptops = useMemo(() => {
-    if (liveLaptops && liveLaptops.length > 0) return liveLaptops;
-    return staticLaptops.slice(0, 4);
-  }, [liveLaptops]);
+    const live = allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 4);
+    return (live && live.length > 0) ? live : staticLaptops.slice(0, 4);
+  }, [allLiveProducts]);
 
   const featuredAccessories = useMemo(() => {
-    if (liveAccessories && liveAccessories.length > 0) return liveAccessories;
-    return staticAccessories.slice(0, 4);
-  }, [liveAccessories]);
+    const live = allLiveProducts?.filter(p => p.type === 'accessory').slice(0, 4);
+    return (live && live.length > 0) ? live : staticAccessories.slice(0, 4);
+  }, [allLiveProducts]);
 
   return (
     <div className="flex flex-col">
@@ -142,7 +130,7 @@ export default function Home() {
               </Link>
             </Button>
           </div>
-          {laptopsLoading ? (
+          {loading ? (
              <div className="flex h-48 items-center justify-center">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
              </div>
@@ -207,7 +195,7 @@ export default function Home() {
               Printers, UPS systems, genuine chargers, and professional software to keep your workflow uninterrupted.
             </p>
           </div>
-          {accessoriesLoading ? (
+          {loading ? (
             <div className="flex h-48 items-center justify-center">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
