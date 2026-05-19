@@ -39,11 +39,7 @@ export default function AdminLoginPage() {
   const validateUser = async (user: any) => {
     if (user.email !== AUTHORIZED_ADMIN_EMAIL) {
       await signOut(auth!);
-      toast({
-        variant: 'destructive',
-        title: 'Access Denied',
-        description: 'This account is not authorized to access the Admin Hub.',
-      });
+      // Silent fail for unauthorized emails
       return false;
     }
     return true;

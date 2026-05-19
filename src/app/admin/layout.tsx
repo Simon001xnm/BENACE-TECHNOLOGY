@@ -8,7 +8,6 @@ import { LayoutDashboard, Laptop, ShoppingCart, LogOut, Settings, Menu, Globe } 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState, useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
 
 const AUTHORIZED_ADMIN_EMAIL = "benacetechnologies@gmail.com";
 
@@ -17,7 +16,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const { toast } = useToast();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -25,18 +23,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       if (!user && pathname !== '/admin/login') {
         router.push('/admin/login');
       } else if (user && user.email !== AUTHORIZED_ADMIN_EMAIL) {
-        // Double check on every route change in the admin section
+        // Silent sign out if account is unauthorized
         signOut(auth!).then(() => {
-           toast({
-             variant: 'destructive',
-             title: 'Unauthorized',
-             description: 'You do not have access to this portal.',
-           });
            router.push('/admin/login');
         });
       }
     }
-  }, [user, loading, pathname, router, auth, toast]);
+  }, [user, loading, pathname, router, auth]);
 
   const handleLogout = async () => {
     if (auth) {
