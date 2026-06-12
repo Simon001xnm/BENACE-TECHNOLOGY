@@ -10,8 +10,9 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, ArrowLeft, Cpu, HardDrive, Monitor, Layers, Info, Loader2, ShieldCheck, Zap } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Cpu, HardDrive, Monitor, Layers, Info, Loader2, ShieldCheck, Zap, MessageSquare } from 'lucide-react';
 import { useMemo } from 'react';
+import { cn } from '@/lib/utils';
 
 export default function LaptopDetailPage() {
   const params = useParams();
@@ -31,7 +32,7 @@ export default function LaptopDetailPage() {
     return (
       <div className="container mx-auto flex h-[60vh] flex-col items-center justify-center">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />
-        <p className="mt-4 font-black uppercase tracking-[0.3em] text-zinc-400">Processing Node Data...</p>
+        <p className="mt-4 font-black uppercase tracking-[0.3em] text-zinc-400">Synchronizing Local Spec-Sheet...</p>
       </div>
     );
   }
@@ -52,11 +53,16 @@ export default function LaptopDetailPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-16">
-      <Button asChild variant="ghost" className="mb-12 pl-0 text-zinc-400 hover:text-primary font-black uppercase tracking-widest text-xs transition-colors">
-        <Link href="/laptops">
-          <ArrowLeft className="mr-2 h-4 w-4" /> Global Collection
-        </Link>
-      </Button>
+      <div className="mb-12 flex items-center justify-between">
+        <Button asChild variant="ghost" className="pl-0 text-zinc-400 hover:text-primary font-black uppercase tracking-widest text-xs transition-colors">
+          <Link href="/laptops">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Global Collection
+          </Link>
+        </Button>
+        <Badge variant="outline" className="border-2 border-black font-black uppercase text-[10px] tracking-[0.2em] px-4 py-1">
+          V1255 Verified
+        </Badge>
+      </div>
 
       <div className="grid gap-16 lg:grid-cols-2 items-start">
         {/* Visual Engine Container */}
@@ -85,13 +91,13 @@ export default function LaptopDetailPage() {
           
           {/* Trust Points */}
           <div className="grid grid-cols-2 gap-4">
-             <div className="flex items-center gap-3 rounded-3xl border-2 border-black/5 bg-zinc-50 p-6">
+             <div className="flex items-center gap-3 rounded-3xl border-4 border-black bg-white p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]">
                 <ShieldCheck className="h-6 w-6 text-emerald-500" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Verified Quality</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">Master Verified</span>
              </div>
-             <div className="flex items-center gap-3 rounded-3xl border-2 border-black/5 bg-zinc-50 p-6">
+             <div className="flex items-center gap-3 rounded-3xl border-4 border-black bg-white p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]">
                 <Zap className="h-6 w-6 text-primary" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Fast Delivery</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">Global Express</span>
              </div>
           </div>
         </div>
@@ -107,15 +113,20 @@ export default function LaptopDetailPage() {
             </h1>
           </div>
 
-          <div className="mb-12 flex items-baseline gap-6 border-b-4 border-zinc-100 pb-12">
+          <div className="mb-12 flex flex-col gap-2 border-b-4 border-zinc-100 pb-12">
             <p className="text-6xl font-black text-primary tracking-tighter">
               KES {laptop.price.toLocaleString()}
             </p>
-            {laptop.oldPrice && (
-              <p className="text-2xl font-bold text-zinc-300 line-through">
-                KES {laptop.oldPrice.toLocaleString()}
-              </p>
-            )}
+            <div className="flex items-center gap-4">
+               {laptop.oldPrice && (
+                <p className="text-2xl font-bold text-zinc-300 line-through">
+                  KES {laptop.oldPrice.toLocaleString()}
+                </p>
+              )}
+              {laptop.salePercentage && (
+                <Badge className="bg-red-600 text-white font-black border-2 border-black">-{laptop.salePercentage}%</Badge>
+              )}
+            </div>
           </div>
 
           {laptop.description && (
@@ -123,7 +134,7 @@ export default function LaptopDetailPage() {
               <div className="flex items-center gap-3 font-black uppercase text-xs mb-6 text-zinc-400 tracking-[0.2em]">
                 <Info className="h-5 w-5 text-primary" /> Technical Narrative
               </div>
-              <p className="text-2xl font-medium text-zinc-500 leading-relaxed italic border-l-8 border-primary pl-8">
+              <p className="text-2xl font-medium text-zinc-600 leading-relaxed italic border-l-8 border-primary pl-8">
                 {laptop.description}
               </p>
             </div>
@@ -131,7 +142,7 @@ export default function LaptopDetailPage() {
 
           <div className="mb-12 space-y-10">
             <h2 className="text-xl font-black uppercase tracking-[0.3em] text-black flex items-center gap-4">
-              Master Specifications <span className="h-px flex-1 bg-black/10"></span>
+              Hardware Stack <span className="h-px flex-1 bg-black/10"></span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
@@ -140,7 +151,7 @@ export default function LaptopDetailPage() {
                 { label: 'Storage Node', value: laptop.specifications?.storage, icon: HardDrive, color: 'text-emerald-500' },
                 { label: 'Visual Interface', value: laptop.specifications?.display || 'Standard', icon: Monitor, color: 'text-orange-500' }
               ].map((spec, i) => (
-                <div key={i} className="flex items-center gap-6 rounded-[2rem] border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] transition-all hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <div key={i} className="flex items-center gap-6 rounded-[2rem] border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] transition-all hover:shadow-[8px_8px_0px_0px_rgba(0,186,242,1)]">
                   <div className={cn("p-4 rounded-2xl bg-zinc-50", spec.color)}>
                     <spec.icon className="h-8 w-8" />
                   </div>
@@ -153,8 +164,8 @@ export default function LaptopDetailPage() {
             </div>
           </div>
 
-          {/* Checkout Engine */}
-          <div className="mt-12 sticky bottom-8 z-30 flex flex-col gap-4 sm:flex-row bg-white/50 backdrop-blur-xl p-4 rounded-[2.5rem] border-4 border-black shadow-2xl">
+          {/* Checkout Engine - Tactile Bar */}
+          <div className="mt-12 sticky bottom-8 z-30 flex flex-col gap-4 sm:flex-row bg-white/50 backdrop-blur-2xl p-6 rounded-[3rem] border-4 border-black shadow-2xl">
             <Button 
               size="lg" 
               className="flex-1 h-20 rounded-[2rem] bg-black text-white font-black uppercase tracking-widest text-xl border-4 border-black hover:bg-primary hover:text-black shadow-[8px_8px_0px_0px_rgba(0,186,242,1)] active:scale-95 transition-all" 
@@ -162,8 +173,13 @@ export default function LaptopDetailPage() {
             >
               <ShoppingCart className="mr-3 h-6 w-6" /> Add to Hub
             </Button>
+            <Button asChild size="lg" variant="outline" className="h-20 w-full sm:w-20 rounded-[2rem] border-4 border-black bg-white flex items-center justify-center hover:bg-primary transition-all">
+                <Link href={`https://wa.me/254714210957?text=I am interested in ${laptop.name}`} target="_blank">
+                  <MessageSquare className="h-6 w-6" />
+                </Link>
+            </Button>
             <Button size="lg" variant="outline" asChild className="flex-1 h-20 rounded-[2rem] border-4 border-black font-black uppercase tracking-widest text-xl hover:bg-zinc-50 active:scale-95 transition-all">
-              <Link href="/checkout">Direct Checkout</Link>
+              <Link href="/checkout">Buy Now</Link>
             </Button>
           </div>
         </div>
