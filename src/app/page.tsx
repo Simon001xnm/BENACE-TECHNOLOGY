@@ -1,11 +1,11 @@
+
 'use client';
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
+import { HeroSlider } from '@/components/home/hero-slider';
 import { ArrowRight, Laptop, Wrench, Globe, Cpu, Loader2, DatabaseBackup, Sparkles, CheckCircle2 } from 'lucide-react';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
@@ -13,7 +13,6 @@ import { cn } from '@/lib/utils';
 
 export default function Home() {
   const db = useFirestore();
-  const shopHeroImage = PlaceHolderImages.find(img => img.id === 'shop-hero');
 
   const productsQuery = useMemo(() => {
     if (!db) return null;
@@ -32,62 +31,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-0">
-      {/* Hero Section - Material Android Vibe */}
-      <section className="relative w-full overflow-hidden bg-white px-4 pt-12 pb-20 md:px-6 md:pt-24 lg:pt-32">
-        <div className="container relative mx-auto">
-          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-            <div className="relative z-10 flex flex-col space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              <div className="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-6 py-2 text-sm font-black uppercase tracking-widest text-primary border-2 border-primary/20">
-                <Sparkles className="h-4 w-4" /> Version 1255 Excellence
-              </div>
-              
-              <h1 className="font-headline text-6xl font-black leading-[1] tracking-tighter text-black md:text-8xl lg:text-[110px]">
-                THE <span className="text-primary italic">FUTURE</span> <br/>
-                OF TECH.
-              </h1>
-              
-              <p className="max-w-xl text-xl font-medium leading-relaxed text-zinc-500 md:text-2xl">
-                Experience Nairobi's most sophisticated digital hub. High-performance gear meets expert craftsmanship.
-              </p>
-
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Button asChild size="lg" className="h-16 rounded-full bg-black px-10 text-lg font-black uppercase tracking-widest text-white transition-all hover:scale-105 active:scale-95 neo-shadow-primary">
-                  <Link href="/laptops">Explore Catalog</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="h-16 rounded-full border-4 border-black px-10 text-lg font-black uppercase tracking-widest transition-all hover:bg-zinc-50 active:scale-95">
-                  <Link href="/services">Our Solutions</Link>
-                </Button>
-              </div>
-
-              <div className="flex flex-wrap gap-8 pt-4">
-                {['Official Warranty', '24/7 Support', 'Free Delivery'].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm font-black uppercase tracking-tight text-zinc-400">
-                    <CheckCircle2 className="h-4 w-4 text-primary" /> {feature}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative flex items-center justify-center animate-in fade-in zoom-in-90 duration-1000 delay-300">
-              <div className="absolute -inset-10 animate-pulse rounded-full bg-primary/5 blur-3xl"></div>
-              <div className="relative aspect-square w-full max-w-[600px] overflow-hidden rounded-[3rem] border-8 border-black bg-zinc-100 shadow-[24px_24px_0px_0px_rgba(0,136,204,1)] transition-transform duration-700 hover:rotate-2">
-                {shopHeroImage && (
-                  <Image
-                    src={shopHeroImage.imageUrl}
-                    alt="Benace Tech Hub"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                  />
-                )}
-                <div className="absolute bottom-10 right-10 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary text-white neo-shadow animate-bounce">
-                  <Laptop className="h-10 w-10" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Hero Section - V1255 Dynamic Slider */}
+      <section className="relative w-full overflow-hidden bg-black">
+        <HeroSlider />
       </section>
 
       {/* Dynamic Inventory - High Gloss Design */}
@@ -95,6 +41,9 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mb-20 flex flex-col items-end justify-between gap-8 md:flex-row">
             <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-primary border border-primary/20 mb-6">
+                <Sparkles className="h-3 w-3" /> Live Inventory Sync
+              </div>
               <h2 className="font-headline text-5xl font-black uppercase tracking-tighter text-black md:text-7xl italic leading-none">
                 LATEST <span className="text-primary underline decoration-8">ARRIVALS</span>
               </h2>
@@ -102,7 +51,7 @@ export default function Home() {
                 Synced globally from Nairobi CBD
               </p>
             </div>
-            <Button asChild variant="ghost" className="h-14 rounded-full border-2 border-black px-8 font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
+            <Button asChild variant="ghost" className="h-14 rounded-full border-2 border-black px-8 font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
               <Link href="/laptops" className="flex items-center">
                 Full Collection <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -147,7 +96,7 @@ export default function Home() {
                 Nairobi's most reliable technology partner. Delivering high-performance hardware and digital craftsmanship.
               </p>
               <div className="flex gap-4">
-                <Button asChild size="lg" className="h-16 rounded-full bg-primary font-black uppercase tracking-widest text-black hover:bg-white transition-all">
+                <Button asChild size="lg" className="h-16 rounded-full bg-primary font-black uppercase tracking-widest text-black hover:bg-white transition-all shadow-[8px_8px_0px_0px_rgba(0,186,242,1)]">
                   <Link href="/contact">Book a Session</Link>
                 </Button>
               </div>
