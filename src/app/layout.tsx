@@ -10,12 +10,26 @@ export const metadata: Metadata = {
   description: 'Nairobi\'s #1 destination for high-performance laptops, professional hardware repairs, and custom web design. Trusted tech partner in Kenya.',
   keywords: 'Laptops Nairobi, Laptop Repair Kenya, Web Design Nairobi, Benace Tech, Ex-UK Laptops, HP Laptops Nairobi, Dell Laptops Kenya',
   openGraph: {
-    title: 'Benace Tech Hub',
-    description: 'Nairobi\'s Ultimate Digital Future. Shop Premium Laptops.',
+    title: 'Benace Tech Hub | Nairobi\'s Ultimate Digital Future',
+    description: 'Shop Premium Laptops, Professional Repairs, and Custom Web Design. Version 1255 Excellence.',
     url: 'https://benacetechnologies.co.ke',
     siteName: 'Benace Tech Hub',
     locale: 'en_KE',
     type: 'website',
+    images: [
+      {
+        url: '/use.png',
+        width: 1200,
+        height: 630,
+        alt: 'Benace Tech Hub',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Benace Tech Hub',
+    description: 'Nairobi\'s Premier Technology Hub.',
+    images: ['/use.png'],
   },
   robots: {
     index: true,
@@ -28,7 +42,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#0088cc',
+  themeColor: '#3b82f6',
 };
 
 export default function RootLayout({
@@ -50,7 +64,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased bg-background text-foreground" suppressHydrationWarning>
+      <body className="font-body antialiased bg-background text-foreground overflow-x-hidden" suppressHydrationWarning>
         <FirebaseClientProvider>
           <CartProvider>
             <PublicLayoutWrapper>

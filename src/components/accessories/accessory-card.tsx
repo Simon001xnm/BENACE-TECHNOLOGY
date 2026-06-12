@@ -16,6 +16,10 @@ import { ShoppingCart, Info, ArrowRight, Package } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 
+/**
+ * Version 1255 Accessory Card
+ * Designed to match the premium tech aesthetic without redundant Quick Views.
+ */
 export function AccessoryCard({ accessory }: { accessory: Accessory }) {
   const { addToCart } = useCart();
   
@@ -25,7 +29,7 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
 
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border-4 border-black bg-white transition-all duration-500 hover:-translate-y-2 hover:shadow-[12px_12px_0px_0px_rgba(0,186,242,1)]">
-      {/* Sale Tag */}
+      {/* Performance Tag */}
       {accessory.salePercentage && (
         <div className="absolute left-6 top-6 z-10">
           <Badge className="bg-red-600 font-black text-white px-3 py-1.5 rounded-full border-2 border-black text-[10px] shadow-md">
@@ -34,7 +38,7 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
         </div>
       )}
 
-      {/* Direct Link Header */}
+      {/* Visual Engine Container */}
       <CardHeader className="relative aspect-square p-0 overflow-hidden bg-zinc-50 border-b-4 border-black">
         <Link href={`/laptops/${accessory.id}`} className="block h-full w-full">
           {displayImage ? (
@@ -65,7 +69,7 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
         </div>
       </CardHeader>
 
-      {/* Details */}
+      {/* Metadata Interface */}
       <CardContent className="flex flex-grow flex-col p-8">
         <span className="mb-2 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
           {accessory.brand} PERIPHERALS
@@ -87,20 +91,20 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
               </span>
             )}
           </div>
-          <Link href={`/laptops/${accessory.id}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-50 text-zinc-300 hover:bg-black hover:text-white transition-all">
+          <Link href={`/laptops/${accessory.id}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-50 text-zinc-300 hover:bg-black hover:text-white transition-all shadow-sm">
             <Info className="h-6 w-6" />
           </Link>
         </div>
       </CardContent>
 
-      {/* Actions */}
+      {/* Tactile Controls */}
       <CardFooter className="grid grid-cols-2 gap-4 p-8 pt-0">
         <Button 
           variant="outline" 
-          onClick={() => addToCart(accessory)} 
+          onClick={() => addToCart(accessory as any)} 
           className="h-14 rounded-2xl border-2 border-black font-black uppercase text-xs transition-all hover:bg-black hover:text-white"
         >
-          Cart
+          Add to Cart
         </Button>
         <Button 
           asChild 

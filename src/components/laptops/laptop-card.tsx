@@ -17,6 +17,11 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
+/**
+ * Version 1255 Laptop Card
+ * Optimized for spec-driven browsing. Replaces "Quick View" with high-fidelity
+ * hardware information directly on the card.
+ */
 export function LaptopCard({ laptop }: { laptop: Laptop }) {
   const { addToCart } = useCart();
   
@@ -35,7 +40,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
 
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border-4 border-black bg-white transition-all duration-500 hover:-translate-y-4 hover:shadow-[16px_16px_0px_0px_rgba(0,136,204,1)]">
-      {/* Sale Tag */}
+      {/* Dynamic Sale Tag */}
       {laptop.salePercentage && (
         <div className="absolute left-6 top-6 z-20">
           <Badge className="bg-red-600 font-black text-white px-4 py-1.5 rounded-full border-2 border-black text-xs shadow-lg">
@@ -44,7 +49,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       )}
 
-      {/* Main Image Link - Direct Gateway to Specs */}
+      {/* Main Image Link - High Speed Gateway */}
       <CardHeader className="relative aspect-[5/4] p-0 overflow-hidden bg-zinc-50 border-b-4 border-black">
         <Link href={`/laptops/${laptop.id}`} className="block h-full w-full">
           {displayImage ? (
@@ -68,7 +73,6 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
           </div>
         </Link>
         
-        {/* Status Badge */}
         <div className="absolute bottom-6 left-6">
           {laptop.status && (
             <Badge className={cn("font-black uppercase tracking-widest px-4 py-1.5 rounded-full border-2 text-[10px] shadow-sm", getStatusStyle())}>
@@ -78,7 +82,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       </CardHeader>
 
-      {/* Content Area - Optimized for Spec Information */}
+      {/* Hardware Node - Spec Information Core */}
       <CardContent className="flex flex-grow flex-col p-8">
         <div className="mb-4 flex items-center justify-between">
           <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400">
@@ -97,22 +101,22 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
           </CardTitle>
         </Link>
 
-        {/* Spec Overview - Direct visibility instead of Quick View */}
+        {/* Hardware Stack Overview */}
         <div className="mb-8 grid grid-cols-1 gap-2 border-l-4 border-zinc-100 pl-4">
             <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-              <Cpu className="h-4 w-4 text-primary" /> {laptop.specifications?.processor}
+              <Cpu className="h-4 w-4 text-primary" /> {laptop.specifications?.processor || 'Standard Chip'}
             </div>
             <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-              <Layers className="h-4 w-4 text-primary" /> {laptop.specifications?.ram} MEMORY
+              <Layers className="h-4 w-4 text-primary" /> {laptop.specifications?.ram || '8GB'} MEMORY
             </div>
             <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-              <HardDrive className="h-4 w-4 text-primary" /> {laptop.specifications?.storage} SSD
+              <HardDrive className="h-4 w-4 text-primary" /> {laptop.specifications?.storage || '256GB'} SSD
             </div>
         </div>
         
         <div className="mt-auto flex items-end justify-between gap-4">
             <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase text-zinc-400 mb-1">Pricing</span>
+              <span className="text-[10px] font-black uppercase text-zinc-400 mb-1">Price Analysis</span>
               <div className="flex flex-col">
                 <span className="text-3xl font-black text-primary leading-none tracking-tighter">
                   KES {laptop.price.toLocaleString()}
@@ -124,17 +128,17 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
                 )}
               </div>
             </div>
-            <Link href={`/laptops/${laptop.id}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-50 text-zinc-300 transition-all hover:bg-black hover:text-white border-2 border-transparent hover:border-black">
+            <Link href={`/laptops/${laptop.id}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-50 text-zinc-300 transition-all hover:bg-black hover:text-white border-2 border-transparent hover:border-black shadow-sm">
                <Info className="h-6 w-6" />
             </Link>
         </div>
       </CardContent>
 
-      {/* Primary Action Bar */}
+      {/* Tactile Action Bar */}
       <CardFooter className="grid grid-cols-2 gap-4 p-8 pt-0">
         <Button 
           variant="outline" 
-          onClick={() => addToCart(laptop)} 
+          onClick={() => addToCart(laptop as any)} 
           className="h-16 rounded-3xl border-4 border-black font-black uppercase tracking-widest text-lg transition-all hover:bg-black hover:text-white active:scale-95"
           aria-label={`Add ${laptop.name} to cart`}
         >
