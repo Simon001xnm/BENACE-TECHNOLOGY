@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useFirestore, useStorage } from '@/firebase';
 import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { editProductImage } from '@/ai/flows/edit-image-flow';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 import { useForm } from 'react-hook-form';
@@ -31,7 +32,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { ImageIcon, Loader2, X, Upload, AlertCircle } from 'lucide-react';
+import { ImageIcon, Loader2, X, Upload, Sparkles, Wand2 } from 'lucide-react';
 import Image from 'next/image';
 
 const productSchema = z.object({
@@ -60,19 +61,10 @@ interface ProductFormProps {
   productId?: string;
 }
 
-/**
- * Recursively removes undefined values from an object to make it Firestore-compatible.
- */
 function sanitizeFirestoreData(data: any): any {
-  if (Array.isArray(data)) {
-    return data.map(sanitizeFirestoreData);
-  }
+  if (Array.isArray(data)) return data.map(sanitizeFirestoreData);
   if (data !== null && typeof data === 'object' && !(data instanceof Date)) {
-    // Check if it's a Firestore sentinel like serverTimestamp()
-    if (data._methodName === 'serverTimestamp' || data.constructor?.name === 'FieldValueImpl') {
-      return data;
-    }
-    
+    if (data._methodName === 'serverTimestamp' || data.constructor?.name === 'FieldValueImpl') return data;
     return Object.fromEntries(
       Object.entries(data)
         .filter(([_, v]) => v !== undefined)
@@ -85,7 +77,7 @@ function sanitizeFirestoreData(data: any): any {
 export function ProductForm({ initialData, productId }: ProductFormProps) {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  
+  const [processingIndex, setProcessingIndex] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const db = useFirestore();
@@ -102,12 +94,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       category: 'Laptops',
       type: 'laptop',
       inStock: true,
-      specifications: {
-        processor: '',
-        ram: '',
-        storage: '',
-        display: '',
-      },
+      specifications: { processor: '', ram: '', storage: '', display: '' },
       imageUrls: [],
     },
   });
@@ -115,7 +102,6 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
   const onSubmit = async (values: ProductFormValues) => {
     if (!db) return;
     setLoading(true);
-
     const productData = sanitizeFirestoreData({
       ...values,
       updatedAt: serverTimestamp(),
@@ -125,21 +111,18 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     try {
       if (productId) {
         await setDoc(doc(db, 'products', productId), productData, { merge: true });
-        toast({ title: 'Success', description: 'Product updated successfully.' });
+        toast({ title: 'Success', description: 'Product updated.' });
       } else {
         await addDoc(collection(db, 'products'), productData);
-        toast({ title: 'Success', description: 'New product added to catalog.' });
+        toast({ title: 'Success', description: 'Product added.' });
       }
       router.push('/admin/products');
-      router.refresh();
     } catch (error: any) {
-      console.error("Firestore Write Error:", error);
-      const permissionError = new FirestorePermissionError({
+      errorEmitter.emit('permission-error', new FirestorePermissionError({
         path: productId ? `products/${productId}` : 'products',
         operation: productId ? 'update' : 'create',
         requestResourceData: productData,
-      } satisfies SecurityRuleContext);
-      errorEmitter.emit('permission-error', permissionError);
+      }));
     } finally {
       setLoading(false);
     }
@@ -148,289 +131,124 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !storage) return;
-
-    if (file.size > 10 * 1024 * 1024) {
-      toast({ variant: 'destructive', title: 'File too large', description: 'Maximum image size is 10MB.' });
-      return;
-    }
-
     setUploading(true);
-
     try {
-      const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-      const imagePath = `products/${fileName}`;
-      const storageRef = ref(storage, imagePath);
-      
+      const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
       const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      
-      const current = form.getValues('imageUrls') || [];
-      form.setValue('imageUrls', [...current, downloadURL], { shouldDirty: true });
-      
-      toast({ 
-        title: 'Upload Successful', 
-        description: `${file.name} is now part of the gallery.` 
-      });
+      const url = await getDownloadURL(snapshot.ref);
+      form.setValue('imageUrls', [...form.getValues('imageUrls'), url], { shouldDirty: true });
     } catch (err: any) {
-      console.error("Firebase Storage Error:", err);
-      toast({ 
-        variant: 'destructive', 
-        title: 'Upload Failed', 
-        description: err.message || "Could not upload image." 
-      });
+      toast({ variant: 'destructive', title: 'Upload Failed', description: err.message });
     } finally {
       setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
-  const removeImage = (index: number) => {
-    const current = form.getValues('imageUrls') || [];
-    form.setValue('imageUrls', current.filter((_, i) => i !== index), { shouldDirty: true });
-  };
+  const removeBackground = async (index: number) => {
+    const imageUrl = form.getValues('imageUrls')[index];
+    if (!storage || !imageUrl) return;
 
-  const watchedImageUrls = form.watch('imageUrls') || [];
+    setProcessingIndex(index);
+    try {
+      // Convert URL to data URI for Gemini processing
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      const dataUri = await new Promise<string>((resolve) => {
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+
+      const { editedImageDataUri } = await editProductImage({
+        imageDataUri: dataUri,
+        prompt: "Remove the background from this image. Make it purely white. Keep only the product (laptop/accessory) with high detail.",
+      });
+
+      // Upload processed image back to Storage
+      const res = await fetch(editedImageDataUri);
+      const processedBlob = await res.blob();
+      const storageRef = ref(storage, `products/ai_cleaned_${Date.now()}.png`);
+      const snapshot = await uploadBytes(storageRef, processedBlob);
+      const newUrl = await getDownloadURL(snapshot.ref);
+
+      const current = [...form.getValues('imageUrls')];
+      current[index] = newUrl;
+      form.setValue('imageUrls', current, { shouldDirty: true });
+
+      toast({ title: 'AI Cleanup Complete', description: 'Background removed successfully.' });
+    } catch (err: any) {
+      toast({ variant: 'destructive', title: 'AI Cleanup Failed', description: 'Could not process image.' });
+    } finally {
+      setProcessingIndex(null);
+    }
+  };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-        <div className="grid gap-8 md:grid-cols-2">
-           <FormField
-            control={form.control}
-            name="type"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Product Class</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                      <SelectValue placeholder="Select Class" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="font-black border-2 border-black">
-                    <SelectItem value="laptop">LAPTOP</SelectItem>
-                    <SelectItem value="accessory">ACCESSORY / PERIPHERAL</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Stock Group</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                      <SelectValue placeholder="Select Group" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="font-black border-2 border-black shadow-lg">
-                    {['Laptops', 'Desktops', 'Accessories', 'Printers', 'Networking', 'Software', 'Mouse', 'UPS'].map(cat => (
-                      <SelectItem key={cat} value={cat} className="uppercase tracking-widest text-[10px]">{cat}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="md:col-span-2">
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Full Model Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g. Lenovo ThinkBook 14-IRL" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="brand"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Manufacturer</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g. Lenovo, Dell, HP" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Listing Price (KES)</FormLabel>
-                <FormControl>
-                  <Input type="number" {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="space-y-6">
-          <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
-            Status <span className="h-px flex-1 bg-black"></span>
-          </h3>
-          <div className="grid gap-8 md:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Device Condition</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                        <SelectValue placeholder="Condition" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="font-black border-2 border-black">
-                      <SelectItem value="New">BRAND NEW</SelectItem>
-                      <SelectItem value="Boxed">BOXED (OPENED)</SelectItem>
-                      <SelectItem value="Ex-UK">EX-UK (PRE-OWNED)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="inStock"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-xl border-4 border-black p-6 bg-zinc-50 shadow-[4px_4px_0px_0px_rgba(0,186,242,1)]">
-                  <div className="space-y-0.5">
-                    <FormLabel className="font-black uppercase text-[10px] tracking-widest">Inventory Availability</FormLabel>
-                    <FormDescription className="text-[10px] font-bold text-zinc-400 uppercase">Is this item ready for sale?</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
-            Specifications <span className="h-px flex-1 bg-black"></span>
-          </h3>
-          <div className="grid gap-6 md:grid-cols-2">
-            {['processor', 'ram', 'storage', 'display'].map((spec) => (
-              <FormField
-                key={spec}
-                control={form.control}
-                name={`specifications.${spec}` as any}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">{spec}</FormLabel>
-                    <FormControl>
-                      <Input {...field} className="h-12 border-2 border-black font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus-visible:ring-0" />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            ))}
-          </div>
-        </div>
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-black uppercase text-[10px] tracking-widest text-zinc-400">Marketing Description</FormLabel>
-              <FormControl>
-                <Textarea {...field} className="min-h-[160px] border-4 border-black font-bold p-4 shadow-[4px_4px_0px_0px_rgba(0,186,242,1)] focus-visible:ring-0" />
-              </FormControl>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="grid gap-6 md:grid-cols-2">
+          <FormField control={form.control} name="name" render={({ field }) => (
+            <FormItem className="md:col-span-2">
+              <FormLabel className="text-xs font-bold uppercase">Product Name</FormLabel>
+              <Input {...field} className="h-11 rounded-lg border-zinc-200 focus:ring-primary" />
               <FormMessage />
             </FormItem>
-          )}
-        />
+          )} />
+          <FormField control={form.control} name="brand" render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs font-bold uppercase">Brand</FormLabel>
+              <Input {...field} className="h-11 rounded-lg border-zinc-200" />
+            </FormItem>
+          )} />
+          <FormField control={form.control} name="price" render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs font-bold uppercase">Price (KES)</FormLabel>
+              <Input type="number" {...field} className="h-11 rounded-lg border-zinc-200" />
+            </FormItem>
+          )} />
+        </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-black uppercase tracking-tight">Visuals</h3>
-            <div className="flex items-center gap-4">
-              <input
-                type="file"
-                className="hidden"
-                ref={fileInputRef}
-                accept="image/*"
-                onChange={handleFileUpload}
-              />
-              <Button 
-                type="button" 
-                disabled={uploading || !storage}
-                onClick={() => fileInputRef.current?.click()} 
-                className="bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)]"
-              >
-                {uploading ? <Loader2 className="mr-2 h-3 w-3 animate-spin" /> : <Upload className="mr-2 h-3 w-3" />}
-                {uploading ? `Uploading...` : 'Upload from Device'}
-              </Button>
-            </div>
+            <h3 className="text-sm font-black uppercase tracking-widest text-zinc-500">Visual Assets</h3>
+            <Button type="button" size="sm" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
+              {uploading ? <Loader2 className="animate-spin" /> : <Upload className="mr-2 h-4 w-4" />} Upload Image
+            </Button>
+            <input type="file" className="hidden" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" />
           </div>
-          
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {watchedImageUrls.map((url, i) => (
-              <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1">
-                <Image src={url} alt={`Product View ${i + 1}`} fill className="object-contain p-2" />
-                <div className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100">
-                  <button
-                    type="button"
-                    onClick={() => removeImage(i)}
-                    className="rounded-lg bg-red-600 p-2 text-white border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,186,242,1)] hover:bg-red-700"
+            {form.watch('imageUrls').map((url, i) => (
+              <div key={i} className="group relative aspect-square rounded-xl border bg-white p-2">
+                <Image src={url} alt="Preview" fill className="object-contain" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100 rounded-xl">
+                  <Button 
+                    type="button" 
+                    size="sm" 
+                    variant="secondary" 
+                    className="h-8 text-[10px] font-bold"
+                    onClick={() => removeBackground(i)}
+                    disabled={processingIndex === i}
                   >
-                    <X className="h-4 w-4" />
-                  </button>
+                    {processingIndex === i ? <Loader2 className="h-3 w-3 animate-spin" /> : <Wand2 className="mr-1 h-3 w-3" />}
+                    AI CLEAN BG
+                  </Button>
+                  <Button 
+                    type="button" 
+                    size="sm" 
+                    variant="destructive" 
+                    className="h-8 text-[10px] font-bold"
+                    onClick={() => form.setValue('imageUrls', form.getValues('imageUrls').filter((_, idx) => idx !== i))}
+                  >
+                    REMOVE
+                  </Button>
                 </div>
               </div>
             ))}
-            {!watchedImageUrls.length && !uploading && (
-              <div className="flex h-32 flex-col items-center justify-center rounded-xl border-4 border-dashed border-zinc-200 bg-zinc-50 col-span-full">
-                <ImageIcon className="mb-2 h-8 w-8 text-zinc-300" />
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">No media attached yet</p>
-              </div>
-            )}
-          </div>
-          
-          <div className="rounded-lg bg-zinc-100 p-4 border-2 border-dashed border-zinc-300">
-             <div className="flex items-start gap-3">
-                <AlertCircle className="h-4 w-4 text-zinc-500 mt-0.5" />
-                <div className="text-[10px] font-bold uppercase text-zinc-500 tracking-tight leading-normal">
-                   Using official bucket. Ensure <strong>Storage Rules</strong> in the Firebase Console allow <code>write</code> access to authenticated users.
-                </div>
-             </div>
           </div>
         </div>
 
-        <Button 
-          type="submit" 
-          disabled={loading || uploading}
-          className="h-16 w-full bg-black font-black uppercase tracking-widest text-white border-4 border-black hover:bg-primary hover:text-black shadow-[10px_10px_0px_0px_rgba(0,186,242,1)] active:translate-y-2 active:shadow-none transition-all"
-        >
-          {loading ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}
-          {productId ? 'Update Listing' : 'Publish to Shop'}
+        <Button type="submit" size="lg" className="w-full h-14 rounded-xl bg-black font-bold uppercase tracking-widest" disabled={loading}>
+          {loading ? <Loader2 className="animate-spin" /> : 'Save Product Listing'}
         </Button>
       </form>
     </Form>

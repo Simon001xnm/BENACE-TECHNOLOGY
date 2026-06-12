@@ -1,6 +1,7 @@
 'use server';
 /**
  * @fileOverview A Genkit flow for AI-powered image editing and enhancement.
+ * Specifically optimized for product cleanup and background removal.
  *
  * - editProductImage - A function that handles image-to-image generation.
  * - EditImageInput - The input type for the editProductImage function.
