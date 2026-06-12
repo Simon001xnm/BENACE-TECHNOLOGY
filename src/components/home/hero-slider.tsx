@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -12,6 +11,7 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel';
 import { ArrowRight, Sparkles, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const SLIDES = [
   {
