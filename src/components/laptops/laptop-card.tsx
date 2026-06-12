@@ -12,17 +12,22 @@ import {
 import { useCart } from '@/lib/cart-context';
 import type { Laptop } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ShoppingCart, Star, Info, ArrowRight, Cpu, Layers, HardDrive } from 'lucide-react';
+import { ShoppingCart, Star, Info, ArrowRight, Cpu, Layers, HardDrive, Monitor, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
+interface LaptopCardProps {
+  laptop: Laptop;
+  viewMode?: 'grid' | 'list';
+}
+
 /**
  * Version 1255 Laptop Card
- * Optimized for spec-driven browsing. Replaces "Quick View" with high-fidelity
- * hardware information directly on the card.
+ * Optimized for spec-driven browsing. Supports Grid and List modes.
+ * List mode provides immediate visibility into the hardware stack for rapid comparison.
  */
-export function LaptopCard({ laptop }: { laptop: Laptop }) {
+export function LaptopCard({ laptop, viewMode = 'grid' }: LaptopCardProps) {
   const { addToCart } = useCart();
   
   const displayImage = laptop.imageUrls && laptop.imageUrls.length > 0 
@@ -38,9 +43,105 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
     }
   };
 
+  if (viewMode === 'list') {
+    return (
+      <Card className="group relative flex flex-col md:flex-row overflow-hidden rounded-[2.5rem] border-4 border-black bg-white transition-all duration-500 hover:shadow-[16px_16px_0px_0px_rgba(0,186,242,1)]">
+        {/* Visual Node */}
+        <div className="relative aspect-video w-full md:w-1/3 overflow-hidden bg-zinc-50 border-b-4 md:border-b-0 md:border-r-4 border-black">
+          <Link href={`/laptops/${laptop.id}`} className="block h-full w-full">
+            {displayImage ? (
+              <Image
+                src={displayImage}
+                alt={laptop.name}
+                fill
+                className="object-contain p-8 transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-zinc-100">
+                <ShoppingCart className="h-12 w-12 text-zinc-300" />
+              </div>
+            )}
+          </Link>
+          <div className="absolute left-4 top-4">
+             {laptop.status && (
+              <Badge className={cn("font-black uppercase tracking-widest px-3 py-1 rounded-full border-2 text-[8px] shadow-sm", getStatusStyle())}>
+                {laptop.status}
+              </Badge>
+            )}
+          </div>
+        </div>
+
+        {/* Data Architecture Node */}
+        <CardContent className="flex flex-grow flex-col p-6 md:p-8">
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
+                {laptop.brand} ARCHITECTURE
+              </span>
+              <Link href={`/laptops/${laptop.id}`}>
+                <CardTitle className="text-2xl font-black leading-tight tracking-tight text-black transition-colors group-hover:text-primary mt-1">
+                  {laptop.name}
+                </CardTitle>
+              </Link>
+            </div>
+            <div className="flex flex-col items-start sm:items-end">
+              <span className="text-3xl font-black text-primary tracking-tighter">
+                KES {laptop.price.toLocaleString()}
+              </span>
+              {laptop.oldPrice && (
+                <span className="text-xs font-bold text-zinc-300 line-through">
+                  KES {laptop.oldPrice.toLocaleString()}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Detailed Hardware Stack - Optimized for scanning */}
+          <div className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { icon: Cpu, label: 'CPU', value: laptop.specifications?.processor },
+              { icon: Layers, label: 'RAM', value: laptop.specifications?.ram },
+              { icon: HardDrive, label: 'Storage', value: laptop.specifications?.storage },
+              { icon: Monitor, label: 'Display', value: laptop.specifications?.display }
+            ].map((spec, i) => (
+              <div key={i} className="flex items-center gap-3 rounded-2xl border-2 border-zinc-100 p-3 bg-zinc-50/50">
+                <spec.icon className="h-4 w-4 text-primary shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-[8px] font-black uppercase text-zinc-400 tracking-widest">{spec.label}</p>
+                  <p className="truncate text-[10px] font-bold text-black uppercase">{spec.value || 'N/A'}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-auto flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest">
+              <CheckCircle2 className="h-4 w-4" /> Ready for Deployment
+            </div>
+            <div className="flex flex-1 items-center justify-end gap-3 w-full sm:w-auto">
+              <Button 
+                variant="outline" 
+                onClick={() => addToCart(laptop as any)} 
+                className="h-12 w-full sm:w-12 rounded-2xl border-2 border-black p-0 hover:bg-black hover:text-white"
+              >
+                <ShoppingCart className="h-5 w-5" />
+              </Button>
+              <Button asChild className="h-12 flex-1 sm:flex-none sm:px-8 rounded-2xl bg-black font-black uppercase tracking-widest text-xs text-white border-2 border-black hover:bg-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <Link href={`/laptops/${laptop.id}`}>
+                  View Details
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Grid View (Existing Version 1255 Design)
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border-4 border-black bg-white transition-all duration-500 hover:-translate-y-4 hover:shadow-[16px_16px_0px_0px_rgba(0,136,204,1)]">
-      {/* Dynamic Sale Tag */}
       {laptop.salePercentage && (
         <div className="absolute left-6 top-6 z-20">
           <Badge className="bg-red-600 font-black text-white px-4 py-1.5 rounded-full border-2 border-black text-xs shadow-lg">
@@ -49,7 +150,6 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       )}
 
-      {/* Main Image Link - High Speed Gateway */}
       <CardHeader className="relative aspect-[5/4] p-0 overflow-hidden bg-zinc-50 border-b-4 border-black">
         <Link href={`/laptops/${laptop.id}`} className="block h-full w-full">
           {displayImage ? (
@@ -72,7 +172,6 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
             </div>
           </div>
         </Link>
-        
         <div className="absolute bottom-6 left-6">
           {laptop.status && (
             <Badge className={cn("font-black uppercase tracking-widest px-4 py-1.5 rounded-full border-2 text-[10px] shadow-sm", getStatusStyle())}>
@@ -82,7 +181,6 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       </CardHeader>
 
-      {/* Hardware Node - Spec Information Core */}
       <CardContent className="flex flex-grow flex-col p-8">
         <div className="mb-4 flex items-center justify-between">
           <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400">
@@ -101,7 +199,6 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
           </CardTitle>
         </Link>
 
-        {/* Hardware Stack Overview */}
         <div className="mb-8 grid grid-cols-1 gap-2 border-l-4 border-zinc-100 pl-4">
             <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
               <Cpu className="h-4 w-4 text-primary" /> {laptop.specifications?.processor || 'Standard Chip'}
@@ -134,7 +231,6 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       </CardContent>
 
-      {/* Tactile Action Bar */}
       <CardFooter className="grid grid-cols-2 gap-4 p-8 pt-0">
         <Button 
           variant="outline" 
