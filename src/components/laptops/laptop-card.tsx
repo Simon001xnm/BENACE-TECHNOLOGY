@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,7 +12,7 @@ import {
 import { useCart } from '@/lib/cart-context';
 import type { Laptop } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ShoppingCart, Eye, Star, Info } from 'lucide-react';
+import { ShoppingCart, Star, Info, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -36,7 +35,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
 
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border-4 border-black bg-white transition-all duration-500 hover:-translate-y-4 hover:shadow-[16px_16px_0px_0px_rgba(0,136,204,1)]">
-      {/* Visual Badge */}
+      {/* Sale Tag */}
       {laptop.salePercentage && (
         <div className="absolute left-6 top-6 z-20">
           <Badge className="bg-red-600 font-black text-white px-4 py-1.5 rounded-full border-2 border-black text-xs">
@@ -45,7 +44,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       )}
 
-      {/* Glossy Image Container */}
+      {/* Main Image Link - Direct to Specs */}
       <CardHeader className="relative aspect-[5/4] p-0 overflow-hidden bg-zinc-50 border-b-4 border-black">
         <Link href={`/laptops/${laptop.id}`} className="block h-full w-full">
           {displayImage ? (
@@ -62,14 +61,15 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
              </div>
           )}
           
-          <div className="absolute inset-0 flex items-center justify-center bg-primary/20 opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:opacity-100">
-            <div className="translate-y-10 rounded-full bg-black p-6 text-white shadow-2xl transition-all duration-500 group-hover:translate-y-0 hover:bg-primary hover:text-white">
-              <Eye className="h-8 w-8" />
+          {/* Subtle Direct Action Hint (No Modal) */}
+          <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-all duration-500 group-hover:opacity-100 p-6">
+            <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[10px] font-black uppercase tracking-widest text-black shadow-xl ring-2 ring-black">
+              View Full Specs <ArrowRight className="h-3 w-3" />
             </div>
           </div>
         </Link>
         
-        {/* Android-style Status Badge */}
+        {/* Status Badge */}
         <div className="absolute bottom-6 left-6">
           {laptop.status && (
             <Badge className={cn("font-black uppercase tracking-widest px-4 py-1.5 rounded-full border-2 text-[10px]", getStatusStyle())}>
@@ -79,7 +79,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
         </div>
       </CardHeader>
 
-      {/* Premium Content */}
+      {/* Content Area */}
       <CardContent className="flex flex-grow flex-col p-8">
         <div className="mb-4 flex items-center justify-between">
           <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400">
@@ -98,12 +98,16 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
           </CardTitle>
         </Link>
 
+        {/* Spec Overview - Hook for Detail Page */}
         <div className="mb-6 flex flex-wrap gap-2">
             {[laptop.specifications?.ram, laptop.specifications?.storage].filter(Boolean).map((spec, i) => (
               <span key={i} className="px-3 py-1 bg-zinc-100 rounded-full text-[10px] font-black uppercase text-zinc-500 border border-zinc-200">
                 {spec}
               </span>
             ))}
+            <span className="px-3 py-1 bg-primary/10 rounded-full text-[10px] font-black uppercase text-primary border border-primary/20">
+              {laptop.specifications?.processor}
+            </span>
         </div>
         
         <div className="mt-auto flex items-end justify-between gap-4">
@@ -120,18 +124,19 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
                 )}
               </div>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-400 transition-colors group-hover:bg-primary/10 group-hover:text-primary">
+            <Link href={`/laptops/${laptop.id}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-400 transition-all hover:bg-black hover:text-white">
                <Info className="h-6 w-6" />
-            </div>
+            </Link>
         </div>
       </CardContent>
 
-      {/* Action Bar */}
+      {/* Direct Action Bar */}
       <CardFooter className="grid grid-cols-2 gap-4 p-8 pt-0">
         <Button 
           variant="outline" 
           onClick={() => addToCart(laptop)} 
           className="h-16 rounded-3xl border-4 border-black font-black uppercase tracking-widest text-lg transition-all hover:bg-black hover:text-white active:scale-95"
+          aria-label={`Add ${laptop.name} to cart`}
         >
           <ShoppingCart className="h-6 w-6" />
         </Button>
@@ -140,7 +145,7 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
           className="h-16 rounded-3xl bg-black font-black uppercase tracking-widest text-white border-4 border-black hover:bg-primary hover:text-white transition-all active:scale-95 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
         >
             <Link href={`/laptops/${laptop.id}`}>
-              Specs
+              Full Specs
             </Link>
         </Button>
       </CardFooter>
