@@ -2,7 +2,9 @@
 
 import { useState, useMemo } from 'react';
 import { LaptopCard } from '@/components/laptops/laptop-card';
+import { ComparisonOverlay } from './comparison-overlay';
 import { useCollection, useFirestore } from '@/firebase';
+import { useCompare } from '@/lib/compare-context';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { Input } from '@/components/ui/input';
 import {
@@ -13,11 +15,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { SlidersHorizontal, Loader2, DatabaseBackup, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, Loader2, DatabaseBackup, BarChart2, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function LaptopsGrid() {
   const db = useFirestore();
+  const { compareItems, setIsComparing, clearCompare } = useCompare();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('relevance');
 
@@ -50,22 +53,26 @@ export function LaptopsGrid() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-4 py-8 relative">
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-medium tracking-tight text-zinc-900 mb-8">
-          Laptop and Notebook Computers
+          Technical Laptop Portfolio
         </h1>
         
         {/* Toolbar */}
-        <div className="flex items-center justify-between gap-4">
-          <Button variant="outline" className="h-12 rounded-full px-6 border-zinc-200 shadow-sm font-medium flex items-center gap-2">
-            <SlidersHorizontal className="h-4 w-4" /> Filters
-          </Button>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-6 rounded-[2rem] shadow-soft">
+          <div className="flex-grow w-full max-w-md">
+            <Input 
+              placeholder="Search by model or brand..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-12 rounded-full border-zinc-100 bg-zinc-50 px-6 font-medium focus-visible:ring-primary/20"
+            />
+          </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-zinc-400">Sort by</span>
+          <div className="flex items-center gap-4 w-full md:w-auto">
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="h-12 border-none bg-transparent shadow-none font-bold text-zinc-700 w-fit gap-2">
+              <SelectTrigger className="h-12 rounded-full border-zinc-100 bg-zinc-50 px-6 font-bold text-zinc-600 w-full md:w-48">
                 <SelectValue placeholder="Best Match" />
               </SelectTrigger>
               <SelectContent className="rounded-2xl border-none shadow-xl">
@@ -74,9 +81,53 @@ export function LaptopsGrid() {
                 <SelectItem value="price-high">Price: High to Low</SelectItem>
               </SelectContent>
             </Select>
+            <Button variant="outline" className="h-12 w-12 rounded-full border-zinc-100 bg-zinc-50 p-0 text-zinc-400">
+              <SlidersHorizontal className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
+
+      {/* Comparison Action Bar */}
+      {compareItems.length > 0 && (
+        <div className="sticky top-20 z-40 mb-8 flex items-center justify-between rounded-full bg-black px-6 py-4 shadow-2xl text-white animate-in fade-in zoom-in duration-300">
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-black uppercase tracking-widest">Comparing {compareItems.length}/4</span>
+            <div className="flex -space-x-2">
+              {compareItems.map((item) => (
+                <div key={item.id} className="h-8 w-8 rounded-full border-2 border-black bg-white overflow-hidden">
+                   {item.imageId && (
+                      <Image 
+                        src={PlaceHolderImages.find(img => img.id === item.imageId)?.imageUrl || '/use.png'} 
+                        alt={item.name} 
+                        width={32} 
+                        height={32} 
+                        className="object-contain p-1"
+                      />
+                   )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={clearCompare}
+              className="text-white hover:text-red-400 font-bold uppercase text-[10px]"
+            >
+              <Trash2 className="mr-2 h-3 w-3" /> Clear
+            </Button>
+            <Button 
+              size="sm" 
+              onClick={() => setIsComparing(true)}
+              className="bg-primary text-black font-black uppercase text-[10px] rounded-full px-6 hover:bg-white"
+            >
+              <BarChart2 className="mr-2 h-3 w-3" /> View Comparison
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Results */}
       {filteredLaptops.length > 0 ? (
@@ -91,6 +142,9 @@ export function LaptopsGrid() {
           <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">No matching models found</p>
         </div>
       )}
+
+      {/* Full Comparison Overlay */}
+      <ComparisonOverlay />
     </div>
   );
 }

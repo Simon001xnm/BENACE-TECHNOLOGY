@@ -4,11 +4,13 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/lib/cart-context';
+import { useCompare } from '@/lib/compare-context';
 import type { Laptop } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Star, List, ShoppingCart, Truck } from 'lucide-react';
+import { Star, List, ShoppingCart, Truck, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -20,13 +22,13 @@ interface LaptopCardProps {
 
 export function LaptopCard({ laptop, viewMode = 'list' }: LaptopCardProps) {
   const { addToCart } = useCart();
+  const { compareItems, addToCompare, removeFromCompare } = useCompare();
   const [quantity, setQuantity] = useState(1);
   
+  const isSelectedForCompare = compareItems.some((item) => item.id === laptop.id);
   const displayImage = laptop.imageUrls && laptop.imageUrls.length > 0 
     ? laptop.imageUrls[0] 
     : PlaceHolderImages.find(img => img.id === laptop.imageId)?.imageUrl;
-
-  const savings = laptop.oldPrice ? laptop.oldPrice - laptop.price : 0;
 
   return (
     <Card className={cn(
@@ -40,7 +42,20 @@ export function LaptopCard({ laptop, viewMode = 'list' }: LaptopCardProps) {
         )}>
           {/* Top Metadata Row */}
           <div className="flex items-center justify-between w-full md:absolute md:top-6 md:left-6 md:right-6 md:z-10">
-            <button className="text-[11px] font-bold text-red-600 hover:underline">Compare</button>
+            <div className="flex items-center gap-2">
+              <Checkbox 
+                id={`compare-${laptop.id}`}
+                checked={isSelectedForCompare}
+                onCheckedChange={(checked) => {
+                  if (checked) addToCompare(laptop);
+                  else removeFromCompare(laptop.id);
+                }}
+                className="border-zinc-300"
+              />
+              <label htmlFor={`compare-${laptop.id}`} className="text-[11px] font-bold text-zinc-500 cursor-pointer hover:text-primary">
+                Compare
+              </label>
+            </div>
             <div className="flex items-center gap-2">
                {laptop.salePercentage && (
                   <Badge className="bg-[#f2e8f5] text-[#8e44ad] border-none font-bold text-[10px] px-3">
@@ -67,9 +82,9 @@ export function LaptopCard({ laptop, viewMode = 'list' }: LaptopCardProps) {
                 />
               )}
             </Link>
-            {laptop.status === 'Boxed' && (
+            {laptop.status && (
                <Badge className="absolute bottom-0 left-0 bg-[#fff1f2] text-[#e11d48] border-none font-bold text-[9px] uppercase tracking-wider px-3 py-1">
-                  Special Buy
+                  {laptop.status}
                </Badge>
             )}
           </div>
@@ -86,8 +101,23 @@ export function LaptopCard({ laptop, viewMode = 'list' }: LaptopCardProps) {
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-amber-400 text-amber-400" : "text-zinc-200")} />
                 ))}
-                <span className="text-xs font-bold text-zinc-400 ml-2">2</span>
+                <span className="text-xs font-bold text-zinc-400 ml-2">2 Reviews</span>
               </div>
+            </div>
+
+            {/* Hardware Summary Hub */}
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2 py-2 border-t border-b border-zinc-50">
+              {[
+                { label: 'CPU', value: laptop.specifications.processor },
+                { label: 'RAM', value: laptop.specifications.ram },
+                { label: 'SSD', value: laptop.specifications.storage },
+                { label: 'LCD', value: laptop.specifications.display }
+              ].map((spec) => (
+                <div key={spec.label} className="flex flex-col">
+                  <span className="text-[9px] font-black text-zinc-300 uppercase">{spec.label}</span>
+                  <span className="text-[10px] font-bold text-zinc-600 truncate">{spec.value}</span>
+                </div>
+              ))}
             </div>
 
             <div className="space-y-1">
@@ -104,7 +134,7 @@ export function LaptopCard({ laptop, viewMode = 'list' }: LaptopCardProps) {
             </div>
 
             {/* Action Row */}
-            <div className="flex items-center gap-2 pt-4">
+            <div className="flex items-center gap-2 pt-2">
               <Input 
                 type="number" 
                 value={quantity} 
@@ -113,10 +143,10 @@ export function LaptopCard({ laptop, viewMode = 'list' }: LaptopCardProps) {
                 min="1"
               />
               <Button 
-                onClick={() => addToCart(laptop as any)}
-                className="flex-grow h-12 rounded-full bg-white border border-zinc-200 text-black font-bold hover:bg-zinc-50 transition-all shadow-sm"
+                onClick={() => addToCart({ ...laptop, quantity } as any)}
+                className="flex-grow h-12 rounded-full bg-red-600 text-white font-black uppercase tracking-widest text-[10px] hover:bg-red-700 transition-all shadow-md"
               >
-                Add
+                Add to Cart
               </Button>
             </div>
           </div>

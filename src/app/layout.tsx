@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/lib/cart-context';
+import { CompareProvider } from '@/lib/compare-context';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { PublicLayoutWrapper } from '@/components/layout/public-layout-wrapper';
 
@@ -36,10 +37,12 @@ export default function RootLayout({
       <body className="font-body antialiased bg-[#f4f4f4] text-foreground" suppressHydrationWarning>
         <FirebaseClientProvider>
           <CartProvider>
-            <PublicLayoutWrapper>
-              {children}
-            </PublicLayoutWrapper>
-            <Toaster />
+            <CompareProvider>
+              <PublicLayoutWrapper>
+                {children}
+              </PublicLayoutWrapper>
+              <Toaster />
+            </CompareProvider>
           </CartProvider>
         </FirebaseClientProvider>
       </body>
