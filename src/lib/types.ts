@@ -15,6 +15,10 @@ export type Laptop = {
     ram: string;
     storage: string;
     display: string;
+    graphics?: string;
+    battery?: string;
+    weight?: string;
+    os?: string;
   };
   imageId: string;
   imageUrls?: string[];
