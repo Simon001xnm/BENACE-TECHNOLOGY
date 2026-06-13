@@ -42,7 +42,7 @@ export function LaptopsGrid() {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list'); // Default to list for better comparison
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list'); // Defaulting to List View as per Baymard research
   const [sortBy, setSortBy] = useState('relevance');
 
   const laptopsQuery = useMemo(() => {
@@ -100,11 +100,11 @@ export function LaptopsGrid() {
       <div className="bg-white p-6 border border-zinc-200 rounded-xl shadow-sm">
         <div className="flex items-center gap-2 mb-6 border-b pb-4">
           <SlidersHorizontal className="h-4 w-4 text-primary" />
-          <h3 className="font-black text-xs uppercase tracking-widest text-black">Technical Filters</h3>
+          <h3 className="font-black text-[10px] uppercase tracking-widest text-black">Master Filters</h3>
         </div>
         <Accordion type="multiple" defaultValue={["brand", "status"]} className="w-full">
           <AccordionItem value="brand" className="border-none">
-            <AccordionTrigger className="text-[10px] font-black uppercase tracking-widest py-3 hover:no-underline">Brand</AccordionTrigger>
+            <AccordionTrigger className="text-[10px] font-black uppercase tracking-widest py-3 hover:no-underline">Filter By Brand</AccordionTrigger>
             <AccordionContent>
               <div className="space-y-3 pt-2">
                 {brands.map(brand => (
@@ -113,7 +113,7 @@ export function LaptopsGrid() {
                       id={`brand-${brand}`} 
                       checked={selectedBrands.includes(brand)}
                       onCheckedChange={() => toggleBrand(brand)}
-                      className="border-zinc-300 data-[state=checked]:bg-black"
+                      className="border-zinc-300 data-[state=checked]:bg-black rounded"
                     />
                     <label htmlFor={`brand-${brand}`} className="text-sm font-medium leading-none cursor-pointer text-zinc-600 group-hover:text-black transition-colors">
                       {brand}
@@ -134,7 +134,7 @@ export function LaptopsGrid() {
                       id={`status-${status}`} 
                       checked={selectedStatus.includes(status)}
                       onCheckedChange={() => toggleStatus(status)}
-                      className="border-zinc-300 data-[state=checked]:bg-black"
+                      className="border-zinc-300 data-[state=checked]:bg-black rounded"
                     />
                     <label htmlFor={`status-${status}`} className="text-sm font-medium leading-none cursor-pointer text-zinc-600 group-hover:text-black transition-colors">
                       {status}
@@ -151,7 +151,7 @@ export function LaptopsGrid() {
           className="w-full mt-8 text-[9px] font-black uppercase tracking-widest text-zinc-400 hover:text-red-500"
           onClick={() => { setSelectedBrands([]); setSelectedStatus([]); setSearchTerm(''); }}
         >
-          Reset All
+          Reset All Filters
         </Button>
       </div>
     </div>
@@ -161,7 +161,7 @@ export function LaptopsGrid() {
     return (
       <div className="flex h-[60vh] flex-col items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Syncing Catalog...</p>
+        <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Syncing Master Inventory...</p>
       </div>
     );
   }
@@ -179,11 +179,11 @@ export function LaptopsGrid() {
           <div className="flex items-center gap-4 w-full sm:w-auto">
              <Sheet>
                <SheetTrigger asChild>
-                 <Button variant="outline" size="sm" className="lg:hidden flex items-center gap-2 h-10 px-4 border-zinc-300">
+                 <Button variant="outline" size="sm" className="lg:hidden flex items-center gap-2 h-10 px-4 border-zinc-200 rounded-lg">
                    <Filter className="h-4 w-4" /> Filters
                  </Button>
                </SheetTrigger>
-               <SheetContent side="left" className="w-[300px] border-r-4 border-black">
+               <SheetContent side="left" className="w-[300px] border-none shadow-2xl">
                  <SheetHeader className="mb-8">
                    <SheetTitle className="text-left font-black uppercase text-xl">Catalog Filters</SheetTitle>
                  </SheetHeader>
@@ -204,12 +204,12 @@ export function LaptopsGrid() {
 
           <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Sort:</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Sort By:</span>
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger className="h-10 w-48 border-zinc-200 font-bold text-xs rounded-lg">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="font-bold">
+                <SelectContent className="font-bold border-none shadow-xl">
                   <SelectItem value="relevance">Relevance</SelectItem>
                   <SelectItem value="price-low">Price: Low to High</SelectItem>
                   <SelectItem value="price-high">Price: High to Low</SelectItem>
@@ -217,7 +217,7 @@ export function LaptopsGrid() {
               </Select>
             </div>
 
-            <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-lg border border-zinc-200">
+            <div className="flex items-center gap-1 bg-zinc-50 p-1 rounded-lg border border-zinc-200">
               <Button 
                 variant="ghost" 
                 size="icon" 
@@ -240,7 +240,7 @@ export function LaptopsGrid() {
 
         {/* Results Info */}
         <div className="flex items-center justify-between text-[9px] font-black text-zinc-400 uppercase tracking-[0.2em] px-2">
-          <span>Displaying {filteredLaptops.length} Master Units</span>
+          <span>{filteredLaptops.length} Models Found</span>
           {totalPages > 1 && <span>Page {currentPage} / {totalPages}</span>}
         </div>
 
@@ -257,12 +257,12 @@ export function LaptopsGrid() {
             ))}
           </div>
         ) : (
-          <div className="bg-white border-2 border-dashed border-zinc-100 rounded-2xl py-24 text-center">
+          <div className="bg-white border border-dashed border-zinc-200 rounded-2xl py-24 text-center shadow-inner">
             <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-100 mb-6" />
-            <p className="text-black font-black uppercase tracking-widest text-sm">No Hardware Found</p>
-            <p className="text-zinc-400 text-xs mt-2 font-medium">Try adjusting your filters or search terms.</p>
+            <p className="text-black font-black uppercase tracking-widest text-sm">No Results Match Your Criteria</p>
+            <p className="text-zinc-400 text-xs mt-2 font-medium">Try adjusting your filters or search terms for better results.</p>
             <Button variant="link" className="text-primary font-bold mt-4" onClick={() => { setSelectedBrands([]); setSelectedStatus([]); setSearchTerm(''); }}>
-              Clear Search Parameters
+              Reset Search Parameters
             </Button>
           </div>
         )}
@@ -272,7 +272,7 @@ export function LaptopsGrid() {
           <div className="flex items-center justify-center gap-3 mt-12 py-8">
             <Button
               variant="outline"
-              className="h-10 px-6 border-zinc-200 font-black uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all"
+              className="h-10 px-6 border-zinc-200 font-black uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all rounded-lg"
               disabled={currentPage === 1}
               onClick={() => { setCurrentPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             >
@@ -284,7 +284,7 @@ export function LaptopsGrid() {
                 <Button
                   key={i}
                   variant={currentPage === i + 1 ? 'default' : 'ghost'}
-                  className={cn("w-10 h-10 font-black", currentPage === i + 1 ? "bg-black text-white" : "text-zinc-400 hover:text-black")}
+                  className={cn("w-10 h-10 font-black rounded-lg", currentPage === i + 1 ? "bg-black text-white" : "text-zinc-400 hover:text-black")}
                   onClick={() => { setCurrentPage(i + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 >
                   {i + 1}
@@ -294,7 +294,7 @@ export function LaptopsGrid() {
 
             <Button
               variant="outline"
-              className="h-10 px-6 border-zinc-200 font-black uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all"
+              className="h-10 px-6 border-zinc-200 font-black uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all rounded-lg"
               disabled={currentPage === totalPages}
               onClick={() => { setCurrentPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             >
