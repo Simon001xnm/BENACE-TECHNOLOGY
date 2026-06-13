@@ -15,8 +15,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { SlidersHorizontal, Loader2, DatabaseBackup, BarChart2, Trash2 } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Loader2, DatabaseBackup, BarChart2, Trash2, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function LaptopsGrid() {
   const db = useFirestore();
@@ -53,97 +56,143 @@ export function LaptopsGrid() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 relative">
-      <div className="mb-10 text-center">
-        <h1 className="text-3xl font-medium tracking-tight text-zinc-900 mb-8">
-          Technical Laptop Portfolio
-        </h1>
-        
-        {/* Toolbar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-6 rounded-[2rem] shadow-soft">
-          <div className="flex-grow w-full max-w-md">
-            <Input 
-              placeholder="Search by model or brand..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-12 rounded-full border-zinc-100 bg-zinc-50 px-6 font-medium focus-visible:ring-primary/20"
-            />
-          </div>
-
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="h-12 rounded-full border-zinc-100 bg-zinc-50 px-6 font-bold text-zinc-600 w-full md:w-48">
-                <SelectValue placeholder="Best Match" />
-              </SelectTrigger>
-              <SelectContent className="rounded-2xl border-none shadow-xl">
-                <SelectItem value="relevance">Best Match</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" className="h-12 w-12 rounded-full border-zinc-100 bg-zinc-50 p-0 text-zinc-400">
-              <SlidersHorizontal className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Comparison Action Bar */}
-      {compareItems.length > 0 && (
-        <div className="sticky top-20 z-40 mb-8 flex items-center justify-between rounded-full bg-black px-6 py-4 shadow-2xl text-white animate-in fade-in zoom-in duration-300">
-          <div className="flex items-center gap-4">
-            <span className="text-xs font-black uppercase tracking-widest">Comparing {compareItems.length}/4</span>
-            <div className="flex -space-x-2">
-              {compareItems.map((item) => (
-                <div key={item.id} className="h-8 w-8 rounded-full border-2 border-black bg-white overflow-hidden">
-                   {item.imageId && (
-                      <Image 
-                        src={PlaceHolderImages.find(img => img.id === item.imageId)?.imageUrl || '/use.png'} 
-                        alt={item.name} 
-                        width={32} 
-                        height={32} 
-                        className="object-contain p-1"
-                      />
-                   )}
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Sidebar Filters */}
+        <aside className="w-full lg:w-64 shrink-0 space-y-6">
+          <div className="rounded-none border border-zinc-200 bg-white p-6">
+            <h2 className="text-lg font-bold text-black mb-6">Filter Results</h2>
+            
+            <div className="space-y-8">
+              <section>
+                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4 pb-2 border-b">Shipping & Delivery</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Free 2-Day Delivery', count: 16 },
+                    { label: 'Ships Within 5 Days', count: 28 },
+                    { label: 'Ships Within 10 Days', count: 39 }
+                  ].map((filter, i) => (
+                    <div key={i} className="flex items-center justify-between group cursor-pointer">
+                      <div className="flex items-center gap-2">
+                        <Checkbox id={`ship-${i}`} className="h-4 w-4 border-zinc-300" />
+                        <label htmlFor={`ship-${i}`} className="text-xs font-medium text-zinc-600 group-hover:text-black">{filter.label}</label>
+                      </div>
+                      <span className="text-[10px] text-zinc-400 font-bold">({filter.count})</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </section>
+
+              <section>
+                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4 pb-2 border-b">Processor</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: 'All Intel Processors', count: 26 },
+                    { label: 'Intel Core i9', count: 4 },
+                    { label: 'Intel Core i7', count: 13 },
+                    { label: 'Intel Core i5', count: 9 }
+                  ].map((filter, i) => (
+                    <div key={i} className="flex items-center justify-between group cursor-pointer">
+                      <div className="flex items-center gap-2">
+                        <Checkbox id={`proc-${i}`} className="h-4 w-4 border-zinc-300" />
+                        <label htmlFor={`proc-${i}`} className="text-xs font-medium text-zinc-600 group-hover:text-black">{filter.label}</label>
+                      </div>
+                      <span className="text-[10px] text-zinc-400 font-bold">({filter.count})</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4 pb-2 border-b">Screen Size</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: '17 inch', count: 18 },
+                    { label: '15 inch', count: 17 },
+                    { label: '14 inch', count: 5 }
+                  ].map((filter, i) => (
+                    <div key={i} className="flex items-center justify-between group cursor-pointer">
+                      <div className="flex items-center gap-2">
+                        <Checkbox id={`screen-${i}`} className="h-4 w-4 border-zinc-300" />
+                        <label htmlFor={`screen-${i}`} className="text-xs font-medium text-zinc-600 group-hover:text-black">{filter.label}</label>
+                      </div>
+                      <span className="text-[10px] text-zinc-400 font-bold">({filter.count})</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={clearCompare}
-              className="text-white hover:text-red-400 font-bold uppercase text-[10px]"
-            >
-              <Trash2 className="mr-2 h-3 w-3" /> Clear
-            </Button>
-            <Button 
-              size="sm" 
-              onClick={() => setIsComparing(true)}
-              className="bg-primary text-black font-black uppercase text-[10px] rounded-full px-6 hover:bg-white"
-            >
-              <BarChart2 className="mr-2 h-3 w-3" /> View Comparison
-            </Button>
+        </aside>
+
+        {/* Main Product Feed */}
+        <main className="flex-grow space-y-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 border border-zinc-200">
+            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
+              Showing 1 to {filteredLaptops.length} of {filteredLaptops.length} Results
+            </p>
+            <div className="flex items-center gap-4 w-full sm:w-auto">
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="h-10 rounded-none border-zinc-200 w-full sm:w-48 text-xs font-bold uppercase">
+                  <span className="mr-2 opacity-50">Sort by:</span>
+                  <SelectValue placeholder="Relevance" />
+                </SelectTrigger>
+                <SelectContent className="rounded-none border-zinc-200">
+                  <SelectItem value="relevance">Relevance</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-        </div>
-      )}
 
-      {/* Results */}
-      {filteredLaptops.length > 0 ? (
-        <div className="grid grid-cols-1 gap-8">
-          {filteredLaptops.map(laptop => (
-            <LaptopCard key={laptop.id} laptop={laptop} viewMode="list" />
-          ))}
-        </div>
-      ) : (
-        <div className="py-20 text-center">
-          <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-200 mb-4" />
-          <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">No matching models found</p>
-        </div>
-      )}
+          {/* Comparison Bar */}
+          {compareItems.length > 0 && (
+            <div className="sticky top-20 z-40 flex items-center justify-between bg-black px-6 py-4 text-white animate-in slide-in-from-top duration-300">
+              <div className="flex items-center gap-4">
+                <span className="text-[10px] font-black uppercase tracking-widest">Selected for Comparison ({compareItems.length}/4)</span>
+                <div className="flex -space-x-2">
+                  {compareItems.map((item) => (
+                    <div key={item.id} className="h-8 w-8 border border-white/20 bg-white overflow-hidden p-1">
+                       {item.imageId && (
+                          <Image 
+                            src={PlaceHolderImages.find(img => img.id === item.imageId)?.imageUrl || '/use.png'} 
+                            alt={item.name} 
+                            width={32} 
+                            height={32} 
+                            className="object-contain"
+                          />
+                       )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Button variant="ghost" size="sm" onClick={clearCompare} className="text-white hover:text-red-400 font-bold uppercase text-[10px]">
+                  <Trash2 className="mr-2 h-3.5 w-3.5" /> Clear
+                </Button>
+                <Button size="sm" onClick={() => setIsComparing(true)} className="bg-primary text-white font-bold uppercase text-[10px] rounded-none px-6">
+                  <BarChart2 className="mr-2 h-3.5 w-3.5" /> Compare Now
+                </Button>
+              </div>
+            </div>
+          )}
 
-      {/* Full Comparison Overlay */}
+          {filteredLaptops.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6">
+              {filteredLaptops.map(laptop => (
+                <LaptopCard key={laptop.id} laptop={laptop} />
+              ))}
+            </div>
+          ) : (
+            <div className="py-32 text-center bg-white border border-zinc-200">
+              <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-100 mb-4" />
+              <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">No technical matches found</p>
+            </div>
+          )}
+        </main>
+      </div>
+
       <ComparisonOverlay />
     </div>
   );
