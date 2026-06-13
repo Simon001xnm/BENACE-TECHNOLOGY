@@ -7,36 +7,34 @@ import { useCart } from '@/lib/cart-context';
 import { useCompare } from '@/lib/compare-context';
 import type { Laptop } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Star, ShoppingCart, Truck, CheckCircle2, Cpu, HardDrive, Monitor, Layers, MessageSquare } from 'lucide-react';
+import { Star, ShoppingCart, Truck, Cpu, HardDrive, Monitor, Layers, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface LaptopCardProps {
   laptop: Laptop;
+  variant?: 'grid' | 'list';
 }
 
-export function LaptopCard({ laptop }: { laptop: Laptop }) {
+export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
   const { addToCart } = useCart();
   const { compareItems, addToCompare, removeFromCompare } = useCompare();
-  const [quantity, setQuantity] = useState(1);
   
   const isSelectedForCompare = compareItems.some((item) => item.id === laptop.id);
   const displayImage = laptop.imageUrls && laptop.imageUrls.length > 0 
     ? laptop.imageUrls[0] 
     : PlaceHolderImages.find(img => img.id === laptop.imageId)?.imageUrl;
 
-  return (
-    <Card className="group overflow-hidden border border-zinc-200 bg-white transition-all duration-300 rounded-none hover:shadow-lg">
-      <CardContent className="p-0">
-        <div className="flex flex-col md:flex-row">
-          {/* Image Container - 75% dominant in visual weight */}
-          <div className="relative flex items-center justify-center bg-white overflow-hidden w-full md:w-[45%] aspect-[4/3] shrink-0">
+  if (variant === 'grid') {
+    return (
+      <Card className="group overflow-hidden border border-zinc-200 bg-white transition-all duration-300 rounded-none hover:shadow-lg flex flex-col h-full">
+        <CardContent className="p-0 flex flex-col h-full">
+          {/* Image Container - Top 75% of card height visually */}
+          <div className="relative flex items-center justify-center bg-white overflow-hidden w-full aspect-square shrink-0">
             <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
               <Checkbox 
-                id={`compare-${laptop.id}`}
+                id={`compare-grid-${laptop.id}`}
                 checked={isSelectedForCompare}
                 onCheckedChange={(checked) => {
                   if (checked) addToCompare(laptop);
@@ -44,7 +42,86 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
                 }}
                 className="h-4 w-4 border-zinc-300"
               />
-              <label htmlFor={`compare-${laptop.id}`} className="text-[10px] font-bold text-zinc-500 cursor-pointer hover:text-black uppercase tracking-widest">
+            </div>
+
+            <Link href={`/laptops/${laptop.id}`} className="relative h-full w-full">
+              {displayImage && (
+                <Image
+                  src={displayImage}
+                  alt={laptop.name}
+                  fill
+                  className="object-contain transition-transform group-hover:scale-105 duration-700 p-6"
+                  sizes="(max-width: 768px) 100vw, 300px"
+                />
+              )}
+            </Link>
+          </div>
+
+          {/* Metadata Interface - Bottom Section */}
+          <div className="flex-1 flex flex-col p-6 space-y-3">
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">{laptop.brand}</span>
+              <Link href={`/laptops/${laptop.id}`}>
+                <h3 className="text-lg font-bold leading-tight text-primary hover:underline transition-all line-clamp-2">
+                  {laptop.name}
+                </h3>
+              </Link>
+            </div>
+
+            <div className="flex items-baseline gap-2">
+              <span className="text-xl font-black text-black">KES {laptop.price.toLocaleString()}</span>
+              {laptop.oldPrice && (
+                <span className="text-xs font-medium text-zinc-400 line-through">KES {laptop.oldPrice.toLocaleString()}</span>
+              )}
+            </div>
+
+            {/* Scannable Spec Summary */}
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1 pt-2 border-t border-zinc-50">
+                <div className="flex items-center gap-1.5 text-[10px] font-medium text-zinc-500">
+                  <Cpu className="h-3 w-3 opacity-40 shrink-0" />
+                  <span className="truncate">{laptop.specifications.processor.split(' ').slice(0, 2).join(' ')}</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[10px] font-medium text-zinc-500">
+                  <Layers className="h-3 w-3 opacity-40 shrink-0" />
+                  <span>{laptop.specifications.ram}</span>
+                </div>
+            </div>
+
+            <div className="mt-auto pt-4 flex items-center gap-2">
+              <Button 
+                onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
+                className="flex-grow h-9 rounded-none bg-black text-white font-bold uppercase text-[9px] tracking-widest hover:bg-primary transition-all"
+              >
+                <ShoppingCart className="mr-2 h-3.5 w-3.5" /> Add
+              </Button>
+              <Button asChild variant="outline" className="h-9 w-9 rounded-none border-zinc-200 p-0 shrink-0">
+                  <Link href={`https://wa.me/254714210957?text=I am interested in ${laptop.name}`} target="_blank">
+                    <MessageSquare className="h-3.5 w-3.5" />
+                  </Link>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="group overflow-hidden border border-zinc-200 bg-white transition-all duration-300 rounded-none hover:shadow-lg">
+      <CardContent className="p-0">
+        <div className="flex flex-col md:flex-row">
+          <div className="relative flex items-center justify-center bg-white overflow-hidden w-full md:w-[45%] aspect-[4/3] shrink-0">
+            <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+              <Checkbox 
+                id={`compare-list-${laptop.id}`}
+                checked={isSelectedForCompare}
+                onCheckedChange={(checked) => {
+                  if (checked) addToCompare(laptop);
+                  else removeFromCompare(laptop.id);
+                }}
+                className="h-4 w-4 border-zinc-300"
+              />
+              <label htmlFor={`compare-list-${laptop.id}`} className="text-[10px] font-bold text-zinc-500 cursor-pointer hover:text-black uppercase tracking-widest">
                 Compare
               </label>
             </div>
@@ -55,14 +132,13 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
                   src={displayImage}
                   alt={laptop.name}
                   fill
-                  className="object-contain transition-transform group-hover:scale-105 duration-700"
+                  className="object-contain transition-transform group-hover:scale-105 duration-700 p-8"
                   sizes="(max-width: 768px) 100vw, 500px"
                 />
               )}
             </Link>
           </div>
 
-          {/* Balanced Metadata Interface */}
           <div className="flex-1 flex flex-col justify-between p-6 md:p-8 border-l border-zinc-100">
             <div className="space-y-4">
               <div className="flex flex-col gap-1">
@@ -93,10 +169,9 @@ export function LaptopCard({ laptop }: { laptop: Laptop }) {
                 </div>
               </div>
 
-              {/* High-Density Spec Stack */}
               <div className="space-y-2 pt-4 border-t border-zinc-50">
                 <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest flex items-center gap-1">
-                  Specs <span className="text-primary hover:underline cursor-pointer">Customize →</span>
+                  Hardware Engine <span className="text-primary hover:underline cursor-pointer">Specs →</span>
                 </p>
                 <div className="grid grid-cols-1 gap-2">
                   {[
