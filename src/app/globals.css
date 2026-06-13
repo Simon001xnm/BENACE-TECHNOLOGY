@@ -10,7 +10,6 @@
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    /* Professional Blue */
     --primary: 217 91% 45%;
     --primary-foreground: 210 20% 98%;
     --secondary: 220 14.3% 95.9%;
@@ -30,15 +29,19 @@
 
 @layer base {
   * {
-    @apply border-border selection:bg-primary/20 selection:text-primary;
+    @apply border-border;
   }
   body {
-    @apply bg-[#f4f4f4] text-foreground font-body antialiased;
+    @apply bg-white text-foreground font-body antialiased;
   }
 }
 
 @layer utilities {
   .shadow-soft {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  
+  .neo-shadow-primary {
+    box-shadow: 4px 4px 0px 0px hsl(var(--primary));
   }
 }
