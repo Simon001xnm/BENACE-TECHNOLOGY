@@ -17,8 +17,8 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 
 /**
- * Accessory Card - Version 1255 Refined
- * Removed all borders from image container, image takes 75% of container area.
+ * Accessory Card - Version 1255 Balanced
+ * Image takes 75% visual dominance, NO BORDERS.
  */
 export function AccessoryCard({ accessory }: { accessory: Accessory }) {
   const { addToCart } = useCart();
@@ -28,71 +28,51 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
     : PlaceHolderImages.find(img => img.id === accessory.imageId)?.imageUrl;
 
   return (
-    <Card className="group relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border-none bg-white transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-      {/* Performance Tag */}
-      {accessory.salePercentage && (
-        <div className="absolute left-6 top-6 z-20">
-          <Badge className="bg-red-600 font-black text-white px-4 py-2 rounded-full border-none text-[10px] shadow-lg">
-            -{accessory.salePercentage}% SAVINGS
-          </Badge>
-        </div>
-      )}
-
-      {/* Visual Engine Container - 75% focus on image */}
+    <Card className="group relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border-none bg-white transition-all duration-500 hover:shadow-2xl">
+      {/* Visual Engine Container - 75% focus, NO BORDERS */}
       <CardHeader className="relative aspect-square p-0 overflow-hidden bg-transparent">
-        <Link href={`/laptops/${accessory.id}`} className="block h-full w-full p-8">
+        <Link href={`/laptops/${accessory.id}`} className="block h-full w-full p-10">
           {displayImage ? (
             <Image
               src={displayImage}
               alt={accessory.name}
               fill
-              className="object-contain p-6 transition-transform duration-1000 group-hover:scale-110"
+              className="object-contain p-4 transition-transform duration-700 group-hover:scale-110"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
           ) : (
              <div className="flex h-full w-full items-center justify-center">
-                <Package className="h-20 w-20 text-zinc-100" />
+                <Package className="h-16 w-16 text-zinc-50" />
              </div>
           )}
-          
-          <div className="absolute inset-0 flex items-center justify-center bg-black/5 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-             <div className="flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm px-6 py-3 text-[10px] font-black uppercase tracking-widest text-black shadow-2xl">
-                Technical Details <ArrowRight className="h-4 w-4" />
-             </div>
-          </div>
         </Link>
         
-        <div className="absolute bottom-6 left-6 z-20">
-          <Badge variant="outline" className="bg-white/80 backdrop-blur-sm font-black text-[9px] uppercase tracking-[0.2em] border-none rounded-full px-4 py-2 shadow-sm">
+        <div className="absolute bottom-6 left-10 z-20">
+          <Badge variant="outline" className="bg-zinc-50/50 backdrop-blur-sm font-bold text-[9px] uppercase tracking-[0.2em] border-none rounded-full px-4 py-1.5">
             {accessory.category}
           </Badge>
         </div>
       </CardHeader>
 
-      {/* Metadata Interface */}
+      {/* Balanced Metadata Interface */}
       <CardContent className="flex flex-grow flex-col p-10 pt-4">
-        <span className="mb-2 text-[9px] font-black uppercase tracking-[0.4em] text-zinc-400">
-          {accessory.brand} TECHNICAL GEAR
+        <span className="mb-2 text-[9px] font-black uppercase tracking-[0.4em] text-zinc-300">
+          {accessory.brand} TECHNICAL
         </span>
         <Link href={`/laptops/${accessory.id}`}>
-          <CardTitle className="mb-8 text-2xl font-black leading-tight text-zinc-900 group-hover:text-primary transition-colors tracking-tight">
+          <CardTitle className="mb-10 text-2xl font-black leading-tight text-zinc-900 group-hover:text-primary transition-colors tracking-tighter">
             {accessory.name}
           </CardTitle>
         </Link>
         
-        <div className="mt-auto flex items-center justify-between">
+        <div className="mt-auto flex items-center justify-between pt-6 border-t border-zinc-50">
           <div className="flex flex-col">
             <span className="text-3xl font-black text-black tracking-tighter">
               KES {accessory.price.toLocaleString()}
             </span>
-            {accessory.oldPrice && (
-              <span className="text-sm font-bold text-zinc-300 line-through">
-                KES {accessory.oldPrice.toLocaleString()}
-              </span>
-            )}
           </div>
-          <Link href={`/laptops/${accessory.id}`} className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-50 text-zinc-300 hover:bg-black hover:text-white transition-all shadow-sm">
-            <Info className="h-7 w-7" />
+          <Link href={`/laptops/${accessory.id}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-50 text-zinc-200 hover:bg-black hover:text-white transition-all">
+            <Info className="h-6 w-6" />
           </Link>
         </div>
       </CardContent>
@@ -102,16 +82,16 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
         <Button 
           variant="outline" 
           onClick={() => addToCart(accessory as any)} 
-          className="h-14 rounded-2xl border-2 border-zinc-100 bg-white font-black uppercase text-[10px] tracking-widest transition-all hover:bg-zinc-50"
+          className="h-14 rounded-2xl border-none bg-zinc-50 font-black uppercase text-[10px] tracking-widest text-zinc-400 hover:bg-zinc-100"
         >
           Add to Cart
         </Button>
         <Button 
           asChild 
-          className="h-14 rounded-2xl bg-black font-black uppercase text-[10px] tracking-widest text-white hover:bg-primary hover:text-black shadow-xl transition-all"
+          className="h-14 rounded-2xl bg-black font-black uppercase text-[10px] tracking-widest text-white hover:bg-primary transition-all shadow-lg"
         >
           <Link href="/checkout">
-            Checkout Now
+            Checkout
           </Link>
         </Button>
       </CardFooter>
