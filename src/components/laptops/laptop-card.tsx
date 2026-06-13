@@ -2,16 +2,15 @@
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/lib/cart-context';
 import type { Laptop } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ShoppingCart, Star, Cpu, HardDrive, Monitor, Layers, Info } from 'lucide-react';
+import { Star, List, ShoppingCart, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface LaptopCardProps {
@@ -19,8 +18,9 @@ interface LaptopCardProps {
   viewMode?: 'grid' | 'list';
 }
 
-export function LaptopCard({ laptop, viewMode = 'grid' }: LaptopCardProps) {
+export function LaptopCard({ laptop, viewMode = 'list' }: LaptopCardProps) {
   const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
   
   const displayImage = laptop.imageUrls && laptop.imageUrls.length > 0 
     ? laptop.imageUrls[0] 
@@ -28,181 +28,98 @@ export function LaptopCard({ laptop, viewMode = 'grid' }: LaptopCardProps) {
 
   const savings = laptop.oldPrice ? laptop.oldPrice - laptop.price : 0;
 
-  if (viewMode === 'list') {
-    return (
-      <Card className="group overflow-hidden border border-zinc-200 bg-white hover:shadow-xl transition-all duration-300 rounded-xl">
-        <CardContent className="p-0">
-          <div className="flex flex-col md:flex-row">
-            {/* Visual Section */}
-            <div className="relative w-full md:w-72 aspect-square bg-white flex items-center justify-center p-8 transition-colors group-hover:bg-zinc-50/50">
-              <Link href={`/laptops/${laptop.id}`} className="relative h-full w-full">
-                {displayImage && (
-                  <Image
-                    src={displayImage}
-                    alt={laptop.name}
-                    fill
-                    className="object-contain transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 288px"
-                  />
-                )}
-              </Link>
-              <div className="absolute top-4 left-4 flex flex-col gap-2">
-                {laptop.status && (
-                  <Badge className="text-[9px] font-black uppercase tracking-wider bg-black text-white px-3 border-none">
-                    {laptop.status}
+  return (
+    <Card className={cn(
+      "group overflow-hidden border-none bg-white transition-all duration-300 rounded-[2rem] shadow-soft hover:shadow-xl",
+      viewMode === 'list' ? "w-full" : "h-full"
+    )}>
+      <CardContent className="p-6 md:p-8">
+        <div className={cn(
+          "flex flex-col gap-6",
+          viewMode === 'list' ? "md:flex-row md:items-start" : ""
+        )}>
+          {/* Top Metadata Row */}
+          <div className="flex items-center justify-between w-full md:absolute md:top-6 md:left-6 md:right-6 md:z-10">
+            <button className="text-[11px] font-bold text-red-600 hover:underline">Compare</button>
+            <div className="flex items-center gap-2">
+               {laptop.salePercentage && (
+                  <Badge className="bg-[#f2e8f5] text-[#8e44ad] border-none font-bold text-[10px] px-3">
+                    {laptop.salePercentage}% off
                   </Badge>
-                )}
-                {laptop.salePercentage && (
-                   <Badge className="text-[9px] font-black uppercase tracking-wider bg-primary text-white px-3 border-none">
-                     Save KES {savings.toLocaleString()}
-                   </Badge>
-                )}
-              </div>
-            </div>
-
-            {/* Content Section */}
-            <div className="flex-1 p-8 flex flex-col md:flex-row gap-8">
-              <div className="flex-grow space-y-4">
-                <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 mb-1">{laptop.brand}</p>
-                  <Link href={`/laptops/${laptop.id}`}>
-                    <h3 className="text-xl font-bold leading-tight hover:text-primary transition-colors line-clamp-2">
-                      {laptop.name}
-                    </h3>
-                  </Link>
-                  <div className="flex items-center gap-1 mt-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400" />
-                    ))}
-                    <span className="text-[10px] font-bold text-zinc-400 ml-2 uppercase tracking-widest">Verified Hardware</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 pt-2">
-                  <div className="flex items-center gap-3 text-sm text-zinc-600">
-                    <Cpu className="h-4 w-4 text-primary/40" />
-                    <span className="font-medium">{laptop.specifications?.processor || 'Standard Processor'}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-zinc-600">
-                    <Layers className="h-4 w-4 text-primary/40" />
-                    <span className="font-medium">{laptop.specifications?.ram || '8GB RAM'}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-zinc-600">
-                    <HardDrive className="h-4 w-4 text-primary/40" />
-                    <span className="font-medium">{laptop.specifications?.storage || '256GB SSD'}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-zinc-600">
-                    <Monitor className="h-4 w-4 text-primary/40" />
-                    <span className="font-medium">{laptop.specifications?.display || 'HD Display'}</span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-zinc-400 line-clamp-2 italic leading-relaxed pt-2">
-                   {laptop.description || "Premium technical hardware engineered for maximum productivity and long-term reliability."}
-                </p>
-              </div>
-
-              {/* Action Section */}
-              <div className="w-full md:w-56 flex flex-col items-end justify-between border-t md:border-t-0 md:border-l border-zinc-100 pt-6 md:pt-0 md:pl-8">
-                <div className="text-right w-full">
-                  <div className="flex flex-col items-end">
-                    <p className="text-3xl font-black text-black tracking-tighter">
-                      KES {laptop.price.toLocaleString()}
-                    </p>
-                    {laptop.oldPrice && (
-                      <p className="text-sm font-bold text-zinc-300 line-through">
-                        KES {laptop.oldPrice.toLocaleString()}
-                      </p>
-                    )}
-                  </div>
-                  <p className="text-[10px] text-emerald-600 mt-2 uppercase font-black flex items-center justify-end gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Ready for Delivery
-                  </p>
-                </div>
-                <div className="w-full flex flex-col gap-2">
-                  <Button 
-                    onClick={() => addToCart(laptop as any)}
-                    className="w-full bg-black hover:bg-primary text-white hover:text-black font-black uppercase tracking-widest h-12 text-xs transition-all rounded-lg"
-                  >
-                    <ShoppingCart className="h-4 w-4 mr-2" /> Add to Cart
-                  </Button>
-                  <Button asChild variant="ghost" className="w-full text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-black">
-                    <Link href={`/laptops/${laptop.id}`}>Full Specifications</Link>
-                  </Button>
-                </div>
-              </div>
+               )}
+               <List className="h-4 w-4 text-zinc-300" />
             </div>
           </div>
-        </CardContent>
-      </Card>
-    );
-  }
 
-  return (
-    <Card className="group flex flex-col border border-zinc-200 bg-white hover:shadow-xl transition-all duration-300 rounded-xl overflow-hidden h-full">
-      <div className="relative aspect-square bg-white flex items-center justify-center p-8 transition-colors group-hover:bg-zinc-50/50">
-        <Link href={`/laptops/${laptop.id}`} className="relative h-full w-full">
-          {displayImage && (
-            <Image
-              src={displayImage}
-              alt={laptop.name}
-              fill
-              className="object-contain transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, 25vw"
-            />
-          )}
-        </Link>
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
-          {laptop.status && (
-            <Badge className="text-[9px] font-black uppercase tracking-wider bg-black text-white px-3 border-none">
-              {laptop.status}
-            </Badge>
-          )}
-          {laptop.salePercentage && (
-             <Badge className="text-[9px] font-black uppercase tracking-wider bg-primary text-white px-3 border-none">
-               -{laptop.salePercentage}%
-             </Badge>
-          )}
-        </div>
-      </div>
-
-      <CardContent className="flex flex-grow flex-col p-6 border-t border-zinc-50">
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 mb-1">{laptop.brand}</p>
-        <Link href={`/laptops/${laptop.id}`} className="flex-grow">
-          <h3 className="text-sm font-bold leading-snug hover:text-primary transition-colors line-clamp-2 mb-4">
-            {laptop.name}
-          </h3>
-        </Link>
-        
-        <div className="grid grid-cols-2 gap-2 mb-6">
-            <div className="flex items-center gap-1.5 text-[10px] font-bold text-zinc-400">
-              <Cpu className="h-3 w-3 text-primary/40" />
-              <span className="truncate">{laptop.specifications?.processor.split(' ').slice(-1)}</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] font-bold text-zinc-400">
-              <Layers className="h-3 w-3 text-primary/40" />
-              <span>{laptop.specifications?.ram}</span>
-            </div>
-        </div>
-
-        <div className="mt-auto pt-4 flex flex-col gap-4">
-          <div className="flex items-baseline gap-2">
-            <p className="text-2xl font-black text-black tracking-tighter">
-              KES {laptop.price.toLocaleString()}
-            </p>
-            {laptop.oldPrice && (
-              <p className="text-xs font-bold text-zinc-300 line-through">
-                KES {laptop.oldPrice.toLocaleString()}
-              </p>
+          {/* Visual Section */}
+          <div className={cn(
+            "relative flex items-center justify-center p-4 transition-transform group-hover:scale-105 duration-500",
+            viewMode === 'list' ? "w-full md:w-64 aspect-square" : "w-full aspect-square"
+          )}>
+            <Link href={`/laptops/${laptop.id}`} className="relative h-full w-full">
+              {displayImage && (
+                <Image
+                  src={displayImage}
+                  alt={laptop.name}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 300px"
+                />
+              )}
+            </Link>
+            {laptop.status === 'Boxed' && (
+               <Badge className="absolute bottom-0 left-0 bg-[#fff1f2] text-[#e11d48] border-none font-bold text-[9px] uppercase tracking-wider px-3 py-1">
+                  Special Buy
+               </Badge>
             )}
           </div>
-          <Button 
-            onClick={() => addToCart(laptop as any)}
-            className="w-full bg-black hover:bg-primary text-white hover:text-black font-black uppercase tracking-widest h-11 text-[10px] rounded-lg"
-          >
-            <ShoppingCart className="h-3.5 w-3.5 mr-2" /> Add to Cart
-          </Button>
+
+          {/* Info Section */}
+          <div className="flex-1 space-y-4">
+            <div>
+              <Link href={`/laptops/${laptop.id}`}>
+                <h3 className="text-sm font-medium leading-relaxed text-zinc-800 hover:text-primary transition-colors line-clamp-2">
+                  {laptop.name}, {laptop.specifications?.processor}, {laptop.specifications?.ram} Memory, {laptop.specifications?.storage} SSD, Windows 11
+                </h3>
+              </Link>
+              <div className="flex items-center gap-1 mt-3">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-amber-400 text-amber-400" : "text-zinc-200")} />
+                ))}
+                <span className="text-xs font-bold text-zinc-400 ml-2">2</span>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-black text-black">KES {laptop.price.toLocaleString()}</span>
+                {laptop.oldPrice && (
+                  <span className="text-sm text-zinc-300 line-through">KES {laptop.oldPrice.toLocaleString()}</span>
+                )}
+              </div>
+              <p className="flex items-center gap-1.5 text-[10px] font-bold text-cyan-600 uppercase tracking-wide">
+                <Truck className="h-3 w-3" />
+                Free 1-2 day delivery
+              </p>
+            </div>
+
+            {/* Action Row */}
+            <div className="flex items-center gap-2 pt-4">
+              <Input 
+                type="number" 
+                value={quantity} 
+                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                className="w-16 h-12 rounded-xl border-zinc-200 text-center font-bold"
+                min="1"
+              />
+              <Button 
+                onClick={() => addToCart(laptop as any)}
+                className="flex-grow h-12 rounded-full bg-white border border-zinc-200 text-black font-bold hover:bg-zinc-50 transition-all shadow-sm"
+              >
+                Add
+              </Button>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>

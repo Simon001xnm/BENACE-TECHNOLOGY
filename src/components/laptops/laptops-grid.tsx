@@ -13,36 +13,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
-import { 
-  LayoutGrid, 
-  List, 
-  Search, 
-  Loader2, 
-  Filter,
-  ChevronLeft,
-  ChevronRight,
-  DatabaseBackup,
-  SlidersHorizontal
-} from 'lucide-react';
+import { SlidersHorizontal, Loader2, DatabaseBackup, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-
-const ITEMS_PER_PAGE = 12;
 
 export function LaptopsGrid() {
   const db = useFirestore();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list'); // Defaulting to List View as per Baymard research
   const [sortBy, setSortBy] = useState('relevance');
 
   const laptopsQuery = useMemo(() => {
@@ -52,257 +28,69 @@ export function LaptopsGrid() {
 
   const { data: dbLaptops, loading } = useCollection(laptopsQuery);
 
-  const allLaptops = useMemo(() => {
-    return dbLaptops?.filter(p => p.type === 'laptop') || [];
-  }, [dbLaptops]);
-
-  const brands = useMemo(() => [...new Set(allLaptops.map(l => l.brand))].sort(), [allLaptops]);
-  const statuses = ['New', 'Boxed', 'Ex-UK'];
-
   const filteredLaptops = useMemo(() => {
-    let filtered = allLaptops.filter(laptop =>
+    const all = dbLaptops?.filter(p => p.type === 'laptop') || [];
+    let filtered = all.filter(laptop =>
       laptop.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       laptop.brand.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    if (selectedBrands.length > 0) {
-      filtered = filtered.filter(l => selectedBrands.includes(l.brand));
-    }
-
-    if (selectedStatus.length > 0) {
-      filtered = filtered.filter(l => selectedStatus.includes(l.status || ''));
-    }
 
     if (sortBy === 'price-low') filtered.sort((a, b) => a.price - b.price);
     if (sortBy === 'price-high') filtered.sort((a, b) => b.price - a.price);
 
     return filtered;
-  }, [searchTerm, selectedBrands, selectedStatus, allLaptops, sortBy]);
-  
-  const totalPages = Math.ceil(filteredLaptops.length / ITEMS_PER_PAGE);
-  const paginatedLaptops = useMemo(() => {
-      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-      return filteredLaptops.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredLaptops, currentPage]);
-
-  const toggleBrand = (brand: string) => {
-    setSelectedBrands(prev => prev.includes(brand) ? prev.filter(b => b !== brand) : [...prev, brand]);
-    setCurrentPage(1);
-  };
-
-  const toggleStatus = (status: string) => {
-    setSelectedStatus(prev => prev.includes(status) ? prev.filter(s => s !== status) : [...prev, status]);
-    setCurrentPage(1);
-  };
-
-  const FilterSidebar = () => (
-    <div className="space-y-6">
-      <div className="bg-white p-6 border border-zinc-200 rounded-xl shadow-sm">
-        <div className="flex items-center gap-2 mb-6 border-b pb-4">
-          <SlidersHorizontal className="h-4 w-4 text-primary" />
-          <h3 className="font-black text-[10px] uppercase tracking-widest text-black">Master Filters</h3>
-        </div>
-        <Accordion type="multiple" defaultValue={["brand", "status"]} className="w-full">
-          <AccordionItem value="brand" className="border-none">
-            <AccordionTrigger className="text-[10px] font-black uppercase tracking-widest py-3 hover:no-underline">Filter By Brand</AccordionTrigger>
-            <AccordionContent>
-              <div className="space-y-3 pt-2">
-                {brands.map(brand => (
-                  <div key={brand} className="flex items-center space-x-3 group cursor-pointer">
-                    <Checkbox 
-                      id={`brand-${brand}`} 
-                      checked={selectedBrands.includes(brand)}
-                      onCheckedChange={() => toggleBrand(brand)}
-                      className="border-zinc-300 data-[state=checked]:bg-black rounded"
-                    />
-                    <label htmlFor={`brand-${brand}`} className="text-sm font-medium leading-none cursor-pointer text-zinc-600 group-hover:text-black transition-colors">
-                      {brand}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          <div className="h-px bg-zinc-100 my-2" />
-          <AccordionItem value="status" className="border-none">
-            <AccordionTrigger className="text-[10px] font-black uppercase tracking-widest py-3 hover:no-underline">Condition</AccordionTrigger>
-            <AccordionContent>
-              <div className="space-y-3 pt-2">
-                {statuses.map(status => (
-                  <div key={status} className="flex items-center space-x-3 group cursor-pointer">
-                    <Checkbox 
-                      id={`status-${status}`} 
-                      checked={selectedStatus.includes(status)}
-                      onCheckedChange={() => toggleStatus(status)}
-                      className="border-zinc-300 data-[state=checked]:bg-black rounded"
-                    />
-                    <label htmlFor={`status-${status}`} className="text-sm font-medium leading-none cursor-pointer text-zinc-600 group-hover:text-black transition-colors">
-                      {status}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
-        <Button 
-          variant="ghost" 
-          className="w-full mt-8 text-[9px] font-black uppercase tracking-widest text-zinc-400 hover:text-red-500"
-          onClick={() => { setSelectedBrands([]); setSelectedStatus([]); setSearchTerm(''); }}
-        >
-          Reset All Filters
-        </Button>
-      </div>
-    </div>
-  );
+  }, [searchTerm, dbLaptops, sortBy]);
 
   if (loading) {
     return (
-      <div className="flex h-[60vh] flex-col items-center justify-center">
+      <div className="flex h-[40vh] items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Syncing Master Inventory...</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:block sticky top-24 h-fit">
-        <FilterSidebar />
-      </aside>
-
-      <main className="lg:col-span-3 space-y-6">
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="mb-10 text-center">
+        <h1 className="text-3xl font-medium tracking-tight text-zinc-900 mb-8">
+          Laptop and Notebook Computers
+        </h1>
+        
         {/* Toolbar */}
-        <div className="bg-white border border-zinc-200 p-4 rounded-xl flex flex-col sm:flex-row gap-6 items-center justify-between shadow-sm">
-          <div className="flex items-center gap-4 w-full sm:w-auto">
-             <Sheet>
-               <SheetTrigger asChild>
-                 <Button variant="outline" size="sm" className="lg:hidden flex items-center gap-2 h-10 px-4 border-zinc-200 rounded-lg">
-                   <Filter className="h-4 w-4" /> Filters
-                 </Button>
-               </SheetTrigger>
-               <SheetContent side="left" className="w-[300px] border-none shadow-2xl">
-                 <SheetHeader className="mb-8">
-                   <SheetTitle className="text-left font-black uppercase text-xl">Catalog Filters</SheetTitle>
-                 </SheetHeader>
-                 <FilterSidebar />
-               </SheetContent>
-             </Sheet>
-             
-             <div className="relative flex-grow sm:w-80">
-               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-300" />
-               <Input 
-                 placeholder="Search by model or brand..." 
-                 className="pl-11 h-11 border-zinc-200 focus:ring-primary rounded-lg text-sm font-medium"
-                 value={searchTerm}
-                 onChange={e => setSearchTerm(e.target.value)}
-               />
-             </div>
-          </div>
+        <div className="flex items-center justify-between gap-4">
+          <Button variant="outline" className="h-12 rounded-full px-6 border-zinc-200 shadow-sm font-medium flex items-center gap-2">
+            <SlidersHorizontal className="h-4 w-4" /> Filters
+          </Button>
 
-          <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Sort By:</span>
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="h-10 w-48 border-zinc-200 font-bold text-xs rounded-lg">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="font-bold border-none shadow-xl">
-                  <SelectItem value="relevance">Relevance</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex items-center gap-1 bg-zinc-50 p-1 rounded-lg border border-zinc-200">
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className={cn("h-8 w-8 rounded-md transition-all", viewMode === 'grid' ? "bg-white text-black shadow-sm" : "text-zinc-400 hover:text-black")}
-                onClick={() => setViewMode('grid')}
-              >
-                <LayoutGrid className="h-4 w-4" />
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className={cn("h-8 w-8 rounded-md transition-all", viewMode === 'list' ? "bg-white text-black shadow-sm" : "text-zinc-400 hover:text-black")}
-                onClick={() => setViewMode('list')}
-              >
-                <List className="h-4 w-4" />
-              </Button>
-            </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-zinc-400">Sort by</span>
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="h-12 border-none bg-transparent shadow-none font-bold text-zinc-700 w-fit gap-2">
+                <SelectValue placeholder="Best Match" />
+              </SelectTrigger>
+              <SelectContent className="rounded-2xl border-none shadow-xl">
+                <SelectItem value="relevance">Best Match</SelectItem>
+                <SelectItem value="price-low">Price: Low to High</SelectItem>
+                <SelectItem value="price-high">Price: High to Low</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
+      </div>
 
-        {/* Results Info */}
-        <div className="flex items-center justify-between text-[9px] font-black text-zinc-400 uppercase tracking-[0.2em] px-2">
-          <span>{filteredLaptops.length} Models Found</span>
-          {totalPages > 1 && <span>Page {currentPage} / {totalPages}</span>}
+      {/* Results */}
+      {filteredLaptops.length > 0 ? (
+        <div className="grid grid-cols-1 gap-8">
+          {filteredLaptops.map(laptop => (
+            <LaptopCard key={laptop.id} laptop={laptop} viewMode="list" />
+          ))}
         </div>
-
-        {/* Container */}
-        {paginatedLaptops.length > 0 ? (
-          <div className={cn(
-            "gap-6",
-            viewMode === 'grid' 
-              ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3" 
-              : "flex flex-col"
-          )}>
-            {paginatedLaptops.map(laptop => (
-              <LaptopCard key={laptop.id} laptop={laptop} viewMode={viewMode} />
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white border border-dashed border-zinc-200 rounded-2xl py-24 text-center shadow-inner">
-            <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-100 mb-6" />
-            <p className="text-black font-black uppercase tracking-widest text-sm">No Results Match Your Criteria</p>
-            <p className="text-zinc-400 text-xs mt-2 font-medium">Try adjusting your filters or search terms for better results.</p>
-            <Button variant="link" className="text-primary font-bold mt-4" onClick={() => { setSelectedBrands([]); setSelectedStatus([]); setSearchTerm(''); }}>
-              Reset Search Parameters
-            </Button>
-          </div>
-        )}
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-3 mt-12 py-8">
-            <Button
-              variant="outline"
-              className="h-10 px-6 border-zinc-200 font-black uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all rounded-lg"
-              disabled={currentPage === 1}
-              onClick={() => { setCurrentPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            >
-              <ChevronLeft className="h-4 w-4 mr-2" /> Previous
-            </Button>
-            
-            <div className="flex items-center gap-2">
-              {[...Array(totalPages)].map((_, i) => (
-                <Button
-                  key={i}
-                  variant={currentPage === i + 1 ? 'default' : 'ghost'}
-                  className={cn("w-10 h-10 font-black rounded-lg", currentPage === i + 1 ? "bg-black text-white" : "text-zinc-400 hover:text-black")}
-                  onClick={() => { setCurrentPage(i + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                >
-                  {i + 1}
-                </Button>
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              className="h-10 px-6 border-zinc-200 font-black uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all rounded-lg"
-              disabled={currentPage === totalPages}
-              onClick={() => { setCurrentPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            >
-              Next <ChevronRight className="h-4 w-4 ml-2" />
-            </Button>
-          </div>
-        )}
-      </main>
+      ) : (
+        <div className="py-20 text-center">
+          <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-200 mb-4" />
+          <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">No matching models found</p>
+        </div>
+      )}
     </div>
   );
 }
