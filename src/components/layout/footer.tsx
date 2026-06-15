@@ -116,11 +116,15 @@ export function Footer() {
             &copy; {currentYear} BENACE TECH HUB. ALL RIGHTS RESERVED. <span className="mx-2 hidden md:inline">|</span> ENGINEERED IN NAIROBI.
           </p>
           <div className="flex items-center gap-8">
-             <div className="flex flex-col items-end">
-                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-300">System Status</span>
-                <span className="text-[9px] font-bold text-emerald-500 flex items-center gap-1.5 uppercase">
-                   <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> Live Hub Optimized
-                </span>
+             <div className="flex flex-col items-end text-right">
+                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-300">Created & Maintained by</span>
+                <Link 
+                  href="https://simonstyles.co.ke" 
+                  target="_blank"
+                  className="text-[9px] font-bold text-primary hover:underline uppercase tracking-widest"
+                >
+                  Simon Styles Technologies Limited
+                </Link>
              </div>
           </div>
         </div>
