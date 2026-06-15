@@ -12,19 +12,19 @@ export default function AboutPage() {
             About Benace Tech Hub
           </h1>
           <p className="mt-6 text-lg text-muted-foreground">
-            Benace Tech Hub is a premier technology solution provider based in Nairobi. We specialize in high-quality laptops, desktops, professional repair services, and bespoke web development.
+            Benace Tech Hub is a computer shop in Nairobi. We sell high-quality laptops, fix broken computers, and build websites.
           </p>
           <p className="mt-4 text-lg text-muted-foreground">
-            Our mission is to empower individuals and businesses with the right technology tools and services to thrive in a digital world. Whether you're a student looking for an affordable Ex-UK laptop or a business needing a complete digital makeover, we are here to serve you.
+            Our goal is to help people get the right computers for their work or school. We have cheap laptops for students and strong ones for work. We are here to help you.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-4">
             <div className="rounded-lg border bg-card p-4 text-center">
               <p className="text-3xl font-bold text-primary">100%</p>
-              <p className="text-sm text-muted-foreground font-medium">Customer Satisfaction</p>
+              <p className="text-sm text-muted-foreground font-medium">Happy Customers</p>
             </div>
             <div className="rounded-lg border bg-card p-4 text-center">
               <p className="text-3xl font-bold text-primary">Fast</p>
-              <p className="text-sm text-muted-foreground font-medium">Repair Turnaround</p>
+              <p className="text-sm text-muted-foreground font-medium">Repair Service</p>
             </div>
           </div>
         </div>

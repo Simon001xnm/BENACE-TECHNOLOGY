@@ -16,18 +16,18 @@ import { cn } from '@/lib/utils';
 const SLIDES = [
   {
     type: 'video',
-    title: 'THE FUTURE OF TECH.',
-    subtitle: 'ABOVE AND BEYOND.',
-    description: 'Experience Nairobi\'s most sophisticated digital hub. High-performance gear meets expert craftsmanship.',
-    cta: 'Explore Catalog',
+    title: 'THE BEST LAPTOPS.',
+    subtitle: 'QUALITY YOU CAN TRUST.',
+    description: 'Visit the best computer shop in Nairobi. We have fast laptops and experts to help you.',
+    cta: 'See Laptops',
     link: '/laptops',
     videoUrl: 'https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4',
   },
   {
     type: 'image',
-    title: 'PRECISION REPAIRS.',
-    subtitle: 'VERSION 1255 QUALITY.',
-    description: 'Expert diagnostics and professional hardware support in Nairobi CBD. We enhance your productivity.',
+    title: 'WE FIX LAPTOPS.',
+    subtitle: 'FAST & GOOD SERVICE.',
+    description: 'We can fix your broken laptop quickly. Visit our shop in Nairobi CBD for help.',
     cta: 'Book Repair',
     link: '/repairs',
     imageUrl: 'https://picsum.photos/seed/repair/1920/1080',
@@ -35,9 +35,9 @@ const SLIDES = [
   },
   {
     type: 'image',
-    title: 'DIGITAL ARCHITECTURE.',
-    subtitle: 'CRAFTED SOLUTIONS.',
-    description: 'Building stunning, high-performance websites that elevate your brand and drive results.',
+    title: 'WE BUILD WEBSITES.',
+    subtitle: 'HELP YOUR BUSINESS GROW.',
+    description: 'We make beautiful websites that help you get more customers for your business.',
     cta: 'Web Design',
     link: '/services',
     imageUrl: 'https://picsum.photos/seed/code/1920/1080',
@@ -45,9 +45,9 @@ const SLIDES = [
   },
   {
     type: 'image',
-    title: 'PREMIUM LAPTOP HIRE.',
-    subtitle: 'ON-DEMAND POWER.',
-    description: 'Access the best hardware for your corporate events, exams, or business travel without the long-term cost.',
+    title: 'RENT A LAPTOP.',
+    subtitle: 'CHEAP & EASY.',
+    description: 'Do not want to buy a laptop? Rent one from us for school, office work, or events.',
     cta: 'Rent Today',
     link: '/laptop-hire',
     imageUrl: 'https://picsum.photos/seed/office/1920/1080',
@@ -118,7 +118,7 @@ export function HeroSlider() {
                     <Link href={slide.link}>{slide.cta}</Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="h-14 rounded-full border-white/20 bg-white/5 backdrop-blur-md px-8 text-sm font-black uppercase tracking-widest text-white hover:bg-white hover:text-black">
-                    <Link href="/contact">Get in Touch</Link>
+                    <Link href="/contact">Talk to Us</Link>
                   </Button>
                 </div>
               </div>

@@ -7,21 +7,21 @@ export function Footer() {
 
   const footerLinks = {
     solutions: [
-      { name: 'Laptops & Notebooks', href: '/laptops' },
-      { name: 'Technical Gear', href: '/accessories' },
+      { name: 'Laptops for Sale', href: '/laptops' },
+      { name: 'Computer Parts', href: '/accessories' },
       { name: 'Repair Services', href: '/repairs' },
       { name: 'Laptop Hire', href: '/laptop-hire' },
-      { name: 'Digital Solutions', href: '/services' },
+      { name: 'Website Design', href: '/services' },
     ],
     company: [
-      { name: 'About Benace', href: '/about' },
-      { name: 'Success Stories', href: '/services#portfolio' },
-      { name: 'Contact Hub', href: '/contact' },
+      { name: 'About Us', href: '/about' },
+      { name: 'Our Work', href: '/services#portfolio' },
+      { name: 'Contact Us', href: '/contact' },
       { name: 'Privacy Policy', href: '#' },
       { name: 'Terms of Service', href: '#' },
     ],
     support: [
-      { name: 'Technical Support', href: '/contact' },
+      { name: 'Technical Help', href: '/contact' },
       { name: 'Bulk Orders', href: '/laptop-hire' },
       { name: 'WhatsApp Sales', href: 'https://wa.me/254714210957' },
       { name: 'Visit Our Shop', href: '/contact' },
@@ -44,7 +44,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm font-medium leading-relaxed text-zinc-500 max-w-xs italic">
-              Empowering Nairobi's digital landscape with high-performance hardware and bespoke technical craftsmanship since 2018.
+              Helping people in Nairobi with high-quality laptops and professional website design since 2018.
             </p>
             <div className="flex gap-4">
               {[Facebook, Instagram, Twitter, Globe].map((Icon, i) => (
@@ -57,7 +57,7 @@ export function Footer() {
 
           {/* Links Columns */}
           <div>
-            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Technical Solutions</h4>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">What We Do</h4>
             <ul className="space-y-4">
               {footerLinks.solutions.map((link) => (
                 <li key={link.name}>
@@ -70,7 +70,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Master Hub</h4>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Learn More</h4>
             <ul className="space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
@@ -84,7 +84,7 @@ export function Footer() {
 
           {/* Contact Column */}
           <div className="space-y-6">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Visit Our Hub</h4>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Visit Our Shop</h4>
             <div className="space-y-4">
               <div className="flex gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0" />
@@ -113,11 +113,11 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-20 pt-8 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 text-center md:text-left">
-            &copy; {currentYear} BENACE TECH HUB. ALL RIGHTS RESERVED. <span className="mx-2 hidden md:inline">|</span> ENGINEERED IN NAIROBI.
+            &copy; {currentYear} BENACE TECH HUB. ALL RIGHTS RESERVED. <span className="mx-2 hidden md:inline">|</span> MADE IN NAIROBI.
           </p>
           <div className="flex items-center gap-8">
              <div className="flex flex-col items-end text-right">
-                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-300">Created & Maintained by</span>
+                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-300">Made and Maintained by</span>
                 <Link 
                   href="https://simonstyles.co.ke" 
                   target="_blank"

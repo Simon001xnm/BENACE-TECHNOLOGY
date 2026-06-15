@@ -18,52 +18,52 @@ import Link from 'next/link';
 export default function LaptopHirePage() {
   const segments = [
     {
-      title: 'For Individuals',
+      title: 'For Students & People',
       icon: GraduationCap,
-      description: 'Ideal for students, freelancers, and travelers who need high-end computing power without the long-term debt.',
+      description: 'Good for students and freelancers who need a fast laptop but do not want to buy one yet.',
       benefits: [
-        'Affordable access to premium machines for short projects.',
-        'Perfect fallback when your personal PC is in for repair.',
-        'High-spec laptops for coding or design workshops.'
+        'Cheap way to get a good laptop for a short time.',
+        'Use it while your own laptop is being fixed.',
+        'Get a fast laptop for your projects.'
       ]
     },
     {
-      title: 'For Corporates',
+      title: 'For Offices',
       icon: Briefcase,
-      description: 'Streamline your IT infrastructure with flexible hardware that scales alongside your business growth.',
+      description: 'Help your business grow by renting laptops for your workers. It saves you a lot of money.',
       benefits: [
-        'Equip temporary staff or interns instantly.',
-        'Preserve capital by moving IT costs to OPEX.',
-        'Uniform hardware for a professional office setup.'
+        'Give laptops to temporary staff quickly.',
+        'No need to spend a lot of money at once.',
+        'Get the same laptops for everyone in the office.'
       ]
     },
     {
-      title: 'For Events & Training',
+      title: 'For Events',
       icon: Users,
-      description: 'Ensure a seamless experience for your attendees with uniform, pre-configured technical gear.',
+      description: 'Make sure everyone at your meeting or event has a good laptop to use.',
       benefits: [
-        'Scalable bulk orders for workshops and exams.',
-        'Optional software pre-loading (Office, specialized tools).',
-        'On-site technical support for large-scale deployments.'
+        'Order many laptops for workshops or exams.',
+        'We can install the programs you need.',
+        'We stay to help if there are any problems.'
       ]
     }
   ];
 
   const marketAdvantanges = [
     {
-      title: 'Zero Depreciation',
+      title: 'Saves You Money',
       icon: TrendingDown,
-      text: 'Laptops lose value the moment they leave the box. With rental, you skip the loss and always have a current asset.'
+      text: 'Laptops lose value as they get old. When you rent, you do not lose money and you always have a good machine.'
     },
     {
-      title: 'Maintenance-Free',
+      title: 'No Repair Costs',
       icon: Settings,
-      text: 'We handle all hardware maintenance and software updates. If a device fails, we replace it instantly at no extra cost.'
+      text: 'We fix everything for you. If a laptop breaks, we bring a new one for free.'
     },
     {
-      title: 'Latest Technology',
+      title: 'Newest Models',
       icon: Zap,
-      text: 'Access 2024 models without paying 2024 prices. Upgrade your fleet as soon as newer models hit our hub.'
+      text: 'Get the latest laptops without paying full price. Upgrade whenever you want.'
     }
   ];
 
@@ -73,28 +73,28 @@ export default function LaptopHirePage() {
       <section className="bg-zinc-50 py-20 border-b">
         <div className="container mx-auto px-4 text-center">
           <h1 className="font-headline text-4xl font-black tracking-tighter text-black sm:text-6xl uppercase italic">
-            Rent the Future. <br /><span className="text-primary">Skip the Cost.</span>
+            Rent a Laptop. <br /><span className="text-primary">Pay Less.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg font-medium text-zinc-500">
-            Access high-performance computing on your terms. From daily rentals for students to bulk corporate leasing for Nairobi's growing enterprises.
+            Use high-quality laptops on your own terms. Rent for a few days or for your whole office in Nairobi.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
             <Button asChild size="lg" className="h-14 rounded-none bg-black text-white font-black uppercase tracking-widest px-8 hover:bg-primary transition-all">
-              <Link href="/contact">Request a Quote</Link>
+              <Link href="/contact">Ask for Prices</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="h-14 rounded-none border-2 border-black font-black uppercase tracking-widest px-8">
-              <Link href="/laptops">View Rental Models</Link>
+              <Link href="/laptops">See Renting Models</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Why Hire? Section */}
+      {/* Why Rent? Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4">Strategic Advantage</h2>
-            <h3 className="text-3xl font-black uppercase tracking-tighter text-black sm:text-4xl">Why Renting Favors You</h3>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4">Why Renting is Good</h2>
+            <h3 className="text-3xl font-black uppercase tracking-tighter text-black sm:text-4xl">Reasons to Hire instead of Buy</h3>
           </div>
           
           <div className="grid gap-8 md:grid-cols-3">
@@ -144,40 +144,40 @@ export default function LaptopHirePage() {
       <section className="py-24 bg-zinc-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl rounded-none border-4 border-black bg-white p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-2xl font-black uppercase mb-8 text-center">Rental vs. Purchase</h3>
+            <h3 className="text-2xl font-black uppercase mb-8 text-center">Buying vs. Renting</h3>
             <div className="grid gap-8 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-zinc-200">
               <div className="space-y-6 pb-8 md:pb-0 md:pr-8">
-                <h4 className="font-black text-red-600 uppercase text-xs tracking-widest">Buying Pitfalls</h4>
+                <h4 className="font-black text-red-600 uppercase text-xs tracking-widest">Bad Things About Buying</h4>
                 <ul className="space-y-4">
                   <li className="text-sm font-bold text-zinc-500 flex items-center gap-2">
-                    <TrendingDown className="h-4 w-4" /> 30% value loss in year 1
+                    <TrendingDown className="h-4 w-4" /> Value goes down quickly
                   </li>
                   <li className="text-sm font-bold text-zinc-500 flex items-center gap-2">
-                    <TrendingDown className="h-4 w-4" /> High upfront capital requirement
+                    <TrendingDown className="h-4 w-4" /> You need a lot of money at once
                   </li>
                   <li className="text-sm font-bold text-zinc-500 flex items-center gap-2">
-                    <TrendingDown className="h-4 w-4" /> Obsolescence risk in 3 years
+                    <TrendingDown className="h-4 w-4" /> The laptop becomes old in 3 years
                   </li>
                 </ul>
               </div>
               <div className="space-y-6 pt-8 md:pt-0 md:pl-8">
-                <h4 className="font-black text-emerald-600 uppercase text-xs tracking-widest">Rental Benefits</h4>
+                <h4 className="font-black text-emerald-600 uppercase text-xs tracking-widest">Good Things About Renting</h4>
                 <ul className="space-y-4">
                   <li className="text-sm font-bold text-zinc-700 flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" /> Pay only for the period used
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" /> Pay only for the days you use
                   </li>
                   <li className="text-sm font-bold text-zinc-700 flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" /> 100% tax-deductible expense
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" /> It is a business expense you can claim
                   </li>
                   <li className="text-sm font-bold text-zinc-700 flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" /> Instant upgrades to newest tech
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" /> Always use the newest laptops
                   </li>
                 </ul>
               </div>
             </div>
             <div className="mt-12 text-center">
               <Button asChild className="h-12 bg-black text-white font-black uppercase tracking-widest rounded-none hover:bg-primary transition-all">
-                <Link href="/contact">Apply for Rental Terms <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                <Link href="/contact">Apply for Rental <ArrowRight className="ml-2 h-4 w-4" /></Link>
               </Button>
             </div>
           </div>
@@ -188,23 +188,23 @@ export default function LaptopHirePage() {
       <section className="py-24 border-t">
         <div className="container mx-auto px-4 text-center">
           <div className="mb-12">
-            <h3 className="text-3xl font-black uppercase tracking-tighter">Total Technical Security</h3>
+            <h3 className="text-3xl font-black uppercase tracking-tighter">We Support You</h3>
             <p className="mt-4 text-zinc-500 font-medium max-w-xl mx-auto italic border-l-4 border-primary pl-6 inline-block">
-              "We don't just rent hardware; we provide the uptime you need to succeed."
+              "We don't just rent laptops; we make sure they work well for you."
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-12">
             <div className="flex items-center gap-3">
               <ShieldCheck className="h-8 w-8 text-primary" />
-              <span className="text-xs font-black uppercase tracking-widest">Full Replacement Warranty</span>
+              <span className="text-xs font-black uppercase tracking-widest">Free Help if it Breaks</span>
             </div>
             <div className="flex items-center gap-3">
               <Settings className="h-8 w-8 text-primary" />
-              <span className="text-xs font-black uppercase tracking-widest">Pre-Configured Software</span>
+              <span className="text-xs font-black uppercase tracking-widest">Programs already installed</span>
             </div>
             <div className="flex items-center gap-3">
               <Calendar className="h-8 w-8 text-primary" />
-              <span className="text-xs font-black uppercase tracking-widest">Flexible Scaling Terms</span>
+              <span className="text-xs font-black uppercase tracking-widest">Rent for as long as you need</span>
             </div>
           </div>
         </div>

@@ -4,34 +4,34 @@ import { Wrench, Zap, Database, Laptop, ShieldCheck, Clock } from 'lucide-react'
 export default function RepairsPage() {
   const repairServices = [
     { 
-      title: 'Hardware Repair', 
+      title: 'Fixing Hardware', 
       icon: Wrench, 
-      desc: 'Expert fixing of broken screens, faulty keyboards, loose hinges, and charging ports. We use high-quality replacement parts for durability.' 
+      desc: 'We fix broken screens, keys that do not work, broken hinges, and charging problems. We use good parts that last long.' 
     },
     { 
-      title: 'Performance Optimization', 
+      title: 'Make Laptop Fast', 
       icon: Zap, 
-      desc: 'Transform your slow PC into a high-speed machine. We offer SSD cloning, RAM upgrades, and deep system cleaning to boost productivity.' 
+      desc: 'Is your laptop slow? We can make it fast by cleaning the system and adding more memory.' 
     },
     { 
-      title: 'Advanced Data Recovery', 
+      title: 'Recover Lost Files', 
       icon: Database, 
-      desc: 'Recovering vital files from crashed hard drives, formatted partitions, or corrupted USB drives using professional recovery tools.' 
+      desc: 'Did you lose your important files or photos? We can try to get them back from your broken disk or USB.' 
     },
     { 
-      title: 'Software & OS Solutions', 
+      title: 'Fixing Software', 
       icon: Laptop, 
-      desc: 'Clean installation of Windows or macOS, virus and malware removal, and driver troubleshooting for a smooth computing experience.' 
+      desc: 'We can install Windows or macOS for you. We also remove viruses and fix programs that are not working.' 
     },
     {
-      title: 'Motherboard Repair',
+      title: 'Motherboard Fix',
       icon: ShieldCheck,
-      desc: 'Complex component-level repairs for water damage, power surges, or random shut-offs that others might write off as irreparable.'
+      desc: 'We fix deep problems like water damage or power issues. Even if others say it cannot be fixed, bring it to us.'
     },
     {
-      title: 'Preventive Maintenance',
+      title: 'Cleaning Service',
       icon: Clock,
-      desc: 'Biannual internal cleaning and thermal paste replacement to prevent overheating and extend the lifespan of your expensive equipment.'
+      desc: 'We clean the inside of your laptop and change the cooling paste to stop it from getting too hot.'
     }
   ];
 
@@ -39,10 +39,10 @@ export default function RepairsPage() {
     <div className="container mx-auto px-4 py-12">
       <div className="mb-12 text-center">
         <h1 className="font-headline text-4xl font-bold tracking-tight text-primary">
-          Professional Repair & Support
+          Laptop Repair & Help
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          Benace Tech Hub provides Nairobi's most reliable repair services. We don't just fix devices; we ensure they perform better than ever.
+          Benace Tech Hub has the most reliable repair services in Nairobi. We fix your device and make sure it works better than before.
         </p>
       </div>
 
@@ -63,16 +63,16 @@ export default function RepairsPage() {
       </div>
 
       <div className="mt-16 rounded-2xl bg-primary/5 border border-primary/10 p-10 text-center">
-        <h2 className="text-2xl font-bold text-primary">Free Technical Diagnosis</h2>
+        <h2 className="text-2xl font-bold text-primary">Free Check-up</h2>
         <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-          Not sure what's wrong? Bring your device to our shop at Old Nation, 2nd Floor, Shop D1. Our technicians will perform a comprehensive check and provide a transparent quote before any work begins.
+          Not sure what is wrong? Bring your laptop to our shop at Old Nation House, 2nd Floor, Shop D1. We will check it for free and tell you the price before we start fixing it.
         </p>
         <div className="mt-8 flex justify-center gap-4">
            <div className="flex items-center gap-2 text-sm font-medium">
-             <Clock className="h-4 w-4 text-primary" /> Fast Turnaround
+             <Clock className="h-4 w-4 text-primary" /> Fast Service
            </div>
            <div className="flex items-center gap-2 text-sm font-medium">
-             <ShieldCheck className="h-4 w-4 text-primary" /> Warranty on Parts
+             <ShieldCheck className="h-4 w-4 text-primary" /> Parts Warranty
            </div>
         </div>
       </div>

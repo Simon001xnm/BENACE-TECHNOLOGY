@@ -52,21 +52,21 @@ export default function Home() {
         <HeroSlider />
       </section>
 
-      {/* 2. Featured Laptops - High Density Square Grid */}
+      {/* 2. Featured Laptops */}
       <section className="bg-[#f8f9fa] py-20 md:py-28 border-b">
         <div className="container mx-auto px-4">
           <div className="mb-16 flex flex-col items-end justify-between gap-6 md:flex-row">
             <div>
               <h2 className="text-3xl font-black uppercase tracking-tighter text-black sm:text-5xl italic">
-                FEATURED INVENTORY.
+                Laptops for Sale
               </h2>
               <p className="mt-3 max-w-lg text-sm font-bold uppercase tracking-[0.2em] text-zinc-400">
-                Premium Laptops • Verified Hardware • Live Sync
+                Top Quality • Clean & Tested • Ready to Use
               </p>
             </div>
             <Button asChild variant="outline" className="h-14 rounded-none border-2 border-black px-10 font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
               <Link href="/laptops" className="flex items-center">
-                Explore All Laptops <ArrowRight className="ml-3 h-4 w-4" />
+                See All Laptops <ArrowRight className="ml-3 h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -86,8 +86,8 @@ export default function Home() {
           ) : (
             <div className="flex flex-col items-center justify-center py-32 text-center border-4 border-dashed border-zinc-200">
                <DatabaseBackup className="mb-6 h-12 w-12 text-zinc-200" />
-               <h3 className="text-xl font-black uppercase text-zinc-900">Inventory Syncing</h3>
-               <p className="mt-2 text-xs font-bold text-zinc-400 uppercase tracking-widest">Checking for fresh arrivals...</p>
+               <h3 className="text-xl font-black uppercase text-zinc-900">Loading Laptops...</h3>
+               <p className="mt-2 text-xs font-bold text-zinc-400 uppercase tracking-widest">Wait a moment for the list to show up</p>
             </div>
           )}
         </div>
@@ -100,33 +100,33 @@ export default function Home() {
             <div className="relative aspect-square overflow-hidden bg-zinc-100">
               <Image 
                 src="https://picsum.photos/seed/repair-hub/1200/1200" 
-                alt="Technical Repair Hub" 
+                alt="Repair Shop" 
                 fill 
                 className="object-cover"
                 data-ai-hint="electronics repair"
               />
               <div className="absolute top-8 left-8 bg-black text-white p-6 font-black uppercase italic tracking-tighter">
-                <span className="text-primary">Precision</span> Support
+                <span className="text-primary">Best</span> Repair Shop
               </div>
             </div>
             <div className="space-y-8">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Technical Integrity</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Technical Experts</span>
                 <h2 className="mt-4 text-4xl font-black uppercase tracking-tighter text-black md:text-5xl">
-                  NAIROBI'S ELITE <br />REPAIR CENTER.
+                  WE FIX ALL <br />LAPTOP PROBLEMS.
                 </h2>
                 <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
-                  We specialize in component-level motherboard repairs, screen replacements, and data recovery for all major brands. Our lab uses professional diagnostic equipment to ensure your device returns to factory performance.
+                  We fix broken screens, keyboards, and motherboard problems. We use special tools to make sure your laptop works like new again. Our work is clean and fast.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="h-5 w-5 text-primary shrink-0" />
-                  <span className="text-xs font-bold uppercase tracking-wide">6-Month Warranty</span>
+                  <span className="text-xs font-bold uppercase tracking-wide">6 Months Warranty</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Zap className="h-5 w-5 text-primary shrink-0" />
-                  <span className="text-xs font-bold uppercase tracking-wide">Express Turnaround</span>
+                  <span className="text-xs font-bold uppercase tracking-wide">Quick Service</span>
                 </div>
               </div>
               <Button asChild size="lg" className="h-14 bg-black text-white font-black uppercase tracking-widest rounded-none hover:bg-primary transition-all px-10">
@@ -137,31 +137,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Laptop Hire - Strategic Rental */}
+      {/* 4. Laptop Hire */}
       <section className="py-24 bg-zinc-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto space-y-6">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Enterprise Solutions</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Rent a Laptop</span>
             <h2 className="text-4xl font-black uppercase tracking-tighter sm:text-6xl">
-              RENT THE FUTURE. <br /><span className="text-zinc-500">SKIP THE DEBT.</span>
+              RENT NOW. <br /><span className="text-zinc-500">SAVE YOUR MONEY.</span>
             </h2>
             <p className="text-lg font-medium text-zinc-400">
-              On-demand computing power for students, corporates, and events. High-spec hardware with zero maintenance worries and flexible weekly terms.
+              Need a laptop for just a short time? Rent one for school, work, or events. We have fast laptops ready for you to use at a low cost.
             </p>
             <div className="pt-8 flex flex-wrap justify-center gap-6">
               <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
-                Individuals <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                For Students <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
-                Corporates <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                For Offices <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
-                Events <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                For Events <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
             <div className="pt-10">
               <Button asChild size="lg" className="bg-primary text-black font-black uppercase tracking-widest rounded-none hover:bg-white transition-all">
-                <Link href="/laptop-hire">View Hire Catalog</Link>
+                <Link href="/laptop-hire">See Renting List</Link>
               </Button>
             </div>
           </div>
@@ -172,9 +172,9 @@ export default function Home() {
       <section className="py-24 bg-white border-b">
         <div className="container mx-auto px-4">
           <div className="mb-16 flex items-center justify-between">
-            <h2 className="text-3xl font-black uppercase tracking-tighter">Tech Peripherals</h2>
+            <h2 className="text-3xl font-black uppercase tracking-tighter">Computer Parts</h2>
             <Link href="/accessories" className="text-xs font-black uppercase tracking-widest text-primary hover:underline">
-              View All Accessories →
+              See All Items →
             </Link>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -203,29 +203,29 @@ export default function Home() {
           <div className="grid gap-16 lg:grid-cols-2 items-center">
             <div className="order-2 lg:order-1 space-y-8">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Web & Software</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Web Design</span>
                 <h2 className="mt-4 text-4xl font-black uppercase tracking-tighter text-black md:text-5xl">
-                  BESPOKE DIGITAL <br />ARCHITECTURE.
+                  WE BUILD GREAT <br />WEBSITES.
                 </h2>
                 <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
-                  Beyond hardware, we build the digital infrastructure that drives modern brands. From high-conversion e-commerce platforms to custom software solutions, we craft experiences that scale.
+                  We don't just sell computers; we also build websites that help your business grow. We can make online shops or simple websites that look good and work well.
                 </p>
               </div>
               <ul className="space-y-4">
-                {['Custom Web Development', 'E-commerce Solutions', 'Brand Identity Design', 'Search Engine Optimization'].map((item, i) => (
+                {['Custom Website Design', 'Online Shops', 'Business Logo Design', 'Google Search Help'].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm font-bold uppercase tracking-wide">
                     <ChevronRight className="h-4 w-4 text-primary" /> {item}
                   </li>
                 ))}
               </ul>
               <Button asChild size="lg" className="h-14 bg-black text-white font-black uppercase tracking-widest rounded-none hover:bg-primary transition-all px-10">
-                <Link href="/services">View Our Portfolio</Link>
+                <Link href="/services">See Our Work</Link>
               </Button>
             </div>
             <div className="order-1 lg:order-2 relative aspect-[4/3] bg-zinc-200">
                <Image 
                 src="https://picsum.photos/seed/dev/1200/900" 
-                alt="Web Development Studio" 
+                alt="Web Design Studio" 
                 fill 
                 className="object-cover"
                 data-ai-hint="code monitor"
@@ -235,17 +235,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Final Trust & About Hub */}
+      {/* 7. Final Trust */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <h3 className="text-2xl font-black uppercase tracking-tighter mb-10">BENACE TECH HUB</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
-                { label: 'Authorized Hub', icon: ShieldCheck },
+                { label: 'Trusted Shop', icon: ShieldCheck },
                 { label: 'Fast Delivery', icon: Zap },
-                { label: 'Expert Support', icon: Wrench },
-                { label: 'Global Inventory', icon: Globe }
+                { label: 'Expert Help', icon: Wrench },
+                { label: 'Good Items', icon: Globe }
               ].map((item, i) => (
                 <div key={i} className="flex flex-col items-center gap-3">
                   <div className="h-12 w-12 flex items-center justify-center bg-zinc-50 rounded-full">
@@ -257,10 +257,10 @@ export default function Home() {
             </div>
             <div className="mt-16 flex flex-col sm:flex-row justify-center gap-4">
               <Button asChild variant="outline" className="h-14 border-2 border-black font-black uppercase px-8">
-                <Link href="/about">Our Story</Link>
+                <Link href="/about">About Us</Link>
               </Button>
               <Button asChild className="h-14 bg-black text-white font-black uppercase px-8">
-                <Link href="/contact">Visit Our CBD Hub</Link>
+                <Link href="/contact">Visit Our Shop</Link>
               </Button>
             </div>
           </div>
