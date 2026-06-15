@@ -1,13 +1,27 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
 import { HeroSlider } from '@/components/home/hero-slider';
-import { ArrowRight, Wrench, Globe, Laptop, DatabaseBackup } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Wrench, 
+  Globe, 
+  Laptop, 
+  DatabaseBackup, 
+  MessageCircle, 
+  Zap, 
+  ShieldCheck, 
+  Calendar,
+  MousePointer2,
+  ChevronRight
+} from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function Home() {
   const db = useFirestore();
@@ -27,28 +41,32 @@ export default function Home() {
     return allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 4) || [];
   }, [allLiveProducts]);
 
+  const accessories = useMemo(() => {
+    return allLiveProducts?.filter(p => p.type === 'accessory').slice(0, 4) || [];
+  }, [allLiveProducts]);
+
   return (
     <div className="flex flex-col gap-0 bg-white">
-      {/* Hero Section */}
+      {/* 1. Hero Section */}
       <section className="relative w-full overflow-hidden bg-black">
         <HeroSlider />
       </section>
 
-      {/* Featured Inventory - High Density Grid View */}
-      <section className="bg-[#f8f9fa] py-20 md:py-28">
+      {/* 2. Featured Laptops - High Density Square Grid */}
+      <section className="bg-[#f8f9fa] py-20 md:py-28 border-b">
         <div className="container mx-auto px-4">
           <div className="mb-16 flex flex-col items-end justify-between gap-6 md:flex-row">
             <div>
               <h2 className="text-3xl font-black uppercase tracking-tighter text-black sm:text-5xl italic">
-                LATEST HARDWARE.
+                FEATURED INVENTORY.
               </h2>
               <p className="mt-3 max-w-lg text-sm font-bold uppercase tracking-[0.2em] text-zinc-400">
-                Synced live from our Nairobi inventory hub.
+                Premium Laptops • Verified Hardware • Live Sync
               </p>
             </div>
-            <Button asChild variant="outline" className="h-14 rounded-full border-2 border-black px-10 font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-xl hover:shadow-none">
+            <Button asChild variant="outline" className="h-14 rounded-none border-2 border-black px-10 font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
               <Link href="/laptops" className="flex items-center">
-                Full Collection <ArrowRight className="ml-3 h-4 w-4" />
+                Explore All Laptops <ArrowRight className="ml-3 h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -56,17 +74,17 @@ export default function Home() {
           {loading ? (
              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="aspect-square w-full animate-pulse bg-zinc-200 rounded-3xl"></div>
+                  <div key={i} className="aspect-square w-full animate-pulse bg-zinc-200 rounded-none"></div>
                 ))}
              </div>
           ) : featuredLaptops.length > 0 ? (
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {featuredLaptops.map(laptop => (
                 <LaptopCard key={laptop.id} laptop={laptop} variant="grid" />
                 ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-32 text-center border-4 border-dashed border-zinc-200 rounded-[3rem]">
+            <div className="flex flex-col items-center justify-center py-32 text-center border-4 border-dashed border-zinc-200">
                <DatabaseBackup className="mb-6 h-12 w-12 text-zinc-200" />
                <h3 className="text-xl font-black uppercase text-zinc-900">Inventory Syncing</h3>
                <p className="mt-2 text-xs font-bold text-zinc-400 uppercase tracking-widest">Checking for fresh arrivals...</p>
@@ -75,44 +93,190 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust & Services */}
-      <section className="bg-white py-24">
+      {/* 3. Professional Repairs Section */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid gap-10 lg:grid-cols-3">
-            {[
-              { 
-                title: 'Expert Repairs', 
-                desc: 'Nairobi\'s most reliable technical support for all hardware brands. Precision diagnostics and fast turnaround.', 
-                icon: Wrench, 
-                link: '/repairs' 
-              },
-              { 
-                title: 'Digital Solutions', 
-                desc: 'Custom web development and software architecture for brands seeking a competitive digital edge.', 
-                icon: Globe, 
-                link: '/services' 
-              },
-              { 
-                title: 'Quality Verified', 
-                desc: 'Premium New, Ex-UK, and Boxed laptops with rigorously verified hardware performance metrics.', 
-                icon: Laptop, 
-                link: '/laptops' 
-              }
-            ].map((service, i) => (
-              <div key={i} className="group relative border border-zinc-100 p-10 hover:border-black transition-all bg-white rounded-3xl">
-                <div className="mb-8 flex h-14 w-14 items-center justify-center bg-zinc-50 text-black border border-zinc-200 group-hover:bg-primary group-hover:text-white transition-colors">
-                  <service.icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-2xl font-black text-black mb-4 uppercase italic tracking-tighter">{service.title}</h3>
-                <p className="text-sm font-medium text-zinc-500 leading-relaxed mb-8">{service.desc}</p>
-                <Link href={service.link} className="inline-flex items-center text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:gap-3 transition-all">
-                  LEARN MORE <ArrowRight className="ml-2 h-3.5 w-3.5" />
-                </Link>
+          <div className="grid gap-16 lg:grid-cols-2 items-center">
+            <div className="relative aspect-square overflow-hidden bg-zinc-100">
+              <Image 
+                src="https://picsum.photos/seed/repair-hub/1200/1200" 
+                alt="Technical Repair Hub" 
+                fill 
+                className="object-cover"
+                data-ai-hint="electronics repair"
+              />
+              <div className="absolute top-8 left-8 bg-black text-white p-6 font-black uppercase italic tracking-tighter">
+                <span className="text-primary">Precision</span> Support
               </div>
+            </div>
+            <div className="space-y-8">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Technical Integrity</span>
+                <h2 className="mt-4 text-4xl font-black uppercase tracking-tighter text-black md:text-5xl">
+                  NAIROBI'S ELITE <br />REPAIR CENTER.
+                </h2>
+                <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
+                  We specialize in component-level motherboard repairs, screen replacements, and data recovery for all major brands. Our lab uses professional diagnostic equipment to ensure your device returns to factory performance.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex items-start gap-3">
+                  <ShieldCheck className="h-5 w-5 text-primary shrink-0" />
+                  <span className="text-xs font-bold uppercase tracking-wide">6-Month Warranty</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Zap className="h-5 w-5 text-primary shrink-0" />
+                  <span className="text-xs font-bold uppercase tracking-wide">Express Turnaround</span>
+                </div>
+              </div>
+              <Button asChild size="lg" className="h-14 bg-black text-white font-black uppercase tracking-widest rounded-none hover:bg-primary transition-all px-10">
+                <Link href="/repairs">Book a Repair</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Laptop Hire - Strategic Rental */}
+      <section className="py-24 bg-zinc-900 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Enterprise Solutions</span>
+            <h2 className="text-4xl font-black uppercase tracking-tighter sm:text-6xl">
+              RENT THE FUTURE. <br /><span className="text-zinc-500">SKIP THE DEBT.</span>
+            </h2>
+            <p className="text-lg font-medium text-zinc-400">
+              On-demand computing power for students, corporates, and events. High-spec hardware with zero maintenance worries and flexible weekly terms.
+            </p>
+            <div className="pt-8 flex flex-wrap justify-center gap-6">
+              <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
+                Individuals <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
+                Corporates <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
+                Events <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+            <div className="pt-10">
+              <Button asChild size="lg" className="bg-primary text-black font-black uppercase tracking-widest rounded-none hover:bg-white transition-all">
+                <Link href="/laptop-hire">View Hire Catalog</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Tech Accessories Section */}
+      <section className="py-24 bg-white border-b">
+        <div className="container mx-auto px-4">
+          <div className="mb-16 flex items-center justify-between">
+            <h2 className="text-3xl font-black uppercase tracking-tighter">Tech Peripherals</h2>
+            <Link href="/accessories" className="text-xs font-black uppercase tracking-widest text-primary hover:underline">
+              View All Accessories →
+            </Link>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {accessories.map((item, i) => (
+              <Link key={i} href={`/accessories`} className="group">
+                <div className="relative aspect-square bg-zinc-50 mb-4 overflow-hidden">
+                  <Image 
+                    src={item.imageUrls?.[0] || 'https://picsum.photos/seed/acc/600/600'} 
+                    alt={item.name} 
+                    fill 
+                    className="object-contain p-8 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{item.brand}</p>
+                <h4 className="font-bold text-sm text-black group-hover:text-primary transition-colors">{item.name}</h4>
+                <p className="mt-1 font-black text-black">KES {item.price.toLocaleString()}</p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
+
+      {/* 6. Digital Solutions & Web Dev */}
+      <section className="py-24 bg-[#f4f4f4]">
+        <div className="container mx-auto px-4">
+          <div className="grid gap-16 lg:grid-cols-2 items-center">
+            <div className="order-2 lg:order-1 space-y-8">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Web & Software</span>
+                <h2 className="mt-4 text-4xl font-black uppercase tracking-tighter text-black md:text-5xl">
+                  BESPOKE DIGITAL <br />ARCHITECTURE.
+                </h2>
+                <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
+                  Beyond hardware, we build the digital infrastructure that drives modern brands. From high-conversion e-commerce platforms to custom software solutions, we craft experiences that scale.
+                </p>
+              </div>
+              <ul className="space-y-4">
+                {['Custom Web Development', 'E-commerce Solutions', 'Brand Identity Design', 'Search Engine Optimization'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm font-bold uppercase tracking-wide">
+                    <ChevronRight className="h-4 w-4 text-primary" /> {item}
+                  </li>
+                ))}
+              </ul>
+              <Button asChild size="lg" className="h-14 bg-black text-white font-black uppercase tracking-widest rounded-none hover:bg-primary transition-all px-10">
+                <Link href="/services">View Our Portfolio</Link>
+              </Button>
+            </div>
+            <div className="order-1 lg:order-2 relative aspect-[4/3] bg-zinc-200">
+               <Image 
+                src="https://picsum.photos/seed/dev/1200/900" 
+                alt="Web Development Studio" 
+                fill 
+                className="object-cover"
+                data-ai-hint="code monitor"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Final Trust & About Hub */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-2xl font-black uppercase tracking-tighter mb-10">BENACE TECH HUB</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { label: 'Authorized Hub', icon: ShieldCheck },
+                { label: 'Fast Delivery', icon: Zap },
+                { label: 'Expert Support', icon: Wrench },
+                { label: 'Global Inventory', icon: Globe }
+              ].map((item, i) => (
+                <div key={i} className="flex flex-col items-center gap-3">
+                  <div className="h-12 w-12 flex items-center justify-center bg-zinc-50 rounded-full">
+                    <item.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest">{item.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-16 flex flex-col sm:flex-row justify-center gap-4">
+              <Button asChild variant="outline" className="h-14 border-2 border-black font-black uppercase px-8">
+                <Link href="/about">Our Story</Link>
+              </Button>
+              <Button asChild className="h-14 bg-black text-white font-black uppercase px-8">
+                <Link href="/contact">Visit Our CBD Hub</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WhatsApp Floating Action */}
+      <div className="fixed bottom-8 right-8 z-[100]">
+        <Link 
+          href="https://wa.me/254714210957" 
+          target="_blank"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-green-600 text-white shadow-2xl hover:scale-110 transition-all hover:bg-green-700"
+        >
+          <MessageCircle className="h-8 w-8" />
+        </Link>
+      </div>
     </div>
   );
 }
