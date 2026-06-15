@@ -32,6 +32,7 @@ export function Header() {
     { name: 'Repairs', href: '/repairs' },
     { name: 'Services', href: '/services' },
     { name: 'Accessories', href: '/accessories' },
+    { name: 'Laptop Hire', href: '/laptop-hire' },
   ];
 
   return (
