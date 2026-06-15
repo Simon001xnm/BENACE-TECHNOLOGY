@@ -1,71 +1,128 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Globe, ArrowRight } from 'lucide-react';
 
 export function Footer() {
-  const navLinks = [
-    { name: 'Laptops', href: '/laptops' },
-    { name: 'Desktops & Monitors', href: '/desktops' },
-    { name: 'Repairs', href: '/repairs' },
-    { name: 'Laptop Hire', href: '/laptop-hire' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Contact Us', href: '/contact' },
-  ];
+  const currentYear = new Date().getFullYear();
+
+  const footerLinks = {
+    solutions: [
+      { name: 'Laptops & Notebooks', href: '/laptops' },
+      { name: 'Technical Gear', href: '/accessories' },
+      { name: 'Repair Services', href: '/repairs' },
+      { name: 'Laptop Hire', href: '/laptop-hire' },
+      { name: 'Digital Solutions', href: '/services' },
+    ],
+    company: [
+      { name: 'About Benace', href: '/about' },
+      { name: 'Success Stories', href: '/services#portfolio' },
+      { name: 'Contact Hub', href: '/contact' },
+      { name: 'Privacy Policy', href: '#' },
+      { name: 'Terms of Service', href: '#' },
+    ],
+    support: [
+      { name: 'Technical Support', href: '/contact' },
+      { name: 'Bulk Orders', href: '/laptop-hire' },
+      { name: 'WhatsApp Sales', href: 'https://wa.me/254714210957' },
+      { name: 'Visit Our Shop', href: '/contact' },
+    ]
+  };
 
   return (
-    <footer className="border-t-4 border-black bg-white">
-      <div className="container mx-auto max-w-7xl px-4 py-16 md:px-6">
-        <div className="grid gap-16 md:grid-cols-3">
-          <div className="flex flex-col gap-6">
-             <Link href="/" className="w-fit">
-                <Image
-                    src="/use.png"
-                    alt="Benace Technologies Logo"
-                    width={160}
-                    height={40}
-                    className="object-contain"
-                />
-             </Link>
-             <p className="text-sm font-bold leading-relaxed text-zinc-600">
-                Benace Tech Hub is Nairobi's premier partner in innovation. We provide high-quality laptops, professional repairs, and custom digital craftsmanship.
-             </p>
-          </div>
-           <div className="flex flex-col gap-6">
-            <h3 className="text-xl font-black uppercase tracking-widest text-black">Visit Us</h3>
-            <div className="space-y-4 text-sm font-black text-zinc-800">
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase text-zinc-400 tracking-widest mb-1">Location</span>
-                  <span>Old Nation, 2nd Flr, Shop D1</span>
-                  <span>Nairobi, Kenya</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase text-zinc-400 tracking-widest mb-1">Contact</span>
-                  <span>0714210957</span>
-                  <span>benacetechnologies@gmail.com</span>
-                </div>
+    <footer className="bg-white border-t-2 border-zinc-100">
+      <div className="container mx-auto max-w-7xl px-4 pt-20 pb-10">
+        <div className="grid gap-12 lg:grid-cols-4 md:grid-cols-2">
+          {/* Brand Column */}
+          <div className="space-y-6">
+            <Link href="/" className="inline-block">
+              <Image
+                src="/use.png"
+                alt="Benace Technologies"
+                width={150}
+                height={40}
+                className="object-contain"
+              />
+            </Link>
+            <p className="text-sm font-medium leading-relaxed text-zinc-500 max-w-xs italic">
+              Empowering Nairobi's digital landscape with high-performance hardware and bespoke technical craftsmanship since 2018.
+            </p>
+            <div className="flex gap-4">
+              {[Facebook, Instagram, Twitter, Globe].map((Icon, i) => (
+                <Link key={i} href="#" className="h-9 w-9 flex items-center justify-center rounded-full bg-zinc-50 text-zinc-400 hover:bg-primary hover:text-white transition-all">
+                  <Icon className="h-4 w-4" />
+                </Link>
+              ))}
             </div>
-           </div>
-           <div className="flex flex-col gap-6">
-             <h3 className="text-xl font-black uppercase tracking-widest text-black">Navigation</h3>
-             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {navLinks.map((link) => (
-                    <Link 
-                        key={link.href}
-                        href={link.href} 
-                        className="text-sm font-bold text-zinc-500 transition-all hover:text-black"
-                    >
-                        {link.name}
-                    </Link>
-                ))}
-             </div>
-           </div>
+          </div>
+
+          {/* Links Columns */}
+          <div>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Technical Solutions</h4>
+            <ul className="space-y-4">
+              {footerLinks.solutions.map((link) => (
+                <li key={link.name}>
+                  <Link href={link.href} className="text-sm font-bold text-zinc-600 hover:text-black hover:translate-x-1 inline-block transition-all">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Master Hub</h4>
+            <ul className="space-y-4">
+              {footerLinks.company.map((link) => (
+                <li key={link.name}>
+                  <Link href={link.href} className="text-sm font-bold text-zinc-600 hover:text-black hover:translate-x-1 inline-block transition-all">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div className="space-y-6">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6">Visit Our Hub</h4>
+            <div className="space-y-4">
+              <div className="flex gap-3">
+                <MapPin className="h-5 w-5 text-primary shrink-0" />
+                <div className="text-sm font-bold text-zinc-700">
+                  <p>Old Nation House</p>
+                  <p className="text-zinc-400 font-medium">2nd Floor, Shop D1</p>
+                  <p className="text-zinc-400 font-medium">Nairobi, Kenya</p>
+                </div>
+              </div>
+              <div className="flex gap-3 items-center">
+                <Phone className="h-5 w-5 text-primary shrink-0" />
+                <span className="text-sm font-bold text-zinc-700">0714210957</span>
+              </div>
+              <div className="flex gap-3 items-center">
+                <Mail className="h-5 w-5 text-primary shrink-0" />
+                <span className="text-sm font-bold text-zinc-700">benacetechnologies@gmail.com</span>
+              </div>
+            </div>
+            
+            <Link href="/contact" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary group">
+              Start a Conversation <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
-        <div className="mt-16 border-t-2 border-zinc-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-             <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
-                &copy; {new Date().getFullYear()} Benace Tech Hub. Engineered for Excellence.
-             </p>
-             <div className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
-               Old Nation, Nairobi • Kenya
+
+        {/* Bottom Bar */}
+        <div className="mt-20 pt-8 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 text-center md:text-left">
+            &copy; {currentYear} BENACE TECH HUB. ALL RIGHTS RESERVED. <span className="mx-2 hidden md:inline">|</span> ENGINEERED IN NAIROBI.
+          </p>
+          <div className="flex items-center gap-8">
+             <div className="flex flex-col items-end">
+                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-300">System Status</span>
+                <span className="text-[9px] font-bold text-emerald-500 flex items-center gap-1.5 uppercase">
+                   <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> Live Hub Optimized
+                </span>
              </div>
+          </div>
         </div>
       </div>
     </footer>
