@@ -61,7 +61,7 @@ export default function Home() {
                 Laptops for Sale
               </h2>
               <p className="mt-3 max-w-lg text-sm font-bold uppercase tracking-[0.2em] text-zinc-400">
-                Top Quality • Clean & Tested • Ready to Use
+                Good Quality • Clean and Tested • Ready to Use
               </p>
             </div>
             <Button asChild variant="outline" className="h-14 rounded-none border-2 border-black px-10 font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
@@ -86,8 +86,8 @@ export default function Home() {
           ) : (
             <div className="flex flex-col items-center justify-center py-32 text-center border-4 border-dashed border-zinc-200">
                <DatabaseBackup className="mb-6 h-12 w-12 text-zinc-200" />
-               <h3 className="text-xl font-black uppercase text-zinc-900">Loading Laptops...</h3>
-               <p className="mt-2 text-xs font-bold text-zinc-400 uppercase tracking-widest">Wait a moment for the list to show up</p>
+               <h3 className="text-xl font-black uppercase text-zinc-900">Checking for Laptops...</h3>
+               <p className="mt-2 text-xs font-bold text-zinc-400 uppercase tracking-widest">Please wait for the list to show up</p>
             </div>
           )}
         </div>
@@ -105,8 +105,8 @@ export default function Home() {
                 playsInline
                 className="h-full w-full object-cover"
               >
-                <source src="/(21).mp4" type="video/mp4" />
-                Your browser does not support the video tag.
+                <source src="/Download (21).mp4" type="video/mp4" />
+                Your browser cannot play this video.
               </video>
               <div className="absolute top-8 left-8 bg-black text-white p-6 font-black uppercase italic tracking-tighter border-l-4 border-primary">
                 <span className="text-primary">Best</span> Repair Shop
@@ -116,10 +116,10 @@ export default function Home() {
               <div>
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Technical Experts</span>
                 <h2 className="mt-4 text-4xl font-black uppercase tracking-tighter text-black md:text-5xl">
-                  WE FIX ALL <br />LAPTOP PROBLEMS.
+                  WE FIX ALL <br />COMPUTER PROBLEMS.
                 </h2>
                 <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
-                  We fix broken screens, keyboards, and internal parts. We use special tools to make your laptop work like new. Our work is clean, fast, and reliable.
+                  We fix broken screens, keys that do not work, and internal parts. We use special tools to make your laptop work like a new one. Our work is clean, fast, and you can trust us.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-6">
@@ -149,7 +149,7 @@ export default function Home() {
               RENT NOW. <br /><span className="text-zinc-500">SAVE YOUR MONEY.</span>
             </h2>
             <p className="text-lg font-medium text-zinc-400">
-              Need a laptop for a short time? Rent one for school, work, or meetings. We have fast laptops ready for you at a low price.
+              Need a laptop for a short time? You can rent one for school, work, or meetings. We have fast laptops ready for you at a low price.
             </p>
             <div className="pt-8 flex flex-wrap justify-center gap-6">
               <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
@@ -164,7 +164,7 @@ export default function Home() {
             </div>
             <div className="pt-10">
               <Button asChild size="lg" className="bg-primary text-black font-black uppercase tracking-widest rounded-none hover:bg-white transition-all">
-                <Link href="/laptop-hire">See Renting List</Link>
+                <Link href="/laptop-hire">See Rental List</Link>
               </Button>
             </div>
           </div>
@@ -211,7 +211,7 @@ export default function Home() {
                   WE BUILD GREAT <br />WEBSITES.
                 </h2>
                 <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
-                  We don't just sell computers. we also build websites that help your business grow. We make online shops and simple sites that look good and work well.
+                  We also build websites to help your business grow. we make online shops and simple sites that look good and work well on all phones.
                 </p>
               </div>
               <ul className="space-y-4">
