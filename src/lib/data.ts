@@ -1,3 +1,4 @@
+
 import type { Laptop, Service, PortfolioProject, Accessory } from '@/lib/types';
 import { Code, ShoppingCart, Wrench, Zap } from 'lucide-react';
 
@@ -10,15 +11,15 @@ export const laptops: Laptop[] = [
     oldPrice: 125000,
     salePercentage: 16,
     status: 'Boxed',
-    description: 'The Lenovo ThinkBook 14-IRL is a sophisticated 14-inch business laptop designed to bridge the gap between high-end performance and everyday portability. Engineered for modern professionals and university students, it delivers the speed and security required for a fast-paced digital environment.',
+    description: 'This is a very good laptop for work that is easy to carry. It is fast and has good security for school or office.',
     specifications: {
       processor: 'Intel Core 7-240H',
       ram: '8GB DDR5',
-      storage: '512GB PCIe Gen4 SSD',
-      display: '14" WUXGA (1920x1200) 300 nits',
-      graphics: 'Intel Iris Xe Graphics',
-      battery: 'Up to 12 Hours',
-      weight: '1.4 kg',
+      storage: '512GB Fast SSD',
+      display: '14" Clear Screen',
+      graphics: 'Intel Graphics',
+      battery: 'Works for 12 Hours',
+      weight: 'Very Light (1.4 kg)',
       os: 'Windows 11 Pro'
     },
     imageId: 'laptop-lenovo-thinkbook-14-irl-1'
@@ -29,53 +30,53 @@ export const laptops: Laptop[] = [
     brand: 'Dell', 
     price: 143750,
     status: 'New',
-    description: 'High-performance professional workstation with Ultra 7 processing and ProSupport.',
+    description: 'A very fast computer for professionals. It has a powerful chip and stays on for a long time.',
     specifications: { 
-      processor: 'Intel Core Ultra 7 256U', 
+      processor: 'Intel Ultra 7', 
       ram: '8GB', 
-      storage: '512GB SSD', 
-      display: '14" FHD',
-      graphics: 'Intel Arc Graphics',
-      battery: 'Up to 15 Hours',
-      weight: '1.36 kg',
+      storage: '512GB Fast SSD', 
+      display: '14" Clear Screen',
+      graphics: 'Intel Arc',
+      battery: 'Works for 15 Hours',
+      weight: 'Very Light',
       os: 'Ubuntu Linux'
     }, 
     imageId: 'laptop-dell-pro-14-1' 
   },
   { 
     id: 'lpt-hp-830-g8-i7-x360', 
-    name: 'Hp 830 G8 i7 x360 Convertible', 
+    name: 'Hp 830 G8 i7 x360', 
     brand: 'HP', 
     price: 66700,
     status: 'Ex-UK',
-    description: 'Top-of-the-line convertible with powerful i7 processing and touch display.',
+    description: 'A laptop that can fold into a tablet. It has a touch screen and is very fast.',
     specifications: { 
       processor: 'i7 11th Gen', 
       ram: '16GB', 
-      storage: '512GB SSD', 
-      display: '13.3" Touch x360',
-      graphics: 'Intel Iris Xe',
-      battery: 'Up to 10 Hours',
-      weight: '1.31 kg',
+      storage: '512GB Fast SSD', 
+      display: '13.3" Touch Screen',
+      graphics: 'Intel Iris',
+      battery: 'Works for 10 Hours',
+      weight: 'Light',
       os: 'Windows 11'
     }, 
     imageId: 'laptop-hp-830-g8-2' 
   },
   { 
     id: 'lpt-hp-zbf-15-g8-1', 
-    name: 'Hp Zbook Firefly 15 G8 Workstation', 
+    name: 'Hp Zbook Firefly 15 G8', 
     brand: 'HP', 
     price: 86250,
     status: 'Ex-UK',
-    description: 'Professional mobile workstation with dedicated 4GB graphics.',
+    description: 'A strong laptop for heavy work like design or videos. It has extra memory and a big screen.',
     specifications: { 
       processor: 'i7 11th Gen', 
       ram: '32GB', 
-      storage: '512GB SSD', 
-      display: '15.6" FHD',
-      graphics: 'NVIDIA T500 4GB',
-      battery: 'Up to 14 Hours',
-      weight: '1.75 kg',
+      storage: '512GB Fast SSD', 
+      display: '15.6" Big Screen',
+      graphics: 'NVIDIA 4GB Card',
+      battery: 'Works for 14 Hours',
+      weight: 'Easy to carry',
       os: 'Windows 11 Pro'
     }, 
     imageId: 'laptop-hp-zbook-firefly-15-g8-1' 
@@ -85,12 +86,12 @@ export const laptops: Laptop[] = [
 export const accessories: Accessory[] = [
   { 
     id: 'acc-dell-mouse-wireless', 
-    name: 'Original Dell Mouse wireless', 
+    name: 'Original Dell Wireless Mouse', 
     brand: 'Dell', 
     price: 1955,
     category: 'Mouse', 
     status: 'New',
-    description: 'Precision wireless mouse from Dell for seamless productivity.',
+    description: 'A smooth mouse that works without wires. Good for your office work.',
     imageId: 'accessory-dell-mouse-1' 
   },
   { 
@@ -98,9 +99,9 @@ export const accessories: Accessory[] = [
     name: 'APC 650VA UPS', 
     brand: 'APC', 
     price: 8000, 
-    category: 'UPS', 
+    category: 'Battery Backup', 
     status: 'New',
-    description: 'Reliable power protection for your home and office electronics.',
+    description: 'Keeps your computer on when the lights go out. Protects your machine.',
     imageId: 'ups-placeholder' 
   }
 ];
@@ -108,20 +109,20 @@ export const accessories: Accessory[] = [
 export const services: Service[] = [
   {
     id: 'srv-01',
-    title: 'Custom Website Development',
-    description: 'We build high-performance, bespoke websites tailored to your brand. From corporate landing pages to complex web applications.',
+    title: 'We Build Websites',
+    description: 'We make beautiful websites for your business that work well on all phones and computers.',
     icon: Code,
   },
   {
     id: 'srv-02',
-    title: 'Professional PC & Laptop Repair',
-    description: 'Expert hardware and software diagnostics. We handle screen replacements, hinge repairs, and motherboard issues.',
+    title: 'We Fix Laptops',
+    description: 'We fix broken screens, keys that do not work, and internal problems. We use good parts.',
     icon: Wrench,
   },
   {
     id: 'srv-03',
-    title: 'IT Consulting & Support',
-    description: 'Guiding businesses through digital transformation. We provide infrastructure setup and software licensing.',
+    title: 'Computer Help',
+    description: 'We help your business get the right computers and set them up correctly.',
     icon: Zap,
   },
 ];
@@ -129,15 +130,15 @@ export const services: Service[] = [
 export const portfolioProjects: PortfolioProject[] = [
   {
     id: 'prj-01',
-    title: 'Aura Fashion Co.',
-    description: 'A sleek, minimalist e-commerce platform for a high-end fashion brand.',
-    category: 'E-commerce',
+    title: 'Fashion Shop Website',
+    description: 'A clean and simple website for a clothing shop to sell items online.',
+    category: 'Online Shop',
     imageId: 'portfolio-1',
   },
   {
     id: 'prj-02',
-    title: 'Nexus Financial',
-    description: 'A professional and trustworthy corporate site for a financial advisory firm.',
+    title: 'Business Help Website',
+    description: 'A professional website for a company that gives advice to other businesses.',
     category: 'Corporate',
     imageId: 'portfolio-2',
   },

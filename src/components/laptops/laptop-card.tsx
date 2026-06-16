@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -28,10 +29,10 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
 
   if (variant === 'grid') {
     return (
-      <Card className="group flex h-full flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300 hover:border-primary hover:shadow-xl">
+      <Card className="group flex h-full flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white transition-all duration-300 hover:border-primary shadow-sm hover:shadow-md">
         <CardContent className="p-0 flex flex-col h-full">
           {/* Image Container - Top 75% height visually */}
-          <div className="relative flex items-center justify-center bg-white overflow-hidden w-full aspect-square shrink-0">
+          <div className="relative flex h-[75%] items-center justify-center bg-white overflow-hidden w-full shrink-0">
             <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
               <Checkbox 
                 id={`compare-grid-${laptop.id}`}
@@ -40,7 +41,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                   if (checked) addToCompare(laptop);
                   else removeFromCompare(laptop.id);
                 }}
-                className="h-5 w-5 rounded-md"
+                className="h-5 w-5 rounded-md border-zinc-200"
               />
             </div>
 
@@ -58,11 +59,11 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
           </div>
 
           {/* Info Section - Bottom 25% height visually */}
-          <div className="flex-1 flex flex-col p-6 space-y-4 border-t bg-zinc-50/30">
+          <div className="flex-1 flex flex-col p-6 space-y-4 border-t border-zinc-100 bg-zinc-50/20">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">{laptop.brand}</span>
               <Link href={`/laptops/${laptop.id}`}>
-                <h3 className="text-base font-bold leading-tight text-black hover:text-primary transition-all line-clamp-2 uppercase tracking-tight">
+                <h3 className="text-base font-bold leading-tight text-black hover:text-primary transition-all line-clamp-1 uppercase tracking-tight">
                   {laptop.name}
                 </h3>
               </Link>
@@ -75,7 +76,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
               )}
             </div>
 
-            <div className="mt-auto flex items-center gap-3">
+            <div className="mt-auto flex items-center gap-2">
               <Button 
                 onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
                 className="flex-grow h-11 rounded-full bg-black text-white font-bold uppercase text-[10px] tracking-widest hover:bg-primary transition-all"
@@ -95,7 +96,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
   }
 
   return (
-    <Card className="group overflow-hidden rounded-3xl border bg-white transition-all duration-300 hover:border-primary hover:shadow-xl">
+    <Card className="group overflow-hidden rounded-3xl border border-zinc-200 bg-white transition-all duration-300 hover:border-primary shadow-sm hover:shadow-md">
       <CardContent className="p-0">
         <div className="flex flex-col md:flex-row">
           <div className="relative flex items-center justify-center bg-white overflow-hidden w-full md:w-[45%] aspect-[4/3] shrink-0">
@@ -107,7 +108,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                   if (checked) addToCompare(laptop);
                   else removeFromCompare(laptop.id);
                 }}
-                className="h-5 w-5 rounded-md"
+                className="h-5 w-5 rounded-md border-zinc-200"
               />
               <label htmlFor={`compare-list-${laptop.id}`} className="text-[10px] font-bold text-zinc-400 cursor-pointer hover:text-primary uppercase tracking-widest">
                 Compare
@@ -127,7 +128,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
             </Link>
           </div>
 
-          <div className="flex-1 flex flex-col justify-between p-8 md:p-10 border-t md:border-t-0 md:border-l">
+          <div className="flex-1 flex flex-col justify-between p-8 md:p-10 border-t md:border-t-0 md:border-l border-zinc-100">
             <div className="space-y-6">
               <div className="flex flex-col gap-2">
                 <Link href={`/laptops/${laptop.id}`}>
@@ -141,7 +142,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                       <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-primary text-primary" : "text-zinc-200")} />
                     ))}
                   </div>
-                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-l pl-3">Clean & Tested</span>
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-l border-zinc-200 pl-3">Good Quality</span>
                 </div>
               </div>
 
@@ -153,18 +154,18 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                   )}
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
-                  <Truck className="h-4 w-4" /> Fast Delivery in Nairobi
+                  <Truck className="h-4 w-4" /> Quick Delivery in Nairobi
                 </div>
               </div>
 
-              <div className="space-y-3 pt-6 border-t">
-                <p className="text-[10px] font-bold uppercase text-zinc-400 tracking-widest">Technical Specs</p>
+              <div className="space-y-3 pt-6 border-t border-zinc-100">
+                <p className="text-[10px] font-bold uppercase text-zinc-400 tracking-widest">Laptop Details</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                   {[
-                    { label: 'Processor', value: laptop.specifications.processor, icon: Cpu },
+                    { label: 'Chip', value: laptop.specifications.processor, icon: Cpu },
                     { label: 'RAM', value: laptop.specifications.ram, icon: Layers },
-                    { label: 'Storage', value: laptop.specifications.storage, icon: HardDrive },
-                    { label: 'Display', value: laptop.specifications.display, icon: Monitor }
+                    { label: 'Disk', value: laptop.specifications.storage, icon: HardDrive },
+                    { label: 'Screen', value: laptop.specifications.display, icon: Monitor }
                   ].map((spec, i) => (
                     <div key={i} className="flex items-center gap-3 text-xs font-medium text-zinc-600">
                       <spec.icon className="h-4 w-4 text-primary shrink-0 opacity-70" />

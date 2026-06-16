@@ -189,13 +189,13 @@
     {
       "id": "portfolio-1",
       "description": "E-commerce Website Project",
-      "imageUrl": "https://picsum.photos/seed/portfolio1/600/400",
+      "imageUrl": "/6bfbcdaa210ab1973cf934ce6da83439.jpg",
       "imageHint": "ecommerce website"
     },
     {
       "id": "portfolio-2",
       "description": "Corporate Website Project",
-      "imageUrl": "https://picsum.photos/seed/portfolio2/600/400",
+      "imageUrl": "/28868284d148ec33bc90264ad4543520.jpg",
       "imageHint": "corporate website"
     },
     {
