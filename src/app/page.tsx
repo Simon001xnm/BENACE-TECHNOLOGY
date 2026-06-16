@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
+import { AccessoryCard } from '@/components/accessories/accessory-card';
 import { HeroSlider } from '@/components/home/hero-slider';
 import { portfolioProjects } from '@/lib/data';
 import { PortfolioItem } from '@/components/services/portfolio-item';
@@ -16,7 +17,8 @@ import {
   MessageCircle, 
   Zap, 
   ShieldCheck, 
-  ChevronRight
+  ChevronRight,
+  MousePointer2
 } from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
@@ -31,7 +33,7 @@ export default function Home() {
     return query(
       collection(db, 'products'), 
       orderBy('createdAt', 'desc'), 
-      limit(12)
+      limit(24)
     );
   }, [db]);
 
@@ -39,6 +41,10 @@ export default function Home() {
 
   const featuredLaptops = useMemo(() => {
     return allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 8) || [];
+  }, [allLiveProducts]);
+
+  const featuredAccessories = useMemo(() => {
+    return allLiveProducts?.filter(p => p.type === 'accessory').slice(0, 4) || [];
   }, [allLiveProducts]);
 
   return (
@@ -90,8 +96,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 2.5 Tech Accessories Section */}
+      <section className="bg-zinc-50 py-16 md:py-24 border-b border-zinc-100">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div className="space-y-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block">Useful Gear</span>
+              <h2 className="text-4xl font-black uppercase tracking-tighter text-black sm:text-5xl">
+                Tech Accessories
+              </h2>
+              <p className="text-sm font-bold text-zinc-400 uppercase tracking-widest">
+                Printers • Mice • Backup Power
+              </p>
+            </div>
+            <Button asChild variant="outline" className="h-14 px-8 rounded-2xl font-black uppercase tracking-widest border-zinc-200 hover:border-black transition-all">
+              <Link href="/accessories" className="flex items-center">
+                View All Gear <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          {loading ? (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-64 w-full border border-zinc-100 animate-pulse bg-zinc-200 rounded-2xl"></div>
+              ))}
+            </div>
+          ) : featuredAccessories.length > 0 ? (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {featuredAccessories.map(accessory => (
+                <AccessoryCard key={accessory.id} accessory={accessory as any} />
+              ))}
+            </div>
+          ) : (
+            <div className="py-20 text-center border-2 border-dashed border-zinc-200 rounded-[2rem] bg-white">
+              <MousePointer2 className="mx-auto h-12 w-12 text-zinc-200 mb-4" />
+              <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">New accessories coming soon</p>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* 3. Professional Repairs Section with Video Ad */}
-      <section className="py-20 bg-zinc-50/50 md:py-32 border-b border-zinc-100">
+      <section className="py-20 bg-white md:py-32 border-b border-zinc-100">
         <div className="container mx-auto px-4">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <div className="relative aspect-square overflow-hidden rounded-[3rem] shadow-2xl bg-black">
@@ -120,11 +167,11 @@ export default function Home() {
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2 p-6 rounded-[2rem] border border-zinc-100 bg-white shadow-sm">
+                <div className="flex flex-col gap-2 p-6 rounded-[2rem] border border-zinc-100 bg-zinc-50/50 shadow-sm">
                   <ShieldCheck className="h-6 w-6 text-primary" />
                   <span className="text-[10px] font-black uppercase tracking-widest">6 Months Warranty</span>
                 </div>
-                <div className="flex flex-col gap-2 p-6 rounded-[2rem] border border-zinc-100 bg-white shadow-sm">
+                <div className="flex flex-col gap-2 p-6 rounded-[2rem] border border-zinc-100 bg-zinc-50/50 shadow-sm">
                   <Zap className="h-6 w-6 text-primary" />
                   <span className="text-[10px] font-black uppercase tracking-widest">Fast Same Day Fix</span>
                 </div>
