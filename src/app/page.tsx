@@ -211,7 +211,7 @@ export default function Home() {
                   We build great <br />websites.
                 </h2>
                 <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed italic border-l-4 border-primary pl-6">
-                  We also build websites to help your business grow. We make online shops and simple sites that look good and work well on all phones.
+                  We make websites for your business. We make shops and simple pages that look good and work well on all phones.
                 </p>
               </div>
               <ul className="grid gap-4 sm:grid-cols-2">
@@ -225,9 +225,9 @@ export default function Home() {
                 <Link href="/services">See Our Work</Link>
               </Button>
             </div>
-            <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-3xl overflow-hidden border bg-zinc-100 shadow-2xl">
+            <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-3xl overflow-hidden border bg-zinc-100 shadow-xl">
                <Image 
-                src="https://picsum.photos/seed/dev/1200/900" 
+                src="/fe42de32149b62db71a04cacce84466b.jpg" 
                 alt="Web Design Studio" 
                 fill 
                 className="object-cover"
