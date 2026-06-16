@@ -28,9 +28,9 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
 
   if (variant === 'grid') {
     return (
-      <Card className="group overflow-hidden border-4 border-black bg-white transition-all duration-300 rounded-none hover:shadow-neo-lg shadow-neo flex flex-col h-full">
+      <Card className="group flex h-full flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300 hover:border-primary hover:shadow-xl">
         <CardContent className="p-0 flex flex-col h-full">
-          {/* Image Container - Top 75% of card height visually */}
+          {/* Image Container - Top 75% height visually */}
           <div className="relative flex items-center justify-center bg-white overflow-hidden w-full aspect-square shrink-0">
             <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
               <Checkbox 
@@ -40,7 +40,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                   if (checked) addToCompare(laptop);
                   else removeFromCompare(laptop.id);
                 }}
-                className="h-5 w-5 border-2 border-black"
+                className="h-5 w-5 rounded-md"
               />
             </div>
 
@@ -50,19 +50,19 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                   src={displayImage}
                   alt={laptop.name}
                   fill
-                  className="object-contain transition-transform group-hover:scale-105 duration-700 p-4"
+                  className="object-contain transition-transform group-hover:scale-105 duration-700 p-6"
                   sizes="(max-width: 768px) 100vw, 300px"
                 />
               )}
             </Link>
           </div>
 
-          {/* Metadata Interface - Bottom Section */}
-          <div className="flex-1 flex flex-col p-6 space-y-3 border-t-4 border-black">
+          {/* Info Section - Bottom 25% height visually */}
+          <div className="flex-1 flex flex-col p-6 space-y-4 border-t bg-zinc-50/30">
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">{laptop.brand}</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">{laptop.brand}</span>
               <Link href={`/laptops/${laptop.id}`}>
-                <h3 className="text-base font-black leading-tight text-black hover:text-primary transition-all line-clamp-2 uppercase">
+                <h3 className="text-base font-bold leading-tight text-black hover:text-primary transition-all line-clamp-2 uppercase tracking-tight">
                   {laptop.name}
                 </h3>
               </Link>
@@ -75,14 +75,14 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
               )}
             </div>
 
-            <div className="mt-auto pt-4 flex items-center gap-3">
+            <div className="mt-auto flex items-center gap-3">
               <Button 
                 onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-                className="flex-grow h-11 rounded-none bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary border-2 border-black shadow-neo hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
+                className="flex-grow h-11 rounded-full bg-black text-white font-bold uppercase text-[10px] tracking-widest hover:bg-primary transition-all"
               >
-                <ShoppingCart className="mr-2 h-4 w-4" /> Add
+                <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
               </Button>
-              <Button asChild variant="outline" className="h-11 w-11 rounded-none border-2 border-black p-0 shrink-0 shadow-neo hover:bg-zinc-100 transition-all">
+              <Button asChild variant="outline" className="h-11 w-11 rounded-full p-0 shrink-0 border-zinc-200 hover:border-primary transition-all">
                   <Link href={`https://wa.me/254714210957?text=I am interested in ${laptop.name}`} target="_blank">
                     <MessageSquare className="h-4 w-4" />
                   </Link>
@@ -95,7 +95,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
   }
 
   return (
-    <Card className="group overflow-hidden border-4 border-black bg-white transition-all duration-300 rounded-none hover:shadow-neo-lg shadow-neo">
+    <Card className="group overflow-hidden rounded-3xl border bg-white transition-all duration-300 hover:border-primary hover:shadow-xl">
       <CardContent className="p-0">
         <div className="flex flex-col md:flex-row">
           <div className="relative flex items-center justify-center bg-white overflow-hidden w-full md:w-[45%] aspect-[4/3] shrink-0">
@@ -107,9 +107,9 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                   if (checked) addToCompare(laptop);
                   else removeFromCompare(laptop.id);
                 }}
-                className="h-5 w-5 border-2 border-black"
+                className="h-5 w-5 rounded-md"
               />
-              <label htmlFor={`compare-list-${laptop.id}`} className="text-[10px] font-black text-black cursor-pointer hover:text-primary uppercase tracking-widest">
+              <label htmlFor={`compare-list-${laptop.id}`} className="text-[10px] font-bold text-zinc-400 cursor-pointer hover:text-primary uppercase tracking-widest">
                 Compare
               </label>
             </div>
@@ -127,49 +127,47 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
             </Link>
           </div>
 
-          <div className="flex-1 flex flex-col justify-between p-6 md:p-8 border-t-4 md:border-t-0 md:border-l-4 border-black">
-            <div className="space-y-4">
-              <div className="flex flex-col gap-1">
+          <div className="flex-1 flex flex-col justify-between p-8 md:p-10 border-t md:border-t-0 md:border-l">
+            <div className="space-y-6">
+              <div className="flex flex-col gap-2">
                 <Link href={`/laptops/${laptop.id}`}>
-                  <h3 className="text-2xl font-black leading-tight text-black hover:text-primary transition-all uppercase tracking-tighter">
+                  <h3 className="text-2xl font-black leading-tight text-black hover:text-primary transition-all uppercase tracking-tight">
                     {laptop.brand} {laptop.name}
                   </h3>
                 </Link>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <div className="flex items-center">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-black text-black" : "text-zinc-200")} />
+                      <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-primary text-primary" : "text-zinc-200")} />
                     ))}
                   </div>
-                  <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">CLEAN & TESTED</span>
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-l pl-3">Clean & Tested</span>
                 </div>
               </div>
 
               <div className="flex flex-col gap-1">
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-3">
                   <span className="text-3xl font-black text-black">KES {laptop.price.toLocaleString()}</span>
                   {laptop.oldPrice && (
                     <span className="text-sm font-bold text-zinc-400 line-through">KES {laptop.oldPrice.toLocaleString()}</span>
                   )}
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-black text-primary uppercase tracking-widest">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
                   <Truck className="h-4 w-4" /> Fast Delivery in Nairobi
                 </div>
               </div>
 
-              <div className="space-y-2 pt-4 border-t-2 border-zinc-100">
-                <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">
-                  Technical Specs
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+              <div className="space-y-3 pt-6 border-t">
+                <p className="text-[10px] font-bold uppercase text-zinc-400 tracking-widest">Technical Specs</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                   {[
                     { label: 'Processor', value: laptop.specifications.processor, icon: Cpu },
                     { label: 'RAM', value: laptop.specifications.ram, icon: Layers },
                     { label: 'Storage', value: laptop.specifications.storage, icon: HardDrive },
                     { label: 'Display', value: laptop.specifications.display, icon: Monitor }
                   ].map((spec, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs font-bold text-zinc-600">
-                      <spec.icon className="h-3.5 w-3.5 text-black shrink-0" />
+                    <div key={i} className="flex items-center gap-3 text-xs font-medium text-zinc-600">
+                      <spec.icon className="h-4 w-4 text-primary shrink-0 opacity-70" />
                       <span>{spec.value}</span>
                     </div>
                   ))}
@@ -177,14 +175,14 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
               </div>
             </div>
 
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-10 flex items-center gap-4">
               <Button 
                 onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-                className="flex-grow h-14 rounded-none bg-black text-white font-black uppercase text-xs tracking-widest hover:bg-primary border-2 border-black shadow-neo transition-all"
+                className="flex-grow h-14 rounded-full bg-black text-white font-bold uppercase text-xs tracking-widest hover:bg-primary transition-all"
               >
                 <ShoppingCart className="mr-3 h-5 w-5" /> Buy this Laptop
               </Button>
-              <Button asChild variant="outline" className="h-14 w-14 rounded-none border-2 border-black shadow-neo hover:bg-zinc-50 transition-all">
+              <Button asChild variant="outline" className="h-14 w-14 rounded-full border-zinc-200 hover:border-primary transition-all">
                   <Link href={`https://wa.me/254714210957?text=I am interested in ${laptop.name}`} target="_blank">
                     <MessageSquare className="h-6 w-6" />
                   </Link>

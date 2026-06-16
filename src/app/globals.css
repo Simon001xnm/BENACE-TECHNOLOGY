@@ -23,13 +23,13 @@
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 217 91% 45%;
-    --radius: 0rem;
+    --radius: 0.75rem;
   }
 }
 
 @layer base {
   * {
-    @apply border-black;
+    @apply border-zinc-200;
   }
   body {
     @apply bg-white text-foreground font-body antialiased;
@@ -37,18 +37,6 @@
 }
 
 @layer utilities {
-  .shadow-neo {
-    box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
-  }
-  
-  .shadow-neo-lg {
-    box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
-  }
-
-  .shadow-neo-xl {
-    box-shadow: 12px 12px 0px 0px rgba(0,0,0,1);
-  }
-
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }

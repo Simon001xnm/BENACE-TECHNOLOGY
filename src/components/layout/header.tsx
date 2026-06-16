@@ -38,14 +38,14 @@ export function Header() {
   return (
     <header 
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300 border-b-4 border-black",
+        "sticky top-0 z-50 w-full transition-all duration-300 border-b",
         scrolled 
-          ? "bg-white py-2 shadow-neo" 
+          ? "bg-white/80 py-2 backdrop-blur-md shadow-sm" 
           : "bg-white py-4"
       )}
     >
       <div className="container mx-auto flex h-14 items-center px-4 md:px-6">
-        <Link href="/" className="relative mr-8 group">
+        <Link href="/" className="relative mr-10 group">
           <Image
             src="/use.png"
             alt="Benace Technologies Logo"
@@ -57,12 +57,12 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-xs font-black uppercase tracking-widest text-black hover:text-primary transition-colors"
+              className="text-[11px] font-bold uppercase tracking-widest text-zinc-500 hover:text-primary transition-colors"
             >
               {link.name}
             </Link>
@@ -74,11 +74,11 @@ export function Header() {
             <Button 
               variant="outline" 
               size="icon" 
-              className="relative h-12 w-12 border-2 border-black bg-white shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+              className="relative h-11 w-11 rounded-full border-zinc-200 bg-white hover:border-primary transition-all"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-none border-2 border-black bg-primary text-[10px] font-black text-white">
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-black text-white">
                   {cartCount}
                 </span>
               )}
@@ -88,13 +88,13 @@ export function Header() {
           <div className="lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="h-12 w-12 border-2 border-black shadow-neo">
-                  <Menu className="h-6 w-6" />
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full border-zinc-200">
+                  <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:max-w-sm p-0 border-l-4 border-black">
-                <SheetHeader className="p-8 border-b-4 border-black bg-zinc-50">
-                  <SheetTitle className="text-left font-black text-2xl uppercase tracking-tighter">
+              <SheetContent side="right" className="w-full sm:max-w-sm p-0">
+                <SheetHeader className="p-8 border-b bg-zinc-50/50">
+                  <SheetTitle className="text-left font-black text-2xl uppercase tracking-tight">
                     Benace Hub
                   </SheetTitle>
                 </SheetHeader>
@@ -104,14 +104,14 @@ export function Header() {
                       key={link.href}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-2xl font-black uppercase tracking-tighter hover:text-primary transition-colors flex items-center justify-between"
+                      className="text-2xl font-black uppercase tracking-tight hover:text-primary transition-colors flex items-center justify-between"
                     >
                       {link.name}
-                      <ArrowUpRight className="h-6 w-6 opacity-30" />
+                      <ArrowUpRight className="h-6 w-6 opacity-20" />
                     </Link>
                   ))}
-                  <div className="mt-8 pt-8 border-t-4 border-black">
-                    <Button asChild className="w-full h-16 rounded-none border-2 border-black bg-black text-white font-black uppercase tracking-widest hover:bg-primary transition-all shadow-neo">
+                  <div className="mt-8 pt-8 border-t">
+                    <Button asChild className="w-full h-14 rounded-full bg-black text-white font-bold uppercase tracking-widest hover:bg-primary transition-all">
                       <Link href="/contact" onClick={() => setIsOpen(false)}>Talk to Us</Link>
                     </Button>
                   </div>
