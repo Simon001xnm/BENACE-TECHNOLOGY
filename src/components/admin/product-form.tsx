@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, X, Upload, Wand2, Info } from 'lucide-react';
+import { Loader2, X, Upload, Wand2 } from 'lucide-react';
 import Image from 'next/image';
 
 const productSchema = z.object({
@@ -115,7 +115,6 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       ...values,
       updatedAt: serverTimestamp(),
       createdAt: initialData?.createdAt || serverTimestamp(),
-      // Ensure imageId is set to the first image if available for backward compatibility
       imageId: values.imageUrls[0] || '',
     });
 
@@ -154,7 +153,12 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
       
       toast({ title: 'Uploaded!', description: 'Photo added successfully.' });
     } catch (err: any) {
-      toast({ variant: 'destructive', title: 'Upload Failed', description: 'Could not upload photo.' });
+      console.error("Storage upload error:", err);
+      toast({ 
+        variant: 'destructive', 
+        title: 'Upload Failed', 
+        description: err.message || 'Could not upload photo. Please check your storage settings.' 
+      });
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -207,15 +211,14 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-        {/* Basic Info */}
         <div className="space-y-6">
-          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 1: Basic Details</h3>
+          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 1: Product Basics</h3>
           <div className="grid gap-6 md:grid-cols-2">
             <FormField control={form.control} name="name" render={({ field }) => (
               <FormItem className="md:col-span-2">
-                <FormLabel className="text-xs font-bold uppercase">Product Name</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Laptop Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. HP EliteBook 840 G8" {...field} className="h-12 border-2 border-zinc-100 focus:border-primary" />
+                  <Input placeholder="e.g. HP EliteBook 840 G8" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -242,7 +245,6 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="Laptops">Laptops</SelectItem>
-                    <SelectItem value="Tablets">Tablets</SelectItem>
                     <SelectItem value="Printers">Printers</SelectItem>
                     <SelectItem value="Accessories">Accessories</SelectItem>
                     <SelectItem value="Monitors">Monitors</SelectItem>
@@ -283,10 +285,9 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
           </div>
         </div>
 
-        {/* Images */}
         <div className="space-y-6">
           <div className="flex items-center justify-between border-b pb-2">
-            <h3 className="text-xs font-black uppercase tracking-widest text-primary">Step 2: Product Photos</h3>
+            <h3 className="text-xs font-black uppercase tracking-widest text-primary">Step 2: Photos</h3>
             <Button 
               type="button" 
               onClick={() => fileInputRef.current?.click()} 
@@ -294,26 +295,25 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
               className="bg-black text-white font-bold uppercase text-[10px] tracking-widest px-6"
             >
               {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
-              {uploading ? 'Uploading...' : 'Add More Photos'}
+              {uploading ? 'Adding...' : 'Add Photos'}
             </Button>
             <input type="file" className="hidden" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" />
           </div>
 
           <p className="text-[10px] font-bold text-zinc-400 uppercase italic">
-            Tip: Use the AI button to make your photos look professional with a white background.
+            Tip: Upload a photo, then use "AI Clean BG" to make it look professional.
           </p>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5">
             {form.watch('imageUrls').map((url, i) => (
               <div key={i} className="group relative aspect-square rounded-2xl border-2 border-zinc-50 bg-white p-2 overflow-hidden shadow-sm">
                 <Image src={url} alt={`Product ${i + 1}`} fill className="object-contain p-2" />
-                
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
                   <Button 
                     type="button" 
                     size="sm" 
                     variant="secondary" 
-                    className="h-9 w-[80%] text-[9px] font-black uppercase tracking-tighter"
+                    className="h-9 w-[80%] text-[9px] font-black uppercase"
                     onClick={() => removeBackground(i)}
                     disabled={processingIndex === i}
                   >
@@ -324,7 +324,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                     type="button" 
                     size="sm" 
                     variant="destructive" 
-                    className="h-9 w-[80%] text-[9px] font-black uppercase tracking-widest"
+                    className="h-9 w-[80%] text-[9px] font-black uppercase"
                     onClick={() => removeImage(i)}
                   >
                     <X className="mr-2 h-3.5 w-3.5" /> Remove
@@ -332,100 +332,81 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                 </div>
                 {i === 0 && (
                   <div className="absolute top-2 left-2 bg-primary text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase">
-                    Main Photo
+                    Main
                   </div>
                 )}
               </div>
             ))}
-            {form.watch('imageUrls').length === 0 && (
-              <div className="col-span-full py-12 text-center border-2 border-dashed border-zinc-100 rounded-3xl">
-                <p className="text-xs font-bold text-zinc-300 uppercase tracking-widest">No photos uploaded yet.</p>
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Specifications */}
         <div className="space-y-6">
-          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 3: Technical Specs</h3>
+          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 3: Tech Specs</h3>
           <div className="grid gap-6 md:grid-cols-2">
             <FormField control={form.control} name="specifications.processor" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Processor (CPU)</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Processor</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. Intel Core i7 11th Gen" {...field} className="h-12 border-2 border-zinc-100" />
+                  <Input placeholder="e.g. Intel Core i7" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
               </FormItem>
             )} />
             <FormField control={form.control} name="specifications.ram" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Memory (RAM)</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">RAM</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. 16GB DDR4" {...field} className="h-12 border-2 border-zinc-100" />
+                  <Input placeholder="e.g. 16GB" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
               </FormItem>
             )} />
             <FormField control={form.control} name="specifications.storage" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Storage (SSD/HDD)</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Storage</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. 512GB Fast SSD" {...field} className="h-12 border-2 border-zinc-100" />
+                  <Input placeholder="e.g. 512GB SSD" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
               </FormItem>
             )} />
             <FormField control={form.control} name="specifications.display" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Screen Size</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Screen</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. 14 inch Full HD" {...field} className="h-12 border-2 border-zinc-100" />
+                  <Input placeholder="e.g. 14 inch" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
               </FormItem>
             )} />
           </div>
         </div>
 
-        {/* Additional Info */}
         <div className="space-y-6">
-          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 4: Final Details</h3>
-          <div className="space-y-6">
-            <FormField control={form.control} name="description" render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">About this product</FormLabel>
-                <FormControl>
-                  <Textarea 
-                    placeholder="Tell your customers more about this item. Keep it simple and helpful." 
-                    className="min-h-[120px] border-2 border-zinc-100 p-4 font-medium" 
-                    {...field} 
-                  />
-                </FormControl>
-              </FormItem>
+          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 4: About Item</h3>
+          <FormField control={form.control} name="description" render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs font-bold uppercase">Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Tell customers about this laptop..." className="min-h-[120px] border-2 border-zinc-100" {...field} />
+              </FormControl>
+            </FormItem>
+          )} />
+          <div className="flex items-center justify-between p-6 rounded-2xl bg-zinc-50 border-2 border-zinc-100">
+            <FormLabel className="text-xs font-black uppercase">In Stock</FormLabel>
+            <FormField control={form.control} name="inStock" render={({ field }) => (
+              <FormControl>
+                <Switch checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
             )} />
-
-            <div className="flex items-center justify-between p-6 rounded-2xl bg-zinc-50 border-2 border-zinc-100">
-              <div className="space-y-0.5">
-                <FormLabel className="text-xs font-black uppercase tracking-widest">In Stock</FormLabel>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase">Is this item available to buy right now?</p>
-              </div>
-              <FormField control={form.control} name="inStock" render={({ field }) => (
-                <FormControl>
-                  <Switch checked={field.value} onCheckedChange={field.onChange} />
-                </FormControl>
-              )} />
-            </div>
           </div>
         </div>
 
-        <div className="pt-6">
-          <Button 
-            type="submit" 
-            size="lg" 
-            className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-[0.2em] text-xs hover:bg-primary transition-all shadow-xl disabled:opacity-50" 
-            disabled={loading || uploading}
-          >
-            {loading ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
-            {productId ? 'Update Shop Listing' : 'Publish Product to Shop'}
-          </Button>
-        </div>
+        <Button 
+          type="submit" 
+          size="lg" 
+          className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-xs hover:bg-primary transition-all shadow-xl" 
+          disabled={loading || uploading}
+        >
+          {loading ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
+          {productId ? 'Update Listing' : 'Publish to Shop'}
+        </Button>
       </form>
     </Form>
   );

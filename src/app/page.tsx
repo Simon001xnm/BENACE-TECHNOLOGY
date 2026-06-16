@@ -53,12 +53,12 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="space-y-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block">Premium Selection</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block">Best Sellers</span>
               <h2 className="text-4xl font-black uppercase tracking-tighter text-black sm:text-6xl">
                 Laptops for Sale
               </h2>
               <p className="text-sm font-bold text-zinc-400 uppercase tracking-widest">
-                Good Quality • Clean and Tested • Ready to Use
+                Good Quality • Tested • Ready to Use
               </p>
             </div>
             <Button asChild variant="outline" className="h-14 px-8 rounded-2xl font-black uppercase tracking-widest border-zinc-200 hover:border-black transition-all">
@@ -84,7 +84,7 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center py-32 text-center border-2 border-dashed border-zinc-100 rounded-[3rem] bg-zinc-50/30">
                <DatabaseBackup className="mb-6 h-12 w-12 text-zinc-200" />
                <h3 className="text-xl font-black text-black uppercase tracking-tight">Updating Stock...</h3>
-               <p className="mt-2 text-xs text-zinc-400 font-bold uppercase tracking-widest">Please wait while we sync the hub</p>
+               <p className="mt-2 text-xs text-zinc-400 font-bold uppercase tracking-widest">Checking our shop inventory</p>
             </div>
           )}
         </div>
@@ -106,7 +106,7 @@ export default function Home() {
                 Your browser cannot play this video.
               </video>
               <div className="absolute top-8 left-8 bg-black/80 text-white px-6 py-3 font-black uppercase text-[10px] tracking-[0.2em] rounded-full border border-white/20 backdrop-blur-md">
-                <span className="text-primary mr-2">●</span> Live Repair Lab
+                <span className="text-primary mr-2">●</span> Live Repair Shop
               </div>
             </div>
             <div className="space-y-8">
@@ -116,7 +116,7 @@ export default function Home() {
                   We fix all <br />problems.
                 </h2>
                 <p className="text-lg font-bold text-zinc-500 leading-relaxed italic border-l-4 border-primary pl-6">
-                  We fix broken screens, keys that do not work, and internal parts. We make your laptop work like a new one. Our work is clean and fast. You can trust us.
+                  We fix broken screens and parts that do not work. We make your laptop look and work like new. Our work is fast and clean.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -126,11 +126,11 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 p-6 rounded-[2rem] border border-zinc-100 bg-white shadow-sm">
                   <Zap className="h-6 w-6 text-primary" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Same Day Finish</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest">Fast Same Day Fix</span>
                 </div>
               </div>
               <Button asChild size="lg" className="h-16 w-full sm:w-auto rounded-2xl bg-black text-white font-black uppercase tracking-widest px-12 hover:bg-primary transition-all shadow-xl">
-                <Link href="/repairs">Book Your Repair</Link>
+                <Link href="/repairs">Fix My Laptop</Link>
               </Button>
             </div>
           </div>
@@ -142,12 +142,12 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 blur-[120px] pointer-events-none" />
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto space-y-10">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Flexible Hardware</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Rent Now</span>
             <h2 className="text-5xl font-black uppercase tracking-tighter sm:text-8xl leading-[0.9]">
-              Rent now. <br /><span className="text-zinc-600">Pay Less.</span>
+              Rent Today. <br /><span className="text-zinc-600">Pay Less.</span>
             </h2>
             <p className="text-xl font-bold text-zinc-400 italic max-w-2xl mx-auto">
-              Need a laptop for a short time? You can rent one for school, work, or meetings. We have fast laptops ready for you at a low price.
+              Need a laptop for a few days? You can rent one from us for school or work. We have good laptops ready for you at a low price.
             </p>
             <div className="pt-8 flex flex-wrap justify-center gap-10">
               {['For Students', 'For Offices', 'For Events'].map((label) => (
@@ -158,7 +158,7 @@ export default function Home() {
             </div>
             <div className="pt-10">
               <Button asChild size="lg" className="h-20 rounded-[2rem] bg-primary text-black font-black uppercase tracking-widest px-16 hover:bg-white transition-all shadow-2xl shadow-primary/20">
-                <Link href="/laptop-hire">See Rental Rates</Link>
+                <Link href="/laptop-hire">See Prices</Link>
               </Button>
             </div>
           </div>
@@ -176,18 +176,18 @@ export default function Home() {
                   We build <br />great sites.
                 </h2>
                 <p className="text-lg font-bold text-zinc-500 leading-relaxed italic border-l-4 border-primary pl-6">
-                  We make websites for your business. We make shops and simple pages that look good and work well on all phones.
+                  We make websites for your business that work well on all phones. We build online shops and simple pages for your company.
                 </p>
               </div>
               <ul className="grid gap-4 sm:grid-cols-2">
-                {['Custom Design', 'Online Shops', 'Brand Logos', 'Google SEO'].map((item, i) => (
+                {['Custom Design', 'Online Shops', 'Business Logos', 'Google SEO'].map((item, i) => (
                   <li key={i} className="flex items-center gap-4 p-5 rounded-2xl border border-zinc-100 font-black uppercase text-[10px] tracking-widest bg-zinc-50/50 text-zinc-700">
                     <ChevronRight className="h-5 w-5 text-primary shrink-0" /> {item}
                   </li>
                 ))}
               </ul>
               <Button asChild size="lg" className="h-16 w-full sm:w-auto rounded-2xl bg-black text-white font-black uppercase tracking-widest px-12 hover:bg-primary transition-all shadow-xl">
-                <Link href="/services">View Our Work</Link>
+                <Link href="/services">See Our Work</Link>
               </Button>
             </div>
             <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl">
@@ -206,10 +206,10 @@ export default function Home() {
       <section className="py-24 bg-zinc-50 border-b border-zinc-100">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center space-y-4">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary block">Success Stories</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary block">Our Work</span>
             <h2 className="text-4xl font-black uppercase tracking-tighter text-black sm:text-6xl">Recent Projects</h2>
             <p className="text-sm font-bold text-zinc-400 uppercase tracking-widest max-w-2xl mx-auto">
-              We help businesses grow online. Take a look at some of the websites we have built recently.
+              Take a look at the websites we have built for other businesses recently.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
@@ -230,7 +230,7 @@ export default function Home() {
                 { label: 'Trusted Shop', icon: ShieldCheck },
                 { label: 'Fast Delivery', icon: Zap },
                 { label: 'Expert Help', icon: Wrench },
-                { label: 'Good Items', icon: Globe }
+                { label: 'Good Quality', icon: Globe }
               ].map((item, i) => (
                 <div key={i} className="flex flex-col items-center gap-6 p-10 rounded-[2.5rem] border border-zinc-100 bg-zinc-50/30 hover:bg-white hover:shadow-xl transition-all group">
                   <div className="h-16 w-16 flex items-center justify-center bg-white rounded-full shadow-md group-hover:scale-110 transition-transform">
@@ -242,10 +242,10 @@ export default function Home() {
             </div>
             <div className="mt-20 flex flex-col sm:flex-row justify-center gap-4 px-4">
               <Button asChild variant="outline" className="h-16 w-full sm:w-auto rounded-2xl px-12 font-black uppercase tracking-widest border-zinc-200 hover:border-black transition-all">
-                <Link href="/about">Our Story</Link>
+                <Link href="/about">About Us</Link>
               </Button>
               <Button asChild className="h-16 w-full sm:w-auto rounded-2xl bg-black text-white px-12 font-black uppercase tracking-widest hover:bg-primary transition-all shadow-xl">
-                <Link href="/contact">Visit Our Shop</Link>
+                <Link href="/contact">Visit Shop</Link>
               </Button>
             </div>
           </div>
@@ -262,7 +262,7 @@ export default function Home() {
           <MessageCircle className="h-8 w-8" />
         </Link>
         <div className="absolute right-20 bottom-3 bg-white px-4 py-2 rounded-xl shadow-xl border border-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden md:block">
-           <p className="text-[10px] font-black uppercase tracking-widest text-black whitespace-nowrap">Chat with an expert</p>
+           <p className="text-[10px] font-black uppercase tracking-widest text-black whitespace-nowrap">Chat with us</p>
         </div>
       </div>
     </div>
