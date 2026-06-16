@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, ArrowUpRight } from 'lucide-react';
+import { ShoppingCart, Menu, ArrowUpRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartSheet } from '@/components/cart/cart-sheet';
 import { useCart } from '@/lib/cart-context';
@@ -40,17 +40,17 @@ export function Header() {
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300 border-b",
         scrolled 
-          ? "bg-white/80 py-2 backdrop-blur-md shadow-sm" 
+          ? "bg-white/95 py-2 backdrop-blur-md shadow-sm" 
           : "bg-white py-4"
       )}
     >
       <div className="container mx-auto flex h-14 items-center px-4 md:px-6">
-        <Link href="/" className="relative mr-10 group">
+        <Link href="/" className="relative mr-10 group shrink-0">
           <Image
             src="/use.png"
             alt="Benace Technologies Logo"
-            width={140}
-            height={36}
+            width={120}
+            height={32}
             priority
             className="object-contain transition-transform group-hover:scale-105"
           />
@@ -69,12 +69,12 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-4">
+        <div className="ml-auto flex items-center gap-3">
           <CartSheet>
             <Button 
-              variant="outline" 
+              variant="ghost" 
               size="icon" 
-              className="relative h-11 w-11 rounded-full border-zinc-200 bg-white hover:border-primary transition-all"
+              className="relative h-10 w-10 rounded-full bg-zinc-50 hover:bg-zinc-100 transition-all"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
@@ -88,31 +88,32 @@ export function Header() {
           <div className="lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full border-zinc-200">
+                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full bg-zinc-50">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:max-w-sm p-0">
-                <SheetHeader className="p-8 border-b bg-zinc-50/50">
-                  <SheetTitle className="text-left font-black text-2xl uppercase tracking-tight">
+              <SheetContent side="right" className="w-full sm:max-w-sm p-0 flex flex-col">
+                <SheetHeader className="p-6 border-b bg-white flex flex-row items-center justify-between">
+                  <SheetTitle className="text-left font-black text-xl uppercase tracking-tight">
                     Benace Hub
                   </SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col p-8 gap-6">
+                <div className="flex-grow flex flex-col p-8 gap-8 overflow-y-auto">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-2xl font-black uppercase tracking-tight hover:text-primary transition-colors flex items-center justify-between"
+                      className="text-3xl font-black uppercase tracking-tight hover:text-primary transition-colors flex items-center justify-between group"
                     >
                       {link.name}
-                      <ArrowUpRight className="h-6 w-6 opacity-20" />
+                      <ArrowUpRight className="h-6 w-6 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                     </Link>
                   ))}
-                  <div className="mt-8 pt-8 border-t">
-                    <Button asChild className="w-full h-14 rounded-full bg-black text-white font-bold uppercase tracking-widest hover:bg-primary transition-all">
-                      <Link href="/contact" onClick={() => setIsOpen(false)}>Talk to Us</Link>
+                  <div className="mt-auto pt-8 border-t space-y-4">
+                    <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Available 24/7</p>
+                    <Button asChild className="w-full h-16 rounded-2xl bg-black text-white font-bold uppercase tracking-widest hover:bg-primary transition-all shadow-xl">
+                      <Link href="/contact" onClick={() => setIsOpen(false)}>Talk to Us Now</Link>
                     </Button>
                   </div>
                 </div>
