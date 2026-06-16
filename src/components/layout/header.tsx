@@ -38,31 +38,31 @@ export function Header() {
   return (
     <header 
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "sticky top-0 z-50 w-full transition-all duration-300 border-b-4 border-black",
         scrolled 
-          ? "bg-white/80 backdrop-blur-md py-3 shadow-sm" 
-          : "bg-white py-5"
+          ? "bg-white py-2 shadow-neo" 
+          : "bg-white py-4"
       )}
     >
       <div className="container mx-auto flex h-14 items-center px-4 md:px-6">
-        <Link href="/" className="relative mr-8">
+        <Link href="/" className="relative mr-8 group">
           <Image
             src="/use.png"
             alt="Benace Technologies Logo"
             width={140}
             height={36}
             priority
-            className="object-contain"
+            className="object-contain transition-transform group-hover:scale-105"
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-zinc-500 hover:text-black transition-colors"
+              className="text-xs font-black uppercase tracking-widest text-black hover:text-primary transition-colors"
             >
               {link.name}
             </Link>
@@ -72,13 +72,13 @@ export function Header() {
         <div className="ml-auto flex items-center gap-4">
           <CartSheet>
             <Button 
-              variant="ghost" 
+              variant="outline" 
               size="icon" 
-              className="relative rounded-full h-11 w-11 bg-zinc-50 hover:bg-zinc-100"
+              className="relative h-12 w-12 border-2 border-black bg-white shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
+                <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-none border-2 border-black bg-primary text-[10px] font-black text-white">
                   {cartCount}
                 </span>
               )}
@@ -88,13 +88,13 @@ export function Header() {
           <div className="lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-11 w-11 rounded-full bg-zinc-50">
+                <Button variant="outline" size="icon" className="h-12 w-12 border-2 border-black shadow-neo">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:max-w-sm p-0">
-                <SheetHeader className="p-8 border-b">
-                  <SheetTitle className="text-left font-bold text-2xl">
+              <SheetContent side="right" className="w-full sm:max-w-sm p-0 border-l-4 border-black">
+                <SheetHeader className="p-8 border-b-4 border-black bg-zinc-50">
+                  <SheetTitle className="text-left font-black text-2xl uppercase tracking-tighter">
                     Benace Hub
                   </SheetTitle>
                 </SheetHeader>
@@ -104,15 +104,15 @@ export function Header() {
                       key={link.href}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-xl font-bold hover:text-primary transition-colors flex items-center justify-between"
+                      className="text-2xl font-black uppercase tracking-tighter hover:text-primary transition-colors flex items-center justify-between"
                     >
                       {link.name}
-                      <ArrowUpRight className="h-5 w-5 opacity-50" />
+                      <ArrowUpRight className="h-6 w-6 opacity-30" />
                     </Link>
                   ))}
-                  <div className="mt-8 pt-8 border-t">
-                    <Button asChild className="w-full h-14 rounded-full font-bold">
-                      <Link href="/contact" onClick={() => setIsOpen(false)}>Get in Touch</Link>
+                  <div className="mt-8 pt-8 border-t-4 border-black">
+                    <Button asChild className="w-full h-16 rounded-none border-2 border-black bg-black text-white font-black uppercase tracking-widest hover:bg-primary transition-all shadow-neo">
+                      <Link href="/contact" onClick={() => setIsOpen(false)}>Talk to Us</Link>
                     </Button>
                   </div>
                 </div>

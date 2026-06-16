@@ -23,22 +23,30 @@
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 217 91% 45%;
-    --radius: 1rem;
+    --radius: 0rem;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-black;
   }
   body {
-    @apply bg-[#f8f9fa] text-foreground font-body antialiased;
+    @apply bg-white text-foreground font-body antialiased;
   }
 }
 
 @layer utilities {
-  .shadow-soft {
-    box-shadow: 0 2px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.05);
+  .shadow-neo {
+    box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+  }
+  
+  .shadow-neo-lg {
+    box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+  }
+
+  .shadow-neo-xl {
+    box-shadow: 12px 12px 0px 0px rgba(0,0,0,1);
   }
 
   .animate-float {
