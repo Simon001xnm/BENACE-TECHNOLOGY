@@ -31,18 +31,14 @@ export default function Home() {
     return query(
       collection(db, 'products'), 
       orderBy('createdAt', 'desc'), 
-      limit(8)
+      limit(12)
     );
   }, [db]);
 
   const { data: allLiveProducts, loading } = useCollection(productsQuery);
 
   const featuredLaptops = useMemo(() => {
-    return allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 4) || [];
-  }, [allLiveProducts]);
-
-  const accessories = useMemo(() => {
-    return allLiveProducts?.filter(p => p.type === 'accessory').slice(0, 4) || [];
+    return allLiveProducts?.filter(p => p.type === 'laptop').slice(0, 8) || [];
   }, [allLiveProducts]);
 
   return (
@@ -164,40 +160,6 @@ export default function Home() {
                 <Link href="/laptop-hire">See Rental List</Link>
               </Button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Tech Accessories Section */}
-      <section className="py-20 bg-zinc-50/50 border-b border-zinc-100">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 flex items-center justify-between">
-            <div>
-               <span className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2 block">Specialized Gear</span>
-               <h2 className="text-3xl font-black uppercase tracking-tight">Computer Parts</h2>
-            </div>
-            <Link href="/accessories" className="text-[10px] font-bold uppercase tracking-widest text-primary hover:underline">
-              See All Items →
-            </Link>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {accessories.map((item, i) => (
-              <Link key={i} href={`/laptops/${item.id}`} className="group flex flex-col bg-white rounded-3xl border border-zinc-100 overflow-hidden hover:shadow-lg transition-all">
-                <div className="relative aspect-square bg-white border-b border-zinc-100 overflow-hidden">
-                  <Image 
-                    src={item.imageUrls?.[0] || PlaceHolderImages.find(img => img.id === item.imageId)?.imageUrl || 'https://picsum.photos/seed/acc/600/600'} 
-                    alt={item.name} 
-                    fill 
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <div className="p-6">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1">{item.brand}</p>
-                  <h4 className="font-bold text-sm text-black group-hover:text-primary transition-colors uppercase leading-tight line-clamp-2">{item.name}</h4>
-                  <p className="mt-4 font-black text-xl text-primary">KES {item.price.toLocaleString()}</p>
-                </div>
-              </Link>
-            ))}
           </div>
         </div>
       </section>
