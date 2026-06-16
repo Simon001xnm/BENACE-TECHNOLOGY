@@ -93,19 +93,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Professional Repairs Section */}
+      {/* 3. Professional Repairs Section with Video Ad */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid gap-16 lg:grid-cols-2 items-center">
-            <div className="relative aspect-square overflow-hidden bg-zinc-100">
-              <Image 
-                src="https://picsum.photos/seed/repair-hub/1200/1200" 
-                alt="Repair Shop" 
-                fill 
-                className="object-cover"
-                data-ai-hint="electronics repair"
-              />
-              <div className="absolute top-8 left-8 bg-black text-white p-6 font-black uppercase italic tracking-tighter">
+            <div className="relative aspect-square overflow-hidden bg-black shadow-2xl">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              >
+                <source src="/(21).mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div className="absolute top-8 left-8 bg-black text-white p-6 font-black uppercase italic tracking-tighter border-l-4 border-primary">
                 <span className="text-primary">Best</span> Repair Shop
               </div>
             </div>
@@ -116,7 +119,7 @@ export default function Home() {
                   WE FIX ALL <br />LAPTOP PROBLEMS.
                 </h2>
                 <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
-                  We fix broken screens, keyboards, and motherboard problems. We use special tools to make sure your laptop works like new again. Our work is clean and fast.
+                  We fix broken screens, keyboards, and internal parts. We use special tools to make your laptop work like new. Our work is clean, fast, and reliable.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-6">
@@ -146,7 +149,7 @@ export default function Home() {
               RENT NOW. <br /><span className="text-zinc-500">SAVE YOUR MONEY.</span>
             </h2>
             <p className="text-lg font-medium text-zinc-400">
-              Need a laptop for just a short time? Rent one for school, work, or events. We have fast laptops ready for you to use at a low cost.
+              Need a laptop for a short time? Rent one for school, work, or meetings. We have fast laptops ready for you at a low price.
             </p>
             <div className="pt-8 flex flex-wrap justify-center gap-6">
               <Link href="/laptop-hire" className="flex items-center gap-2 group text-xs font-black uppercase tracking-widest">
@@ -208,7 +211,7 @@ export default function Home() {
                   WE BUILD GREAT <br />WEBSITES.
                 </h2>
                 <p className="mt-6 text-lg font-medium text-zinc-500 leading-relaxed">
-                  We don't just sell computers; we also build websites that help your business grow. We can make online shops or simple websites that look good and work well.
+                  We don't just sell computers. we also build websites that help your business grow. We make online shops and simple sites that look good and work well.
                 </p>
               </div>
               <ul className="space-y-4">
