@@ -9,8 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState, useEffect } from 'react';
 
-const AUTHORIZED_ADMIN_EMAIL = "benacetechnologies@gmail.com";
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useUser();
   const auth = useAuth();
@@ -22,16 +20,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     if (!loading) {
       if (!user && pathname !== '/admin/login') {
         router.push('/admin/login');
-      } else if (user && user.email !== AUTHORIZED_ADMIN_EMAIL) {
-        // Silently sign out unauthorized users
-        if (auth) {
-          signOut(auth).then(() => {
-             router.push('/admin/login');
-          });
-        }
       }
     }
-  }, [user, loading, pathname, router, auth]);
+  }, [user, loading, pathname, router]);
 
   const handleLogout = async () => {
     if (auth) {
@@ -44,14 +35,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="flex h-screen items-center justify-center bg-zinc-50">
         <div className="text-center font-black uppercase tracking-widest animate-pulse">
-          Synchronizing Admin Privileges...
+          Checking access...
         </div>
       </div>
     );
   }
 
-  // If not logged in or wrong email and not on login page, don't render content
-  if ((!user || user.email !== AUTHORIZED_ADMIN_EMAIL) && pathname !== '/admin/login') {
+  // If not logged in and not on login page, don't render content
+  if (!user && pathname !== '/admin/login') {
     return null;
   }
 
@@ -98,7 +89,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <div className="mt-auto pt-6 border-t border-zinc-800">
         <div className="mb-4 px-4 py-2 bg-zinc-900 rounded-lg">
-          <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Master Account</p>
+          <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Logged in as</p>
           <p className="text-[10px] font-bold truncate text-primary">{user?.email}</p>
         </div>
         <Button 
