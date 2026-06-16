@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -189,13 +188,13 @@ export default function Home() {
                     src={item.imageUrls?.[0] || PlaceHolderImages.find(img => img.id === item.imageId)?.imageUrl || 'https://picsum.photos/seed/acc/600/600'} 
                     alt={item.name} 
                     fill 
-                    className="object-contain p-8 group-hover:scale-110 transition-transform duration-700"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
                 <div className="p-6">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1">{item.brand}</p>
                   <h4 className="font-bold text-sm text-black group-hover:text-primary transition-colors uppercase leading-tight line-clamp-2">{item.name}</h4>
-                  <p className="mt-4 font-black text-xl text-black">KES {item.price.toLocaleString()}</p>
+                  <p className="mt-4 font-black text-xl text-primary">KES {item.price.toLocaleString()}</p>
                 </div>
               </Link>
             ))}

@@ -1,4 +1,3 @@
-
 import type { Laptop, Service, PortfolioProject, Accessory } from '@/lib/types';
 import { Code, ShoppingCart, Wrench, Zap } from 'lucide-react';
 
@@ -30,7 +29,7 @@ export const laptops: Laptop[] = [
     brand: 'Dell', 
     price: 143750,
     status: 'New',
-    description: 'A very fast computer for professionals. It has a powerful chip and stays on for a long time.',
+    description: 'A very fast computer for work. It has a strong chip and stays on for a long time.',
     specifications: { 
       processor: 'Intel Ultra 7', 
       ram: '8GB', 
@@ -49,7 +48,7 @@ export const laptops: Laptop[] = [
     brand: 'HP', 
     price: 66700,
     status: 'Ex-UK',
-    description: 'A laptop that can fold into a tablet. It has a touch screen and is very fast.',
+    description: 'A laptop that can fold like a tablet. It has a touch screen and is very fast.',
     specifications: { 
       processor: 'i7 11th Gen', 
       ram: '16GB', 
@@ -68,7 +67,7 @@ export const laptops: Laptop[] = [
     brand: 'HP', 
     price: 86250,
     status: 'Ex-UK',
-    description: 'A strong laptop for heavy work like design or videos. It has extra memory and a big screen.',
+    description: 'A strong laptop for heavy work like design. It has a big screen and lots of memory.',
     specifications: { 
       processor: 'i7 11th Gen', 
       ram: '32GB', 
@@ -101,8 +100,8 @@ export const accessories: Accessory[] = [
     price: 8000, 
     category: 'Battery Backup', 
     status: 'New',
-    description: 'Keeps your computer on when the lights go out. Protects your machine.',
-    imageId: 'ups-placeholder' 
+    description: 'Keeps your computer on when the power goes out. Protects your machine.',
+    imageId: 'printer-placeholder' 
   }
 ];
 
@@ -110,7 +109,7 @@ export const services: Service[] = [
   {
     id: 'srv-01',
     title: 'We Build Websites',
-    description: 'We make beautiful websites for your business that work well on all phones and computers.',
+    description: 'We make websites for your business that work well on all phones and computers.',
     icon: Code,
   },
   {
@@ -122,7 +121,7 @@ export const services: Service[] = [
   {
     id: 'srv-03',
     title: 'Computer Help',
-    description: 'We help your business get the right computers and set them up correctly.',
+    description: 'We help you get the right computers and set them up correctly.',
     icon: Zap,
   },
 ];
@@ -130,16 +129,16 @@ export const services: Service[] = [
 export const portfolioProjects: PortfolioProject[] = [
   {
     id: 'prj-01',
-    title: 'Fashion Shop Website',
-    description: 'A clean and simple website for a clothing shop to sell items online.',
+    title: 'Aura Fashion Co.',
+    description: 'A clean website for a fashion shop to sell clothes online.',
     category: 'Online Shop',
     imageId: 'portfolio-1',
   },
   {
     id: 'prj-02',
-    title: 'Business Help Website',
-    description: 'A professional website for a company that gives advice to other businesses.',
-    category: 'Corporate',
+    title: 'Nexus Financial',
+    description: 'A professional website for a business that gives money advice.',
+    category: 'Business',
     imageId: 'portfolio-2',
   },
 ];
