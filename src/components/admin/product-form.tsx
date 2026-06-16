@@ -1,10 +1,10 @@
+
 'use client';
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { useFirestore, useStorage } from '@/firebase';
+import { useFirestore } from '@/firebase';
 import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { editProductImage } from '@/ai/flows/edit-image-flow';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
@@ -74,14 +74,24 @@ function sanitizeFirestoreData(data: any): any {
   return data;
 }
 
+/**
+ * Converts a File object to a Base64 string.
+ */
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
 export function ProductForm({ initialData, productId }: ProductFormProps) {
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [processingIndex, setProcessingIndex] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const db = useFirestore();
-  const storage = useStorage();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -140,63 +150,53 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !storage) return;
+    if (!file) return;
     
-    setUploading(true);
-    try {
-      const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(snapshot.ref);
-      
-      const currentImages = form.getValues('imageUrls');
-      form.setValue('imageUrls', [...currentImages, url], { shouldDirty: true });
-      
-      toast({ title: 'Uploaded!', description: 'Photo added successfully.' });
-    } catch (err: any) {
-      console.error("Storage upload error:", err);
+    // Check file size (suggest under 1MB for Base64 storage)
+    if (file.size > 1.5 * 1024 * 1024) {
       toast({ 
         variant: 'destructive', 
-        title: 'Upload Failed', 
-        description: err.message || 'Could not upload photo. Please check your storage settings.' 
+        title: 'File Too Large', 
+        description: 'Please use a smaller picture (under 1MB) so the site stays fast.' 
+      });
+      return;
+    }
+
+    try {
+      const base64String = await fileToBase64(file);
+      const currentImages = form.getValues('imageUrls');
+      form.setValue('imageUrls', [...currentImages, base64String], { shouldDirty: true });
+      
+      toast({ title: 'Photo Added!', description: 'The picture is ready to save.' });
+    } catch (err: any) {
+      toast({ 
+        variant: 'destructive', 
+        title: 'Error', 
+        description: 'Could not read the photo.' 
       });
     } finally {
-      setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
   const removeBackground = async (index: number) => {
     const imageUrl = form.getValues('imageUrls')[index];
-    if (!storage || !imageUrl) return;
+    if (!imageUrl) return;
 
     setProcessingIndex(index);
     try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const reader = new FileReader();
-      const dataUri = await new Promise<string>((resolve) => {
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(blob);
-      });
-
       const { editedImageDataUri } = await editProductImage({
-        imageDataUri: dataUri,
+        imageDataUri: imageUrl,
         prompt: "Remove the background from this image. Make it purely white. Keep only the laptop or accessory with very high detail.",
       });
 
-      const res = await fetch(editedImageDataUri);
-      const processedBlob = await res.blob();
-      const storageRef = ref(storage, `products/cleaned_${Date.now()}.png`);
-      const snapshot = await uploadBytes(storageRef, processedBlob);
-      const newUrl = await getDownloadURL(snapshot.ref);
-
       const current = [...form.getValues('imageUrls')];
-      current[index] = newUrl;
+      current[index] = editedImageDataUri;
       form.setValue('imageUrls', current, { shouldDirty: true });
 
-      toast({ title: 'AI Clean Done!', description: 'Background removed successfully.' });
+      toast({ title: 'AI Magic Done!', description: 'Background removed successfully.' });
     } catch (err: any) {
-      toast({ variant: 'destructive', title: 'AI Clean Failed', description: 'Could not clean image.' });
+      toast({ variant: 'destructive', title: 'AI Magic Failed', description: 'Could not clean image.' });
     } finally {
       setProcessingIndex(null);
     }
@@ -212,11 +212,11 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
         <div className="space-y-6">
-          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 1: Product Basics</h3>
+          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 1: Basic Info</h3>
           <div className="grid gap-6 md:grid-cols-2">
             <FormField control={form.control} name="name" render={({ field }) => (
               <FormItem className="md:col-span-2">
-                <FormLabel className="text-xs font-bold uppercase">Laptop Name</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Item Name</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. HP EliteBook 840 G8" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
@@ -226,7 +226,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             
             <FormField control={form.control} name="brand" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Brand</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Brand Name</FormLabel>
                 <FormControl>
                   <Input placeholder="HP, Dell, Lenovo..." {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
@@ -236,7 +236,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
             <FormField control={form.control} name="category" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Category</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Type of Item</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger className="h-12 border-2 border-zinc-100">
@@ -256,7 +256,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
             <FormField control={form.control} name="price" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Price (KSH)</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Price in KSH</FormLabel>
                 <FormControl>
                   <Input type="number" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
@@ -266,7 +266,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
             <FormField control={form.control} name="status" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Condition</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">How is the item?</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger className="h-12 border-2 border-zinc-100">
@@ -276,7 +276,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                   <SelectContent>
                     <SelectItem value="New">New (Sealed)</SelectItem>
                     <SelectItem value="Boxed">Open Box</SelectItem>
-                    <SelectItem value="Ex-UK">Ex-UK (Refurbished)</SelectItem>
+                    <SelectItem value="Ex-UK">Ex-UK (Used but good)</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -287,21 +287,21 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
         <div className="space-y-6">
           <div className="flex items-center justify-between border-b pb-2">
-            <h3 className="text-xs font-black uppercase tracking-widest text-primary">Step 2: Photos</h3>
+            <h3 className="text-xs font-black uppercase tracking-widest text-primary">Step 2: Add Pictures</h3>
             <Button 
               type="button" 
               onClick={() => fileInputRef.current?.click()} 
-              disabled={uploading}
               className="bg-black text-white font-bold uppercase text-[10px] tracking-widest px-6"
             >
-              {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
-              {uploading ? 'Adding...' : 'Add Photos'}
+              <Upload className="mr-2 h-4 w-4" />
+              Add Photo
             </Button>
             <input type="file" className="hidden" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" />
           </div>
 
-          <p className="text-[10px] font-bold text-zinc-400 uppercase italic">
-            Tip: Upload a photo, then use "AI Clean BG" to make it look professional.
+          <p className="text-[10px] font-bold text-zinc-400 uppercase italic leading-relaxed">
+            Note: We are saving pictures directly to the list to save space. <br />
+            Tip: Use "AI Magic" to remove the background from your photos!
           </p>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5">
@@ -318,7 +318,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
                     disabled={processingIndex === i}
                   >
                     {processingIndex === i ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="mr-2 h-3.5 w-3.5" />}
-                    AI Clean BG
+                    AI Magic
                   </Button>
                   <Button 
                     type="button" 
@@ -341,11 +341,11 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 3: Tech Specs</h3>
+          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 3: Laptop Details</h3>
           <div className="grid gap-6 md:grid-cols-2">
             <FormField control={form.control} name="specifications.processor" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Processor</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">CPU / Processor</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. Intel Core i7" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
@@ -353,7 +353,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             )} />
             <FormField control={form.control} name="specifications.ram" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">RAM</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Memory (RAM)</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. 16GB" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
@@ -361,7 +361,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             )} />
             <FormField control={form.control} name="specifications.storage" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Storage</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Storage Space</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. 512GB SSD" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
@@ -369,7 +369,7 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
             )} />
             <FormField control={form.control} name="specifications.display" render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xs font-bold uppercase">Screen</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase">Screen Size</FormLabel>
                 <FormControl>
                   <Input placeholder="e.g. 14 inch" {...field} className="h-12 border-2 border-zinc-100" />
                 </FormControl>
@@ -379,17 +379,17 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 4: About Item</h3>
+          <h3 className="text-xs font-black uppercase tracking-widest text-primary border-b pb-2">Step 4: Summary</h3>
           <FormField control={form.control} name="description" render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-xs font-bold uppercase">Description</FormLabel>
+              <FormLabel className="text-xs font-bold uppercase">Tell us about it</FormLabel>
               <FormControl>
-                <Textarea placeholder="Tell customers about this laptop..." className="min-h-[120px] border-2 border-zinc-100" {...field} />
+                <Textarea placeholder="Write a short note for customers..." className="min-h-[120px] border-2 border-zinc-100" {...field} />
               </FormControl>
             </FormItem>
           )} />
           <div className="flex items-center justify-between p-6 rounded-2xl bg-zinc-50 border-2 border-zinc-100">
-            <FormLabel className="text-xs font-black uppercase">In Stock</FormLabel>
+            <FormLabel className="text-xs font-black uppercase">Is it in the shop?</FormLabel>
             <FormField control={form.control} name="inStock" render={({ field }) => (
               <FormControl>
                 <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -402,10 +402,10 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
           type="submit" 
           size="lg" 
           className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-xs hover:bg-primary transition-all shadow-xl" 
-          disabled={loading || uploading}
+          disabled={loading}
         >
           {loading ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
-          {productId ? 'Update Listing' : 'Publish to Shop'}
+          {productId ? 'Update Item' : 'Add to Shop'}
         </Button>
       </form>
     </Form>
