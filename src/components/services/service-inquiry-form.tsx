@@ -1,3 +1,4 @@
+
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -25,7 +26,6 @@ import {
 } from "../ui/select"
 import { services } from "@/lib/data"
 
-
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
   email: z.string().email("Please enter a valid email address."),
@@ -47,11 +47,34 @@ export function ServiceInquiryForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    const businessEmail = "benacetechnologies@gmail.com";
+    const subject = encodeURIComponent(`Service Inquiry: ${values.service} - From ${values.name}`);
+    
+    // Constructing a "Receipt" style body
+    const body = encodeURIComponent(
+      `* BENACE TECH HUB - SERVICE INQUIRY *\n` +
+      `----------------------------------\n` +
+      `CUSTOMER DETAILS:\n` +
+      `Name: ${values.name}\n` +
+      `Email: ${values.email}\n` +
+      `----------------------------------\n\n` +
+      `SERVICE REQUESTED:\n` +
+      `${values.service}\n\n` +
+      `MESSAGE / DETAILS:\n` +
+      `${values.details}\n\n` +
+      `----------------------------------\n` +
+      `Sent via Benace Tech Hub Website inquiry form.`
+    );
+
+    // This opens the default email client (like Gmail)
+    const mailtoUrl = `mailto:${businessEmail}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoUrl;
+
     toast({
-      title: "Inquiry Sent!",
-      description: "Thank you for your interest. We'll be in touch shortly.",
+      title: "Opening Your Email App",
+      description: "We have filled in the details for you. Please click 'Send' in Gmail or your email app to finish.",
     })
+    
     form.reset();
   }
 
@@ -63,9 +86,9 @@ export function ServiceInquiryForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel className="text-xs font-black uppercase tracking-widest text-zinc-400">Your Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input placeholder="Enter your name here" {...field} className="h-12 border-2 border-zinc-100 rounded-xl focus-visible:ring-primary/20" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,9 +99,9 @@ export function ServiceInquiryForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Address</FormLabel>
+              <FormLabel className="text-xs font-black uppercase tracking-widest text-zinc-400">Your Email Address</FormLabel>
               <FormControl>
-                <Input placeholder="you@example.com" {...field} />
+                <Input placeholder="Enter your email so we can reply" {...field} className="h-12 border-2 border-zinc-100 rounded-xl focus-visible:ring-primary/20" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -89,11 +112,11 @@ export function ServiceInquiryForm() {
           name="service"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Service of Interest</FormLabel>
+              <FormLabel className="text-xs font-black uppercase tracking-widest text-zinc-400">What service do you need?</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a service" />
+                  <SelectTrigger className="h-12 border-2 border-zinc-100 rounded-xl">
+                    <SelectValue placeholder="Pick a service" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -111,11 +134,11 @@ export function ServiceInquiryForm() {
           name="details"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Details</FormLabel>
+              <FormLabel className="text-xs font-black uppercase tracking-widest text-zinc-400">Tell us what you need</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Tell us a little about your project..."
-                  className="resize-none"
+                  placeholder="Explain your problem or project here..."
+                  className="min-h-[120px] border-2 border-zinc-100 rounded-xl focus-visible:ring-primary/20"
                   {...field}
                 />
               </FormControl>
@@ -123,7 +146,16 @@ export function ServiceInquiryForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">Submit Inquiry</Button>
+        <Button 
+          type="submit" 
+          size="lg" 
+          className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-widest hover:bg-primary transition-all shadow-xl"
+        >
+          Open Email to Send Inquiry
+        </Button>
+        <p className="text-[10px] text-center font-bold text-zinc-400 uppercase tracking-widest italic">
+          This will open your Gmail or Email app with the details filled in.
+        </p>
       </form>
     </Form>
   )
