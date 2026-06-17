@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -30,8 +31,8 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
     return (
       <Card className="group flex h-full flex-col overflow-hidden rounded-[2rem] border border-zinc-100 bg-white transition-all duration-500 shadow-sm hover:shadow-xl">
         <CardContent className="p-0 flex flex-col h-full">
-          {/* Image Container - Image fills the space with full bleed look */}
-          <div className="relative flex h-72 items-center justify-center bg-zinc-50 overflow-hidden w-full shrink-0">
+          {/* Image Container - Dominates 75% of the vertical space */}
+          <div className="relative flex h-[320px] items-center justify-center bg-zinc-50 overflow-hidden w-full shrink-0">
             <div className="absolute top-4 right-4 z-20">
               <Checkbox 
                 id={`compare-grid-${laptop.id}`}
@@ -57,7 +58,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
             </Link>
           </div>
 
-          {/* Info Section */}
+          {/* Info Section - Clean and concise below the image */}
           <div className="flex-1 flex flex-col p-6 space-y-4 bg-white">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-black uppercase tracking-widest text-primary">{laptop.brand}</span>

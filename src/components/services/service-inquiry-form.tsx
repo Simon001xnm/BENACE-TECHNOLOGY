@@ -50,7 +50,6 @@ export function ServiceInquiryForm() {
     const businessEmail = "benacetechnologies@gmail.com";
     const subject = encodeURIComponent(`Service Inquiry: ${values.service} - From ${values.name}`);
     
-    // Constructing a "Receipt" style body
     const body = encodeURIComponent(
       `* BENACE TECH HUB - SERVICE INQUIRY *\n` +
       `----------------------------------\n` +
@@ -66,13 +65,13 @@ export function ServiceInquiryForm() {
       `Sent via Benace Tech Hub Website inquiry form.`
     );
 
-    // This opens the default email client (like Gmail)
-    const mailtoUrl = `mailto:${businessEmail}?subject=${subject}&body=${body}`;
-    window.location.href = mailtoUrl;
+    // Using Gmail Web Compose URL for an "on-screen" redirect experience like WhatsApp
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${businessEmail}&su=${subject}&body=${body}`;
+    window.open(gmailUrl, '_blank');
 
     toast({
-      title: "Opening Your Email App",
-      description: "We have filled in the details for you. Please click 'Send' in Gmail or your email app to finish.",
+      title: "Opening Gmail",
+      description: "We are taking you to your Gmail to finish sending the message.",
     })
     
     form.reset();
@@ -151,10 +150,10 @@ export function ServiceInquiryForm() {
           size="lg" 
           className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-widest hover:bg-primary transition-all shadow-xl"
         >
-          Open Email to Send Inquiry
+          Open Gmail to Send Inquiry
         </Button>
         <p className="text-[10px] text-center font-bold text-zinc-400 uppercase tracking-widest italic">
-          This will open your Gmail or Email app with the details filled in.
+          This will open your Gmail on screen with everything filled in.
         </p>
       </form>
     </Form>
