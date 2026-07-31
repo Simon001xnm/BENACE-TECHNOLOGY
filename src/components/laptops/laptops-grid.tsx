@@ -16,15 +16,19 @@ import {
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import { Loader2, DatabaseBackup, BarChart2, Trash2 } from 'lucide-react';
+import { Loader2, DatabaseBackup, BarChart2, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function LaptopsGrid() {
   const db = useFirestore();
   const { compareItems, setIsComparing, clearCompare } = useCompare();
+  
+  // Filter States
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('relevance');
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [selectedProcessors, setSelectedProcessors] = useState<string[]>([]);
 
   const laptopsQuery = useMemo(() => {
     if (!db) return null;
@@ -33,18 +37,50 @@ export function LaptopsGrid() {
 
   const { data: dbLaptops, loading } = useCollection(laptopsQuery);
 
+  const availableProcessors = ['Intel Core i7', 'Intel Core i5', 'Intel Ultra 7', 'Apple M2'];
+
+  const handleProcessorToggle = (processor: string) => {
+    setSelectedProcessors(prev => 
+      prev.includes(processor) 
+        ? prev.filter(p => p !== processor) 
+        : [...prev, processor]
+    );
+  };
+
+  const resetFilters = () => {
+    setSearchTerm('');
+    setSortBy('relevance');
+    setInStockOnly(false);
+    setSelectedProcessors([]);
+  };
+
   const filteredLaptops = useMemo(() => {
     const all = dbLaptops?.filter(p => p.type === 'laptop') || [];
-    let filtered = all.filter(laptop =>
-      laptop.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      laptop.brand.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    
+    let filtered = all.filter(laptop => {
+      // Search term match
+      const matchesSearch = 
+        laptop.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        laptop.brand.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      // Stock match
+      const matchesStock = inStockOnly ? laptop.inStock : true;
+      
+      // Processor match
+      const matchesProcessor = selectedProcessors.length === 0 || 
+        selectedProcessors.some(proc => 
+          laptop.specifications?.processor?.toLowerCase().includes(proc.toLowerCase())
+        );
 
+      return matchesSearch && matchesStock && matchesProcessor;
+    });
+
+    // Sorting
     if (sortBy === 'price-low') filtered.sort((a, b) => a.price - b.price);
     if (sortBy === 'price-high') filtered.sort((a, b) => b.price - a.price);
 
     return filtered;
-  }, [searchTerm, dbLaptops, sortBy]);
+  }, [searchTerm, dbLaptops, sortBy, inStockOnly, selectedProcessors]);
 
   if (loading) {
     return (
@@ -57,11 +93,18 @@ export function LaptopsGrid() {
   return (
     <div className="w-full pb-20">
       <div className="flex flex-col lg:flex-row gap-0">
-        {/* Sidebar Filters - Hidden on small screens or kept for function */}
+        {/* Sidebar Filters */}
         <aside className="hidden lg:block w-72 shrink-0 bg-white border-r border-zinc-100 p-8 space-y-8">
-          <div className="space-y-1">
-            <h2 className="text-xs font-black uppercase tracking-widest text-primary">Refine Search</h2>
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Filter by specs</p>
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <h2 className="text-xs font-black uppercase tracking-widest text-primary">Refine Search</h2>
+              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Filter by specs</p>
+            </div>
+            {(searchTerm || inStockOnly || selectedProcessors.length > 0) && (
+              <Button variant="ghost" size="sm" onClick={resetFilters} className="h-6 px-2 text-[8px] font-black uppercase text-zinc-400 hover:text-primary">
+                Reset
+              </Button>
+            )}
           </div>
 
           <div className="space-y-8">
@@ -69,7 +112,12 @@ export function LaptopsGrid() {
               <h3 className="text-[10px] font-black uppercase tracking-widest mb-4">Availability</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Checkbox id="in-stock" className="h-4 w-4 border-zinc-300" />
+                  <Checkbox 
+                    id="in-stock" 
+                    className="h-4 w-4 border-zinc-300" 
+                    checked={inStockOnly}
+                    onCheckedChange={(checked) => setInStockOnly(!!checked)}
+                  />
                   <label htmlFor="in-stock" className="text-xs font-bold uppercase tracking-tight cursor-pointer">Ready to ship</label>
                 </div>
               </div>
@@ -78,9 +126,14 @@ export function LaptopsGrid() {
             <section>
               <h3 className="text-[10px] font-black uppercase tracking-widest mb-4">Processor Type</h3>
               <div className="space-y-3">
-                {['Intel Core i7', 'Intel Core i5', 'Intel Ultra 7', 'Apple M2'].map((proc, i) => (
+                {availableProcessors.map((proc, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <Checkbox id={`proc-${i}`} className="h-4 w-4 border-zinc-300" />
+                    <Checkbox 
+                      id={`proc-${i}`} 
+                      className="h-4 w-4 border-zinc-300" 
+                      checked={selectedProcessors.includes(proc)}
+                      onCheckedChange={() => handleProcessorToggle(proc)}
+                    />
                     <label htmlFor={`proc-${i}`} className="text-xs font-bold uppercase tracking-tight cursor-pointer">{proc}</label>
                   </div>
                 ))}
@@ -123,15 +176,15 @@ export function LaptopsGrid() {
                 <div className="flex -space-x-2">
                   {compareItems.map((item) => (
                     <div key={item.id} className="h-8 w-8 border border-white/20 bg-white overflow-hidden p-1">
-                       {item.imageId && (
+                       {(item.imageUrls?.[0] || item.imageId) ? (
                           <Image 
-                            src={PlaceHolderImages.find(img => img.id === item.imageId)?.imageUrl || '/use.png'} 
+                            src={item.imageUrls?.[0] || PlaceHolderImages.find(img => img.id === item.imageId)?.imageUrl || '/use.png'} 
                             alt={item.name} 
                             width={32} 
                             height={32} 
                             className="object-contain"
                           />
-                       )}
+                       ) : <div className="h-full w-full bg-zinc-100" />}
                     </div>
                   ))}
                 </div>
@@ -147,7 +200,7 @@ export function LaptopsGrid() {
             </div>
           )}
 
-          {/* Grid Container - TOUCHES EDGES */}
+          {/* Grid Container */}
           {filteredLaptops.length > 0 ? (
             <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 xl:grid-cols-3 w-full">
               {filteredLaptops.map(laptop => (
@@ -155,9 +208,12 @@ export function LaptopsGrid() {
               ))}
             </div>
           ) : (
-            <div className="py-32 text-center bg-white">
+            <div className="py-32 text-center bg-white flex flex-col items-center justify-center">
               <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-100 mb-4" />
               <p className="font-black text-zinc-400 uppercase tracking-[0.2em] text-[10px]">No technical matches found</p>
+              <Button variant="outline" size="sm" onClick={resetFilters} className="mt-4 border-zinc-200 text-[9px] font-black uppercase tracking-widest">
+                Clear All Filters
+              </Button>
             </div>
           )}
         </main>
