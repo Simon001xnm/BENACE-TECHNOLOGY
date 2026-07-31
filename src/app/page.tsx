@@ -14,7 +14,9 @@ import {
   Zap, 
   ShieldCheck, 
   Laptop,
-  CheckCircle2
+  CheckCircle2,
+  ShoppingCart,
+  LayoutDashboard
 } from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
@@ -45,12 +47,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-0 bg-[#fdfdfd] overflow-x-hidden">
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section - Realistic Split Design */}
       <section className="relative w-full overflow-hidden bg-black">
         <HeroSlider />
       </section>
 
-      {/* 2. Featured Laptops - Nairobi Local SEO */}
+      {/* 2. Featured Laptops - Full Width Edge to Edge */}
       <section className="py-16 bg-white w-full">
         <div className="container mx-auto px-6 mb-10">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
@@ -79,7 +81,7 @@ export default function Home() {
                 ))}
              </div>
           ) : featuredLaptops.length > 0 ? (
-            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4 w-full">
+            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4 w-full border-y border-zinc-100">
                 {featuredLaptops.map(laptop => (
                 <LaptopCard key={laptop.id} laptop={laptop} variant="grid" />
                 ))}
@@ -95,8 +97,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Tech Peripherals - Edge to Edge */}
-      <section className="py-16 bg-zinc-50 w-full border-y border-zinc-100">
+      {/* 3. Tech Peripherals - Full Width */}
+      <section className="py-16 bg-zinc-50 w-full">
         <div className="container mx-auto px-6 mb-10">
           <div className="space-y-2">
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block">Specialized Gear</span>
@@ -105,18 +107,18 @@ export default function Home() {
             </h2>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4 w-full">
+        <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4 w-full border-y border-zinc-100">
           {featuredAccessories.map(item => (
             <AccessoryCard key={item.id} accessory={item} />
           ))}
         </div>
       </section>
 
-      {/* 4. Professional Repairs - Technical SEO */}
-      <section className="py-20 bg-white w-full">
+      {/* 4. Professional Repairs */}
+      <section className="py-20 bg-white w-full border-b border-zinc-100">
         <div className="container mx-auto px-6">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
-            <div className="relative aspect-video lg:aspect-square overflow-hidden rounded-[3rem] shadow-2xl bg-black">
+            <div className="relative aspect-square overflow-hidden rounded-[3rem] shadow-2xl bg-black">
               <Image 
                 src="https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=800&auto=format&fit=crop" 
                 alt="Expert Laptop Repair in Nairobi" 
@@ -159,8 +161,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. Website Studio - Digital Solutions */}
-      <section className="py-20 bg-zinc-50 w-full border-t border-zinc-100">
+      {/* 5. Website Studio */}
+      <section className="py-20 bg-zinc-50 w-full border-b border-zinc-100">
         <div className="container mx-auto px-6">
           <div className="grid gap-16 lg:grid-cols-2 items-center">
             <div className="order-2 lg:order-1 space-y-8">
@@ -175,7 +177,7 @@ export default function Home() {
               </div>
               <div className="flex flex-wrap gap-4">
                  {[
-                  'Online Stores', 'Company Profiles', 'POS Systems'
+                  'Online Stores', 'Company Profiles', 'Custom Portals'
                  ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-700 bg-white px-4 py-2 rounded-full border border-zinc-100">
                       <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> {item}
@@ -199,8 +201,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Portfolio Showcase */}
-      <section className="py-20 bg-white w-full">
+      {/* 6. Point of Sale (POS) Systems - NEW SECTION */}
+      <section className="py-20 bg-white w-full border-b border-zinc-100">
+        <div className="container mx-auto px-6">
+          <div className="grid gap-16 lg:grid-cols-2 items-center">
+            <div className="relative aspect-video lg:aspect-square rounded-[3rem] overflow-hidden shadow-2xl bg-zinc-900">
+               <Image 
+                src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=800&auto=format&fit=crop" 
+                alt="Point of Sale Systems Nairobi" 
+                fill 
+                className="object-cover opacity-90 transition-transform hover:scale-105 duration-1000"
+                data-ai-hint="pos system"
+              />
+              <div className="absolute top-8 right-8 bg-primary text-white px-4 py-2 font-black uppercase text-[10px] tracking-widest rounded-full">
+                Business Logic
+              </div>
+            </div>
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Retail Solutions</span>
+                <h2 className="text-4xl font-black uppercase tracking-tight text-black md:text-5xl leading-tight">
+                  Smart Point <br />of Sale.
+                </h2>
+                <p className="text-base font-bold text-zinc-500 leading-relaxed italic border-l-4 border-primary pl-6">
+                  We setup machines for shops to help you count money and stock. Our POS systems make running your business in Kenya very easy.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-4">
+                 {[
+                  { title: 'Inventory Tracking', desc: 'Know what you have in the shop at all times.', icon: LayoutDashboard },
+                  { title: 'Sales Reports', desc: 'See how much money you made today easily.', icon: Zap },
+                  { title: 'Receipt Printing', desc: 'Give your customers professional receipts.', icon: CheckCircle2 }
+                 ].map((item, i) => (
+                    <div key={i} className="flex gap-4 p-5 rounded-2xl border border-zinc-100 bg-zinc-50 group hover:bg-white transition-all">
+                      <div className="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-white border border-zinc-100 group-hover:bg-primary transition-colors">
+                        <item.icon className="h-5 w-5 text-black" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black uppercase tracking-tight text-black">{item.title}</h4>
+                        <p className="text-[10px] font-bold text-zinc-400 uppercase mt-1">{item.desc}</p>
+                      </div>
+                    </div>
+                 ))}
+              </div>
+              <Button asChild size="lg" className="h-14 w-full sm:w-auto rounded-xl bg-black text-white font-black uppercase tracking-widest px-10 hover:bg-primary transition-all">
+                <Link href="/contact">Setup My Shop</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Portfolio Showcase */}
+      <section className="py-20 bg-zinc-50 w-full">
         <div className="container mx-auto px-6">
           <div className="mb-12 text-center space-y-2">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary block">Success Stories</span>
@@ -214,7 +267,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Final Call to Action */}
+      {/* 8. Final Call to Action */}
       <section className="py-24 bg-black w-full text-white text-center">
         <div className="container mx-auto px-6 max-w-4xl space-y-10">
           <h3 className="text-4xl font-black uppercase tracking-tight md:text-5xl leading-none">Ready to start?</h3>
