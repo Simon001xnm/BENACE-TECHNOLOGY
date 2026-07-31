@@ -44,7 +44,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm font-bold leading-relaxed text-zinc-500 max-w-xs italic border-l-2 border-primary pl-4">
-              Help people in Kenya with high-quality laptops and professional website design since 2018. We also setup point of sale systems for businesses.
+              Help people in Kenya and East Africa with high-quality laptops and professional website design since 2018. We also setup point of sale systems for businesses.
             </p>
             <div className="flex gap-3">
               {[Facebook, Instagram, Twitter, Globe].map((Icon, i) => (
