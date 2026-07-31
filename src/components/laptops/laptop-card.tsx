@@ -28,10 +28,10 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
 
   if (variant === 'grid') {
     return (
-      <Card className="group flex h-full flex-col overflow-hidden rounded-[2rem] border border-zinc-100 bg-white transition-all duration-500 shadow-sm hover:shadow-xl">
+      <Card className="group flex h-full flex-col overflow-hidden rounded-none border border-zinc-100 bg-white transition-all duration-500 hover:z-10 hover:shadow-2xl">
         <CardContent className="p-0 flex flex-col h-full">
           {/* Image Container - Dominates 75% of the vertical space */}
-          <div className="relative flex h-[340px] items-center justify-center bg-zinc-50 overflow-hidden w-full shrink-0">
+          <div className="relative flex h-[400px] items-center justify-center bg-zinc-50 overflow-hidden w-full shrink-0">
             <div className="absolute top-4 right-4 z-20">
               <Checkbox 
                 id={`compare-grid-${laptop.id}`}
@@ -44,7 +44,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
               />
             </div>
 
-            <Link href={`/laptops/${laptop.id}`} className="relative h-full w-full">
+            <Link href={`/laptops/${laptop.id}`} className="relative h-full w-full block">
               {displayImage ? (
                 <Image
                   src={displayImage}
@@ -55,14 +55,14 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-zinc-100">
-                  <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">No Image</span>
+                  <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">No Image</span>
                 </div>
               )}
             </Link>
           </div>
 
-          {/* Info Section */}
-          <div className="flex-1 flex flex-col p-6 space-y-4 bg-white">
+          {/* Info Section - 25% Space */}
+          <div className="flex-1 flex flex-col p-6 space-y-4 bg-white border-t border-zinc-100">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-black uppercase tracking-widest text-primary">{laptop.brand}</span>
               <Link href={`/laptops/${laptop.id}`}>
@@ -79,11 +79,11 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
             <div className="mt-auto flex items-center gap-2">
               <Button 
                 onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-                className="flex-grow h-12 rounded-xl bg-black text-white font-bold uppercase text-[10px] tracking-widest hover:bg-primary transition-all"
+                className="flex-grow h-12 rounded-none bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-primary transition-all"
               >
                 <ShoppingCart className="mr-2 h-4 w-4" /> Buy Now
               </Button>
-              <Button asChild variant="outline" className="h-12 w-12 rounded-xl p-0 shrink-0 border-zinc-100 bg-zinc-50 hover:bg-zinc-100">
+              <Button asChild variant="outline" className="h-12 w-12 rounded-none p-0 shrink-0 border-zinc-100 bg-zinc-50 hover:bg-zinc-100">
                   <Link href={`https://wa.me/254714210957?text=Hi, I want to buy ${laptop.name}`} target="_blank">
                     <MessageSquare className="h-5 w-5 text-green-600" />
                   </Link>
@@ -96,7 +96,7 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
   }
 
   return (
-    <Card className="group overflow-hidden rounded-[2.5rem] border border-zinc-100 bg-white transition-all duration-500 shadow-sm hover:shadow-xl">
+    <Card className="group overflow-hidden rounded-none border border-zinc-100 bg-white transition-all duration-500 hover:shadow-xl">
       <CardContent className="p-0">
         <div className="flex flex-col md:flex-row">
           <div className="relative flex items-center justify-center bg-zinc-50 overflow-hidden w-full md:w-[40%] aspect-square md:aspect-auto shrink-0">
@@ -174,11 +174,11 @@ export function LaptopCard({ laptop, variant = 'list' }: LaptopCardProps) {
             <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
               <Button 
                 onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-                className="w-full sm:flex-grow h-14 rounded-xl bg-black text-white font-black uppercase text-xs tracking-widest hover:bg-primary transition-all"
+                className="w-full sm:flex-grow h-14 rounded-none bg-black text-white font-black uppercase text-xs tracking-widest hover:bg-primary transition-all"
               >
                 <ShoppingCart className="mr-2 h-5 w-5" /> Buy this laptop
               </Button>
-              <Button asChild variant="outline" className="h-14 w-14 rounded-xl border-zinc-200 bg-zinc-50 hover:bg-zinc-100">
+              <Button asChild variant="outline" className="h-14 w-14 rounded-none border-zinc-200 bg-zinc-50 hover:bg-zinc-100">
                   <Link href={`https://wa.me/254714210957?text=I want to ask about ${laptop.name}`} target="_blank" className="flex items-center justify-center">
                     <MessageSquare className="h-6 w-6 text-green-600" />
                   </Link>

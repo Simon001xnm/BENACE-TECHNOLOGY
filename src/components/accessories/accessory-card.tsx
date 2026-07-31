@@ -24,24 +24,24 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
     : PlaceHolderImages.find(img => img.id === accessory.imageId)?.imageUrl;
 
   return (
-    <Card className="group relative flex h-full flex-col overflow-hidden rounded-none border border-zinc-200 bg-white transition-all duration-300 hover:shadow-lg">
-      <CardHeader className="relative aspect-square p-0 overflow-hidden bg-white">
+    <Card className="group relative flex h-full flex-col overflow-hidden rounded-none border border-zinc-100 bg-white transition-all duration-300 hover:z-10 hover:shadow-2xl">
+      <CardHeader className="relative h-[300px] p-0 overflow-hidden bg-white">
         <Link href={`/laptops/${accessory.id}`} className="block h-full w-full">
           {displayImage ? (
             <Image
               src={displayImage}
               alt={accessory.name}
               fill
-              className="object-contain p-6 transition-transform duration-700 group-hover:scale-105"
+              className="object-cover p-0 transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
           ) : (
-             <div className="flex h-full w-full items-center justify-center">
+             <div className="flex h-full w-full items-center justify-center bg-zinc-50">
                 <Package className="h-16 w-16 text-zinc-100" />
              </div>
           )}
         </Link>
-        <Badge className="absolute bottom-4 left-4 bg-zinc-100 text-zinc-500 border-none font-bold text-[9px] uppercase tracking-widest rounded-none px-3 py-1">
+        <Badge className="absolute bottom-4 left-4 bg-primary text-white border-none font-black text-[9px] uppercase tracking-widest rounded-none px-3 py-1">
           {accessory.category}
         </Badge>
       </CardHeader>
@@ -51,7 +51,7 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
           {accessory.brand} TECHNICAL
         </span>
         <Link href={`/laptops/${accessory.id}`}>
-          <CardTitle className="mb-4 text-lg font-bold leading-tight text-primary hover:underline transition-all">
+          <CardTitle className="mb-4 text-lg font-black leading-tight text-black hover:text-primary transition-all uppercase tracking-tight line-clamp-1">
             {accessory.name}
           </CardTitle>
         </Link>
@@ -76,9 +76,9 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
       <CardFooter className="p-6 pt-0">
         <Button 
           onClick={() => addToCart(accessory as any)} 
-          className="w-full h-10 rounded-none bg-black font-bold uppercase text-[10px] tracking-widest text-white hover:bg-primary transition-all"
+          className="w-full h-12 rounded-none bg-black font-black uppercase text-[10px] tracking-widest text-white hover:bg-primary transition-all"
         >
-          <ShoppingCart className="mr-2 h-3.5 w-3.5" /> Add to Cart
+          <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
         </Button>
       </CardFooter>
     </Card>

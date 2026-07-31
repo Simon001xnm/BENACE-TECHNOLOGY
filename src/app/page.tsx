@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { LaptopCard } from '@/components/laptops/laptop-card';
 import { AccessoryCard } from '@/components/accessories/accessory-card';
@@ -10,21 +9,18 @@ import { portfolioProjects } from '@/lib/data';
 import { PortfolioItem } from '@/components/services/portfolio-item';
 import { 
   ArrowRight, 
-  Wrench, 
-  Globe, 
-  Laptop, 
   DatabaseBackup, 
   MessageCircle, 
   Zap, 
   ShieldCheck, 
-  ChevronRight,
-  MousePointer2,
-  CheckCircle2
+  Laptop,
+  CheckCircle2,
+  MousePointer2
 } from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import Image from 'next/image';
 
 export default function Home() {
   const db = useFirestore();
@@ -56,9 +52,9 @@ export default function Home() {
       </section>
 
       {/* 2. Featured Laptops - SEO: Laptops for sale in Nairobi */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <section className="py-16 md:py-24 bg-white w-full">
+        <div className="container mx-auto px-4 mb-12">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="space-y-3">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block">Store Catalog</span>
               <h2 className="text-4xl font-black uppercase tracking-tighter text-black sm:text-6xl leading-[0.9]">
@@ -74,33 +70,37 @@ export default function Home() {
               </Link>
             </Button>
           </div>
-          
+        </div>
+        
+        <div className="w-full">
           {loading ? (
-             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+             <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="aspect-square w-full border border-zinc-100 animate-pulse bg-zinc-50 rounded-[2.5rem]"></div>
+                  <div key={i} className="aspect-square w-full animate-pulse bg-zinc-50 border border-zinc-100"></div>
                 ))}
              </div>
           ) : featuredLaptops.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4 w-full">
                 {featuredLaptops.map(laptop => (
                 <LaptopCard key={laptop.id} laptop={laptop} variant="grid" />
                 ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-32 text-center border border-dashed border-zinc-200 rounded-[3rem] bg-zinc-50/50">
-               <DatabaseBackup className="mb-6 h-12 w-12 text-zinc-200" />
-               <h3 className="text-xl font-black text-black uppercase tracking-tight">Checking Stock...</h3>
-               <p className="mt-2 text-xs text-zinc-400 font-bold uppercase tracking-widest">We are updating our shop list</p>
+            <div className="container mx-auto px-4">
+              <div className="flex flex-col items-center justify-center py-32 text-center border border-dashed border-zinc-200 rounded-[3rem] bg-zinc-50/50">
+                 <DatabaseBackup className="mb-6 h-12 w-12 text-zinc-200" />
+                 <h3 className="text-xl font-black text-black uppercase tracking-tight">Checking Stock...</h3>
+                 <p className="mt-2 text-xs text-zinc-400 font-bold uppercase tracking-widest">We are updating our shop list</p>
+              </div>
             </div>
           )}
         </div>
       </section>
 
       {/* 3. Tech Gear Section - SEO: Accessories & Printers Nairobi */}
-      <section className="bg-zinc-50 py-16 md:py-24 border-y border-zinc-100">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <section className="bg-zinc-50 py-16 md:py-24 border-y border-zinc-100 w-full">
+        <div className="container mx-auto px-4 mb-12">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="space-y-3">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary block">Essential Gear</span>
               <h2 className="text-4xl font-black uppercase tracking-tighter text-black sm:text-5xl">
@@ -116,30 +116,34 @@ export default function Home() {
               </Link>
             </Button>
           </div>
+        </div>
 
+        <div className="w-full">
           {loading ? (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-64 w-full border border-zinc-100 animate-pulse bg-zinc-200 rounded-2xl"></div>
+                <div key={i} className="h-64 w-full animate-pulse bg-zinc-200 border border-zinc-100"></div>
               ))}
             </div>
           ) : featuredAccessories.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4 w-full">
               {featuredAccessories.map(accessory => (
                 <AccessoryCard key={accessory.id} accessory={accessory as any} />
               ))}
             </div>
           ) : (
-            <div className="py-20 text-center border border-dashed border-zinc-200 rounded-[2.5rem] bg-white">
-              <MousePointer2 className="mx-auto h-12 w-12 text-zinc-100 mb-4" />
-              <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">New gear arriving soon</p>
+            <div className="container mx-auto px-4">
+              <div className="py-20 text-center border border-dashed border-zinc-200 rounded-[2.5rem] bg-white">
+                <MousePointer2 className="mx-auto h-12 w-12 text-zinc-100 mb-4" />
+                <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">New gear arriving soon</p>
+              </div>
             </div>
           )}
         </div>
       </section>
 
       {/* 4. Professional Repairs - SEO: Fast Laptop Repair Nairobi CBD */}
-      <section className="py-20 bg-white md:py-32">
+      <section className="py-20 bg-white md:py-32 w-full">
         <div className="container mx-auto px-4">
           <div className="grid gap-16 lg:grid-cols-2 items-center">
             <div className="relative aspect-square overflow-hidden rounded-[4rem] shadow-xl bg-black">
@@ -189,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* 5. Website Studio - SEO: Web design Nairobi business */}
-      <section className="py-20 md:py-32 bg-zinc-50">
+      <section className="py-20 md:py-32 bg-zinc-50 w-full">
         <div className="container mx-auto px-4">
           <div className="grid gap-20 lg:grid-cols-2 items-center">
             <div className="order-2 lg:order-1 space-y-10">
@@ -228,7 +232,7 @@ export default function Home() {
       </section>
 
       {/* 6. Recent Work - SEO Portfolio */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white w-full">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center space-y-4">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary block">Portfolio</span>
@@ -246,7 +250,7 @@ export default function Home() {
       </section>
 
       {/* 7. Final Visit Call to Action */}
-      <section className="py-24 bg-zinc-50">
+      <section className="py-24 bg-zinc-50 w-full">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto space-y-12">
             <h3 className="text-4xl font-black uppercase tracking-tighter">Benace Tech Hub</h3>

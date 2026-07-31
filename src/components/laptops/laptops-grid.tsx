@@ -14,10 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Loader2, DatabaseBackup, BarChart2, Trash2, ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Loader2, DatabaseBackup, BarChart2, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -56,91 +55,61 @@ export function LaptopsGrid() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar Filters */}
-        <aside className="w-full lg:w-64 shrink-0 space-y-6">
-          <div className="rounded-none border border-zinc-200 bg-white p-6">
-            <h2 className="text-lg font-bold text-black mb-6">Filter Results</h2>
-            
-            <div className="space-y-8">
-              <section>
-                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4 pb-2 border-b">Shipping & Delivery</h3>
-                <div className="space-y-3">
-                  {[
-                    { label: 'Free 2-Day Delivery', count: 16 },
-                    { label: 'Ships Within 5 Days', count: 28 },
-                    { label: 'Ships Within 10 Days', count: 39 }
-                  ].map((filter, i) => (
-                    <div key={i} className="flex items-center justify-between group cursor-pointer">
-                      <div className="flex items-center gap-2">
-                        <Checkbox id={`ship-${i}`} className="h-4 w-4 border-zinc-300" />
-                        <label htmlFor={`ship-${i}`} className="text-xs font-medium text-zinc-600 group-hover:text-black">{filter.label}</label>
-                      </div>
-                      <span className="text-[10px] text-zinc-400 font-bold">({filter.count})</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
+    <div className="w-full pb-20">
+      <div className="flex flex-col lg:flex-row gap-0">
+        {/* Sidebar Filters - Hidden on small screens or kept for function */}
+        <aside className="hidden lg:block w-72 shrink-0 bg-white border-r border-zinc-100 p-8 space-y-8">
+          <div className="space-y-1">
+            <h2 className="text-xs font-black uppercase tracking-widest text-primary">Refine Search</h2>
+            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Filter by specs</p>
+          </div>
 
-              <section>
-                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4 pb-2 border-b">Processor</h3>
-                <div className="space-y-3">
-                  {[
-                    { label: 'All Intel Processors', count: 26 },
-                    { label: 'Intel Core i9', count: 4 },
-                    { label: 'Intel Core i7', count: 13 },
-                    { label: 'Intel Core i5', count: 9 }
-                  ].map((filter, i) => (
-                    <div key={i} className="flex items-center justify-between group cursor-pointer">
-                      <div className="flex items-center gap-2">
-                        <Checkbox id={`proc-${i}`} className="h-4 w-4 border-zinc-300" />
-                        <label htmlFor={`proc-${i}`} className="text-xs font-medium text-zinc-600 group-hover:text-black">{filter.label}</label>
-                      </div>
-                      <span className="text-[10px] text-zinc-400 font-bold">({filter.count})</span>
-                    </div>
-                  ))}
+          <div className="space-y-8">
+            <section>
+              <h3 className="text-[10px] font-black uppercase tracking-widest mb-4">Availability</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Checkbox id="in-stock" className="h-4 w-4 border-zinc-300" />
+                  <label htmlFor="in-stock" className="text-xs font-bold uppercase tracking-tight cursor-pointer">Ready to ship</label>
                 </div>
-              </section>
+              </div>
+            </section>
 
-              <section>
-                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4 pb-2 border-b">Screen Size</h3>
-                <div className="space-y-3">
-                  {[
-                    { label: '17 inch', count: 18 },
-                    { label: '15 inch', count: 17 },
-                    { label: '14 inch', count: 5 }
-                  ].map((filter, i) => (
-                    <div key={i} className="flex items-center justify-between group cursor-pointer">
-                      <div className="flex items-center gap-2">
-                        <Checkbox id={`screen-${i}`} className="h-4 w-4 border-zinc-300" />
-                        <label htmlFor={`screen-${i}`} className="text-xs font-medium text-zinc-600 group-hover:text-black">{filter.label}</label>
-                      </div>
-                      <span className="text-[10px] text-zinc-400 font-bold">({filter.count})</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
+            <section>
+              <h3 className="text-[10px] font-black uppercase tracking-widest mb-4">Processor Type</h3>
+              <div className="space-y-3">
+                {['Intel Core i7', 'Intel Core i5', 'Intel Ultra 7', 'Apple M2'].map((proc, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <Checkbox id={`proc-${i}`} className="h-4 w-4 border-zinc-300" />
+                    <label htmlFor={`proc-${i}`} className="text-xs font-bold uppercase tracking-tight cursor-pointer">{proc}</label>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </aside>
 
         {/* Main Product Feed */}
-        <main className="flex-grow space-y-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 border border-zinc-200">
-            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
-              Showing 1 to {filteredLaptops.length} of {filteredLaptops.length} Results
-            </p>
+        <main className="flex-grow">
+          {/* Controls Bar */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 border-b border-zinc-100">
+            <div className="flex-grow max-w-md w-full">
+              <Input 
+                placeholder="Search by brand or model..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="h-10 rounded-none border-zinc-200 font-bold uppercase text-[10px] tracking-widest"
+              />
+            </div>
             <div className="flex items-center gap-4 w-full sm:w-auto">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="h-10 rounded-none border-zinc-200 w-full sm:w-48 text-xs font-bold uppercase">
-                  <span className="mr-2 opacity-50">Sort by:</span>
-                  <SelectValue placeholder="Relevance" />
+                <SelectTrigger className="h-10 rounded-none border-zinc-200 w-full sm:w-48 text-[10px] font-black uppercase tracking-widest">
+                  <SelectValue placeholder="Sort Order" />
                 </SelectTrigger>
                 <SelectContent className="rounded-none border-zinc-200">
-                  <SelectItem value="relevance">Relevance</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="relevance">Recent First</SelectItem>
+                  <SelectItem value="price-low">Cheapest First</SelectItem>
+                  <SelectItem value="price-high">Highest Price</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -148,9 +117,9 @@ export function LaptopsGrid() {
 
           {/* Comparison Bar */}
           {compareItems.length > 0 && (
-            <div className="sticky top-20 z-40 flex items-center justify-between bg-black px-6 py-4 text-white animate-in slide-in-from-top duration-300">
+            <div className="sticky top-14 z-40 flex items-center justify-between bg-black px-6 py-3 text-white animate-in slide-in-from-top duration-300">
               <div className="flex items-center gap-4">
-                <span className="text-[10px] font-black uppercase tracking-widest">Selected for Comparison ({compareItems.length}/4)</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">Selected: {compareItems.length}/4</span>
                 <div className="flex -space-x-2">
                   {compareItems.map((item) => (
                     <div key={item.id} className="h-8 w-8 border border-white/20 bg-white overflow-hidden p-1">
@@ -167,27 +136,28 @@ export function LaptopsGrid() {
                   ))}
                 </div>
               </div>
-              <div className="flex gap-4">
-                <Button variant="ghost" size="sm" onClick={clearCompare} className="text-white hover:text-red-400 font-bold uppercase text-[10px]">
-                  <Trash2 className="mr-2 h-3.5 w-3.5" /> Clear
+              <div className="flex gap-2">
+                <Button variant="ghost" size="sm" onClick={clearCompare} className="text-white hover:text-red-400 font-black uppercase text-[9px] h-8">
+                  <Trash2 className="mr-2 h-3.5 w-3.5" /> Reset
                 </Button>
-                <Button size="sm" onClick={() => setIsComparing(true)} className="bg-primary text-white font-bold uppercase text-[10px] rounded-none px-6">
+                <Button size="sm" onClick={() => setIsComparing(true)} className="bg-primary text-white font-black uppercase text-[9px] rounded-none px-6 h-8">
                   <BarChart2 className="mr-2 h-3.5 w-3.5" /> Compare Now
                 </Button>
               </div>
             </div>
           )}
 
+          {/* Grid Container - TOUCHES EDGES */}
           {filteredLaptops.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 xl:grid-cols-3 w-full">
               {filteredLaptops.map(laptop => (
-                <LaptopCard key={laptop.id} laptop={laptop} />
+                <LaptopCard key={laptop.id} laptop={laptop} variant="grid" />
               ))}
             </div>
           ) : (
-            <div className="py-32 text-center bg-white border border-zinc-200">
+            <div className="py-32 text-center bg-white">
               <DatabaseBackup className="mx-auto h-12 w-12 text-zinc-100 mb-4" />
-              <p className="font-bold text-zinc-400 uppercase tracking-widest text-xs">No technical matches found</p>
+              <p className="font-black text-zinc-400 uppercase tracking-[0.2em] text-[10px]">No technical matches found</p>
             </div>
           )}
         </main>
