@@ -29,7 +29,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-white border-t">
+    <footer className="bg-white border-t border-zinc-200">
       <div className="container mx-auto max-w-7xl px-4 pt-20 pb-10">
         <div className="grid gap-12 lg:grid-cols-4 md:grid-cols-2">
           {/* Brand Column */}
@@ -44,7 +44,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm font-medium leading-relaxed text-zinc-500 max-w-xs italic border-l-2 border-primary pl-4">
-              Helping people in Nairobi with high-quality laptops and professional website design since 2018.
+              Helping people in Nairobi with high-quality laptops and professional website design since 2018. We also setup point of sale systems.
             </p>
             <div className="flex gap-3">
               {[Facebook, Instagram, Twitter, Globe].map((Icon, i) => (
@@ -111,7 +111,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-20 pt-10 border-t flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="mt-20 pt-10 border-t border-zinc-200 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 text-center md:text-left">
             &copy; {currentYear} Benace Tech Hub. All Rights Reserved.
           </p>
