@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, Search, User, MapPin, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Menu, Search, MapPin, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartSheet } from '@/components/cart/cart-sheet';
 import { useCart } from '@/lib/cart-context';
@@ -28,13 +28,13 @@ export function Header() {
   ];
 
   return (
-    <header className="w-full flex flex-col">
+    <header className="w-full flex flex-col sticky top-0 z-50 shadow-md">
       {/* Top Primary Nav */}
       <div className="bg-[#131921] text-white py-2 px-4 md:px-6 flex items-center gap-4 md:gap-8 h-16">
         <Link href="/" className="shrink-0 pt-1">
           <Image
             src="/logo.jpeg"
-            alt="Benace Store"
+            alt="Benace Tech Hub"
             width={100}
             height={40}
             priority
@@ -56,7 +56,7 @@ export function Header() {
           </div>
           <Input 
             className="flex-grow border-none rounded-none focus-visible:ring-0 text-black h-full"
-            placeholder="Search for products, brands and more..."
+            placeholder="Search for laptops, repairs and more..."
           />
           <Button className="bg-primary hover:bg-primary/90 rounded-none h-full px-5">
             <Search className="h-5 w-5 text-white" />
@@ -66,7 +66,7 @@ export function Header() {
         <div className="hidden lg:flex items-center gap-6 text-[12px]">
           <Link href="/admin/login" className="flex flex-col group">
             <span className="text-zinc-400 group-hover:text-white transition-colors">Hello, Sign in</span>
-            <span className="font-bold flex items-center group-hover:text-white">Account & Lists <ChevronDown className="h-3 w-3 ml-1" /></span>
+            <span className="font-bold flex items-center group-hover:text-white">Account Hub <ChevronDown className="h-3 w-3 ml-1" /></span>
           </Link>
           <Link href="/admin/orders" className="flex flex-col group">
             <span className="text-zinc-400 group-hover:text-white transition-colors">Returns</span>
@@ -94,20 +94,20 @@ export function Header() {
       <div className="bg-[#232f3e] text-white text-[13px] font-medium px-4 md:px-6 h-10 flex items-center justify-between">
         <div className="flex items-center gap-6 h-full overflow-x-auto no-scrollbar">
           <Button variant="ghost" className="text-white hover:bg-white/10 h-full rounded-none flex items-center px-2">
-            <Menu className="h-5 w-5 mr-1" /> All Categories
+            <Menu className="h-5 w-5 mr-1" /> All
           </Button>
           {topNavLinks.map((link) => (
             <Link 
               key={link.name} 
               href={link.href} 
-              className="whitespace-nowrap hover:text-primary transition-colors py-2"
+              className="whitespace-nowrap hover:text-primary transition-colors py-2 font-bold"
             >
               {link.name}
             </Link>
           ))}
         </div>
         <div className="hidden md:flex items-center gap-2">
-           <span className="text-[10px] font-black uppercase tracking-widest text-primary">Technical Hub Live</span>
+           <span className="text-[10px] font-black uppercase tracking-widest text-primary">Nairobi Technical Hub Live</span>
         </div>
       </div>
     </header>
