@@ -28,66 +28,60 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
 
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden rounded-md border border-zinc-200 bg-white transition-all hover:shadow-lg">
-      <CardContent className="p-4 flex flex-col h-full space-y-3">
-        {/* Deal Badge */}
+      <CardContent className="p-3 flex flex-col h-full space-y-2">
         <div className="absolute top-2 left-2 z-10">
-          <Badge className="bg-red-600 text-white font-bold text-[10px] px-2 py-0.5 rounded-sm">
+          <Badge className="bg-red-600 text-white font-bold text-[8px] px-1.5 py-0.5 rounded-sm">
             {salePercentage}% OFF
           </Badge>
         </div>
 
-        {/* Image Container */}
         <Link href={`/laptops/${laptop.id}`} className="relative block aspect-square w-full overflow-hidden">
           {displayImage ? (
             <Image
               src={displayImage}
               alt={laptop.name}
               fill
-              className="object-contain p-2 transition-transform group-hover:scale-105 duration-500"
+              className="object-contain p-1 transition-transform group-hover:scale-105 duration-500"
               sizes="(max-width: 768px) 100vw, 300px"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-zinc-50">
-              <span className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest">No Image</span>
+              <span className="text-[8px] font-bold text-zinc-300 uppercase tracking-widest">No Image</span>
             </div>
           )}
         </Link>
 
-        {/* Info Section */}
-        <div className="flex flex-col flex-grow space-y-2">
+        <div className="flex flex-col flex-grow space-y-1">
           <Link href={`/laptops/${laptop.id}`}>
-            <h3 className="text-sm font-bold leading-tight text-zinc-900 line-clamp-2 group-hover:text-primary transition-colors">
+            <h3 className="text-xs font-bold leading-tight text-zinc-900 line-clamp-2 group-hover:text-primary transition-colors">
               {laptop.brand} {laptop.name} - {laptop.specifications.processor}, {laptop.specifications.ram} RAM, {laptop.specifications.storage}
             </h3>
           </Link>
 
-          {/* Rating */}
           <div className="flex items-center gap-1">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-[#ffa41c] text-[#ffa41c]" : "text-zinc-200")} />
+                <Star key={i} className={cn("h-2.5 w-2.5", i < 4 ? "fill-[#ffa41c] text-[#ffa41c]" : "text-zinc-200")} />
               ))}
             </div>
-            <span className="text-[10px] text-zinc-500 font-medium">12,568</span>
+            <span className="text-[9px] text-zinc-400 font-medium">12,568</span>
           </div>
 
-          {/* Pricing */}
           <div className="flex flex-col">
-            <div className="flex items-baseline gap-2">
-              <span className="text-lg font-black text-black">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xs font-black text-black">
                 KES {laptop.price.toLocaleString()}
               </span>
-              <span className="text-xs text-zinc-400 line-through">
+              <span className="text-[10px] text-zinc-400 line-through">
                 KES {originalPrice.toLocaleString()}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Action Button */}
         <Button 
           onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-          className="w-full h-9 rounded-md bg-[#ffd814] hover:bg-[#f7ca00] text-black border border-[#e7af06] font-bold text-xs shadow-sm mt-auto"
+          className="w-full h-7 rounded-md bg-[#ffd814] hover:bg-[#f7ca00] text-black border border-[#e7af06] font-bold text-[10px] shadow-sm mt-auto py-0"
         >
           Add to Cart
         </Button>
