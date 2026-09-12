@@ -90,19 +90,19 @@ export function HeroSlider() {
                   <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-md px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
                     <Sparkles className="h-3.5 w-3.5 text-primary" /> {slide.subtitle}
                   </div>
-                  <h1 className="font-headline text-3xl font-black leading-tight tracking-tight text-white md:text-5xl lg:text-6xl uppercase italic">
+                  <h1 className="font-headline text-3xl font-black leading-tight tracking-tight text-white md:text-5xl lg:text-6xl uppercase">
                     {slide.title}
                   </h1>
-                  <p className="max-w-md text-base font-bold text-zinc-400 italic leading-relaxed">
+                  <p className="max-w-md text-base font-bold text-zinc-400 leading-relaxed">
                     {slide.description}
                   </p>
                   <div className="flex flex-col gap-4 sm:flex-row pt-4">
-                    <Button asChild size="lg" className="h-14 rounded-xl bg-primary px-10 text-[11px] font-black uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all">
+                    <Button asChild size="lg" className="h-14 rounded-none bg-primary px-10 text-[11px] font-black uppercase tracking-widest text-white hover:bg-white hover:text-primary transition-all">
                       <Link href={slide.link} className="flex items-center gap-2">
                         {slide.cta} <ArrowRight className="h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button asChild size="lg" variant="outline" className="h-14 rounded-xl border-2 border-white/20 bg-white/5 backdrop-blur-sm px-10 text-[11px] font-black uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all">
+                    <Button asChild size="lg" variant="outline" className="h-14 rounded-none border-2 border-white/20 bg-white/5 backdrop-blur-sm px-10 text-[11px] font-black uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all">
                       <Link href="https://wa.me/254714210957" target="_blank" className="flex items-center gap-2">
                         <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
                       </Link>
@@ -110,7 +110,7 @@ export function HeroSlider() {
                   </div>
                 </div>
 
-                {/* Right Side: Showcase Showcase (Replacing Pop-ups) */}
+                {/* Right Side: Showcase Showcase */}
                 <div className="relative hidden lg:flex items-center justify-center h-[500px] animate-in fade-in zoom-in duration-1000 delay-300">
                   <div className="relative h-full w-full rounded-[3rem] overflow-hidden border-8 border-white/5 bg-black/20 backdrop-blur-xl p-8">
                      <div className="grid grid-cols-2 gap-4 h-full">

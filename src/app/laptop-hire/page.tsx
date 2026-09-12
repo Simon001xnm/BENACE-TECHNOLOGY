@@ -72,17 +72,17 @@ export default function LaptopHirePage() {
       {/* Hero Section */}
       <section className="bg-zinc-50 py-20 border-b">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="font-headline text-4xl font-black tracking-tighter text-black sm:text-6xl uppercase italic">
+          <h1 className="font-headline text-4xl font-black tracking-tighter text-black sm:text-6xl uppercase">
             Rent a Laptop. <br /><span className="text-primary">Pay Less.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg font-medium text-zinc-500">
             Use high-quality laptops on your own terms. Rent for a few days or for your whole office in Nairobi.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild size="lg" className="h-14 rounded-full bg-black text-white font-black uppercase tracking-widest px-8 hover:bg-primary transition-all">
+            <Button asChild size="lg" className="h-14 rounded-none bg-black text-white font-black uppercase tracking-widest px-8 hover:bg-primary transition-all">
               <Link href="/contact">Ask for Prices</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="h-14 rounded-full border-2 border-zinc-200 font-black uppercase tracking-widest px-8">
+            <Button asChild variant="outline" size="lg" className="h-14 rounded-none border-2 border-zinc-200 font-black uppercase tracking-widest px-8">
               <Link href="/laptops">See Models</Link>
             </Button>
           </div>
@@ -121,7 +121,7 @@ export default function LaptopHirePage() {
                   <div className="h-10 w-10 flex items-center justify-center bg-primary rounded-full">
                     <segment.icon className="h-5 w-5 text-black" />
                   </div>
-                  <h4 className="text-xl font-black uppercase italic tracking-tighter">{segment.title}</h4>
+                  <h4 className="text-xl font-black uppercase tracking-tighter">{segment.title}</h4>
                 </div>
                 <p className="text-zinc-400 font-medium mb-8 leading-relaxed">
                   {segment.description}
@@ -145,7 +145,7 @@ export default function LaptopHirePage() {
         <div className="container mx-auto px-4 text-center">
           <div className="mb-12">
             <h3 className="text-3xl font-black uppercase tracking-tighter">We Help You</h3>
-            <p className="mt-4 text-zinc-500 font-medium max-w-xl mx-auto italic border-l-4 border-primary pl-6 inline-block">
+            <p className="mt-4 text-zinc-500 font-medium max-w-xl mx-auto border-l-4 border-primary pl-6 inline-block">
               "We do not just rent laptops; we make sure they work well for you."
             </p>
           </div>

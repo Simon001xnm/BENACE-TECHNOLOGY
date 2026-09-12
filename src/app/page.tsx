@@ -122,16 +122,16 @@ export default function Home() {
       <section className="py-10 bg-black text-white overflow-hidden relative">
         <div className="w-full px-6 flex flex-col md:flex-row items-center gap-8">
            <div className="flex-1 space-y-4 z-10">
-              <div className="inline-block bg-primary px-2 py-0.5 text-[7px] font-black uppercase text-black">New Solution</div>
-              <h2 className="text-2xl font-black uppercase italic tracking-tighter leading-none">Smart <br />POS Systems</h2>
-              <p className="text-[10px] font-bold text-zinc-400 italic max-w-sm leading-tight">
+              <div className="inline-block bg-primary px-2 py-0.5 text-[7px] font-black uppercase text-white">New Solution</div>
+              <h2 className="text-2xl font-black uppercase tracking-tighter leading-none">Smart <br />POS Systems</h2>
+              <p className="text-[10px] font-bold text-zinc-400 max-w-sm leading-tight">
                 Setup your retail shop today. Manage stock, sales, and money with ease across Kenya.
               </p>
-              <Button asChild className="h-9 bg-primary text-black font-black uppercase text-[8px] tracking-widest px-6 hover:bg-white transition-all">
+              <Button asChild className="h-9 rounded-none bg-primary text-white font-black uppercase text-[8px] tracking-widest px-8 border border-primary hover:bg-white hover:text-primary transition-all">
                 <Link href="/services">Setup Now</Link>
               </Button>
            </div>
-           <div className="flex-1 relative h-48 w-full md:h-64 opacity-50 md:opacity-100">
+           <div className="flex-1 relative h-48 w-full md:h-64">
               {posImage && (
                 <Image 
                   src={posImage.imageUrl} 
