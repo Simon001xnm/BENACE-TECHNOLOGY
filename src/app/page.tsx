@@ -17,6 +17,7 @@ import { collection, query, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
 import Image from 'next/image';
 import { laptops as staticLaptops } from '@/lib/data';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function Home() {
   const db = useFirestore();
@@ -38,14 +39,14 @@ export default function Home() {
   }, [allLiveProducts]);
 
   const categories = [
-    { name: 'Laptops', img: 'https://picsum.photos/seed/cat1/200/200' },
-    { name: 'Monitors', img: 'https://picsum.photos/seed/cat2/200/200' },
-    { name: 'Printers', img: 'https://picsum.photos/seed/cat3/200/200' },
-    { name: 'Accessories', img: 'https://picsum.photos/seed/cat4/200/200' },
-    { name: 'Repair Tools', img: 'https://picsum.photos/seed/cat5/200/200' },
-    { name: 'Networking', img: 'https://picsum.photos/seed/cat6/200/200' },
-    { name: 'Storage', img: 'https://picsum.photos/seed/cat7/200/200' },
-    { name: 'POS Systems', img: 'https://picsum.photos/seed/cat8/200/200' },
+    { name: 'Laptops', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-830-g8-1')?.imageUrl || '' },
+    { name: 'Monitors', img: PlaceHolderImages.find(p => p.id === 'laptop-dell-pro-14-1')?.imageUrl || '' },
+    { name: 'Printers', img: PlaceHolderImages.find(p => p.id === 'printer-placeholder')?.imageUrl || '' },
+    { name: 'Accessories', img: PlaceHolderImages.find(p => p.id === 'accessory-dell-mouse-1')?.imageUrl || '' },
+    { name: 'Repair Tools', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-dragonfly-1')?.imageUrl || '' },
+    { name: 'Networking', img: PlaceHolderImages.find(p => p.id === 'laptop-lenovo-thinkbook-14-irl-1')?.imageUrl || '' },
+    { name: 'Storage', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-840-g8-2')?.imageUrl || '' },
+    { name: 'POS Systems', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-1030-g8-1')?.imageUrl || '' },
   ];
 
   return (
