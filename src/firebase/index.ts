@@ -3,16 +3,18 @@ import { initializeFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
+/**
+ * Initializes Firebase services for the application.
+ * 
+ * We use experimentalForceLongPolling to resolve persistent "unavailable" connection
+ * errors that often occur in development environments where standard WebChannel
+ * communication might be blocked.
+ */
 export function initializeFirebase() {
   const app = initializeFirebaseApp();
   
-  /**
-   * We use initializeFirestore with experimentalAutoDetectLongPolling enabled.
-   * This helps resolve "unavailable" errors in environments where the default 
-   * WebChannel connection might be blocked by proxies or firewalls.
-   */
   const db = initializeFirestore(app, {
-    experimentalAutoDetectLongPolling: true,
+    experimentalForceLongPolling: true,
   });
   
   const auth = getAuth(app);
