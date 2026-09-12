@@ -1,20 +1,15 @@
 'use client';
 
-import Image from 'next/image';
+import Image from 'next/next';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/lib/cart-context';
 import type { Accessory } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ShoppingCart, Info, Package } from 'lucide-react';
+import { Star, Package } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export function AccessoryCard({ accessory }: { accessory: Accessory }) {
   const { addToCart } = useCart();
@@ -23,64 +18,68 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
     ? accessory.imageUrls[0] 
     : PlaceHolderImages.find(img => img.id === accessory.imageId)?.imageUrl;
 
+  const originalPrice = accessory.oldPrice || accessory.price * 1.25;
+
   return (
-    <Card className="group relative flex h-full flex-col overflow-hidden rounded-none border border-zinc-100 bg-white transition-all duration-300 hover:z-10 hover:shadow-2xl">
-      <CardHeader className="relative h-[300px] p-0 overflow-hidden bg-white">
-        <Link href={`/laptops/${accessory.id}`} className="block h-full w-full">
+    <Card className="group relative flex h-full flex-col overflow-hidden rounded-none border-none bg-white transition-all hover:z-10 hover:shadow-2xl">
+      <CardContent className="p-1.5 flex flex-col h-full space-y-1">
+        <div className="absolute top-1.5 left-1.5 z-10">
+          <Badge className="bg-primary text-white font-black text-[6px] px-1 py-0.5 rounded-none uppercase leading-none">
+            {accessory.category || 'GEAR'}
+          </Badge>
+        </div>
+
+        <Link href={`/laptops/${accessory.id}`} className="relative block aspect-square w-full overflow-hidden bg-zinc-50/50">
           {displayImage ? (
             <Image
               src={displayImage}
               alt={accessory.name}
               fill
-              className="object-cover p-0 transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className="object-contain p-2 transition-transform group-hover:scale-110 duration-700"
+              sizes="(max-width: 768px) 50vw, 20vw"
             />
           ) : (
-             <div className="flex h-full w-full items-center justify-center bg-zinc-50">
-                <Package className="h-16 w-16 text-zinc-100" />
-             </div>
+            <div className="flex h-full w-full items-center justify-center bg-zinc-50">
+              <Package className="h-4 w-4 text-zinc-200" />
+            </div>
           )}
         </Link>
-        <Badge className="absolute bottom-4 left-4 bg-primary text-white border-none font-black text-[9px] uppercase tracking-widest rounded-none px-3 py-1">
-          {accessory.category}
-        </Badge>
-      </CardHeader>
 
-      <CardContent className="flex flex-grow flex-col p-6 border-t border-zinc-100">
-        <span className="mb-1 text-[9px] font-black uppercase tracking-widest text-zinc-400">
-          {accessory.brand} TECHNICAL
-        </span>
-        <Link href={`/laptops/${accessory.id}`}>
-          <CardTitle className="mb-4 text-lg font-black leading-tight text-black hover:text-primary transition-all uppercase tracking-tight line-clamp-1">
-            {accessory.name}
-          </CardTitle>
-        </Link>
-        
-        <div className="mt-auto flex items-center justify-between">
-          <span className="text-xl font-black text-black">
-            KES {accessory.price.toLocaleString()}
-          </span>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            asChild 
-            className="h-8 w-8 text-zinc-300 hover:text-primary"
-          >
-            <Link href={`/laptops/${accessory.id}`}>
-              <Info className="h-4 w-4" />
-            </Link>
-          </Button>
+        <div className="flex flex-col flex-grow space-y-0.5 pt-1">
+          <Link href={`/laptops/${accessory.id}`}>
+            <h3 className="text-[9px] font-bold leading-[1.1] text-zinc-900 line-clamp-2 group-hover:text-primary transition-colors uppercase tracking-tighter">
+              {accessory.brand} {accessory.name}
+            </h3>
+          </Link>
+
+          <div className="flex items-center gap-0.5">
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-1.5 w-1.5 fill-[#ffa41c] text-[#ffa41c]" />
+              ))}
+            </div>
+            <span className="text-[7px] text-zinc-400 font-bold">100%</span>
+          </div>
+
+          <div className="flex flex-col mt-0.5">
+            <div className="flex items-baseline gap-1">
+              <span className="text-[10px] font-black text-black">
+                KES {accessory.price.toLocaleString()}
+              </span>
+              <span className="text-[7px] text-zinc-400 line-through font-medium">
+                {originalPrice.toLocaleString()}
+              </span>
+            </div>
+          </div>
         </div>
-      </CardContent>
 
-      <CardFooter className="p-6 pt-0">
         <Button 
-          onClick={() => addToCart(accessory as any)} 
-          className="w-full h-12 rounded-none bg-black font-black uppercase text-[10px] tracking-widest text-white hover:bg-primary transition-all"
+          onClick={() => addToCart({ ...accessory, quantity: 1 } as any)}
+          className="w-full h-6 rounded-none bg-primary hover:bg-primary/90 text-primary-foreground border border-primary font-black text-[8px] uppercase tracking-widest shadow-sm mt-auto py-0"
         >
-          <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
+          Add to Cart
         </Button>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 }
