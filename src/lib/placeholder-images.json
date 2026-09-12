@@ -203,6 +203,12 @@
       "description": "Cart Item Placeholder",
       "imageUrl": "/FB_IMG_1753445965146.jpg",
       "imageHint": "product image"
+    },
+    {
+      "id": "pos-system-hero",
+      "description": "Smart POS System for Retail",
+      "imageUrl": "/3da4051a8a4c87af701f96948c2ceec7.jpg",
+      "imageHint": "pos retail"
     }
   ]
 }

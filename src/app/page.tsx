@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -48,6 +49,8 @@ export default function Home() {
     { name: 'Storage', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-840-g8-2')?.imageUrl || '' },
     { name: 'POS Systems', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-1030-g8-1')?.imageUrl || '' },
   ];
+
+  const posImage = PlaceHolderImages.find(p => p.id === 'pos-system-hero');
 
   return (
     <div className="flex flex-col gap-0 bg-[#f4f4f4] overflow-x-hidden min-h-screen">
@@ -130,13 +133,15 @@ export default function Home() {
               </Button>
            </div>
            <div className="flex-1 relative h-48 w-full md:h-64 opacity-50 md:opacity-100">
-              <Image 
-                src="https://picsum.photos/seed/pos/800/600" 
-                alt="POS System" 
-                fill 
-                className="object-cover rounded-2xl grayscale" 
-                data-ai-hint="pos system"
-              />
+              {posImage && (
+                <Image 
+                  src={posImage.imageUrl} 
+                  alt={posImage.description} 
+                  fill 
+                  className="object-cover rounded-2xl grayscale" 
+                  data-ai-hint={posImage.imageHint}
+                />
+              )}
            </div>
         </div>
       </section>
