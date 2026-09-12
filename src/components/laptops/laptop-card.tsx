@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/lib/cart-context';
 import type { Laptop } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -48,7 +48,7 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-zinc-50">
-              <span className="text-[10px] font-bold text-zinc-300">No Image</span>
+              <span className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest">No Image</span>
             </div>
           )}
         </Link>
@@ -65,7 +65,7 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
           <div className="flex items-center gap-1">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-primary text-primary" : "text-zinc-200")} />
+                <Star key={i} className={cn("h-3 w-3", i < 4 ? "fill-[#ffa41c] text-[#ffa41c]" : "text-zinc-200")} />
               ))}
             </div>
             <span className="text-[10px] text-zinc-500 font-medium">12,568</span>
@@ -87,7 +87,7 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
         {/* Action Button */}
         <Button 
           onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-          className="w-full h-9 rounded-md bg-primary hover:bg-primary/90 text-white font-bold text-xs shadow-sm mt-auto"
+          className="w-full h-9 rounded-md bg-[#ffd814] hover:bg-[#f7ca00] text-black border border-[#e7af06] font-bold text-xs shadow-sm mt-auto"
         >
           Add to Cart
         </Button>
