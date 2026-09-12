@@ -1,14 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, Search, User, MapPin, ChevronDown, List } from 'lucide-react';
+import { ShoppingCart, Menu, Search, User, MapPin, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartSheet } from '@/components/cart/cart-sheet';
 import { useCart } from '@/lib/cart-context';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
 
 export function Header() {
   const { cartCount } = useCart();
@@ -21,11 +20,11 @@ export function Header() {
   }, []);
 
   const topNavLinks = [
-    { name: "Today's Deals", href: '#' },
-    { name: 'Best Sellers', href: '/laptops' },
-    { name: 'New Releases', href: '#' },
-    { name: 'Customer Service', href: '/contact' },
-    { name: 'Gift Cards', href: '#' },
+    { name: "Laptops", href: '/laptops' },
+    { name: 'Accessories', href: '/accessories' },
+    { name: 'Repairs', href: '/repairs' },
+    { name: 'Laptop Hire', href: '/laptop-hire' },
+    { name: 'Services', href: '/services' },
   ];
 
   return (
@@ -34,12 +33,12 @@ export function Header() {
       <div className="bg-[#131921] text-white py-2 px-4 md:px-6 flex items-center gap-4 md:gap-8 h-16">
         <Link href="/" className="shrink-0 pt-1">
           <Image
-            src="/use.png"
+            src="/logo.jpeg"
             alt="Benace Store"
             width={100}
-            height={30}
+            height={40}
             priority
-            className="invert brightness-200"
+            className="rounded-sm"
           />
         </Link>
 
@@ -108,7 +107,7 @@ export function Header() {
           ))}
         </div>
         <div className="hidden md:flex items-center gap-2">
-           <Image src="https://picsum.photos/seed/promo/200/40" alt="Special Deals" width={100} height={20} className="rounded" />
+           <span className="text-[10px] font-black uppercase tracking-widest text-primary">Technical Hub Live</span>
         </div>
       </div>
     </header>

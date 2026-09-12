@@ -7,39 +7,39 @@ export function Footer() {
 
   const footerLinks = [
     {
-      title: 'About Us',
+      title: 'Our Hub',
       links: [
-        { name: 'Careers', href: '#' },
-        { name: 'Press Releases', href: '#' },
-        { name: 'Amazon Science', href: '#' },
-        { name: 'Our Hub', href: '/about' },
+        { name: 'Laptops', href: '/laptops' },
+        { name: 'Accessories', href: '/accessories' },
+        { name: 'Laptop Hire', href: '/laptop-hire' },
+        { name: 'About Us', href: '/about' },
       ],
     },
     {
-      title: 'Make Money with Us',
+      title: 'Services',
       links: [
-        { name: 'Sell on Benace', href: '#' },
-        { name: 'Sell Under Accelerator', href: '#' },
-        { name: 'Become an Affiliate', href: '#' },
-        { name: 'Advertise Your Products', href: '#' },
+        { name: 'Computer Repair', href: '/repairs' },
+        { name: 'Web Design', href: '/services' },
+        { name: 'POS Setup', href: '/services' },
+        { name: 'Tech Consulting', href: '/contact' },
       ],
     },
     {
       title: 'Let Us Help You',
       links: [
         { name: 'Your Account', href: '/admin/login' },
-        { name: 'Returns Center', href: '#' },
-        { name: '100% Purchase Protection', href: '#' },
+        { name: 'Returns Center', href: '/contact' },
+        { name: 'Purchase Protection', href: '/about' },
         { name: 'Help & Support', href: '/contact' },
       ],
     },
     {
       title: 'Get to Know Us',
       links: [
-        { name: 'About Amazon', href: '#' },
-        { name: 'Sustainability', href: '#' },
-        { name: 'Investor Relations', href: '#' },
-        { name: 'Tech Solutions', href: '/services' },
+        { name: 'Sustainability', href: '/about' },
+        { name: 'Our Location', href: '/contact' },
+        { name: 'Contact Us', href: '/contact' },
+        { name: 'East Africa Reach', href: '/about' },
       ],
     },
   ];
@@ -78,11 +78,11 @@ export function Footer() {
           <div className="flex items-center gap-8">
             <Link href="/" className="shrink-0">
               <Image
-                src="/use.png"
+                src="/logo.jpeg"
                 alt="Benace Technologies"
-                width={100}
+                width={80}
                 height={30}
-                className="invert brightness-200"
+                className="rounded-sm"
               />
             </Link>
             <div className="flex items-center gap-4 text-xs font-medium text-zinc-400">
@@ -126,7 +126,7 @@ export function Footer() {
           </div>
           
           <p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">
-            &copy; {currentYear}, Benace Store or its affiliates. Your one-stop shop for everything you need.
+            &copy; {currentYear}, Benace Store or its affiliates. Help people in Kenya and East Africa.
           </p>
         </div>
       </div>
