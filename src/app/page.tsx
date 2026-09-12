@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -47,7 +46,7 @@ export default function Home() {
     { name: 'Repair Tools', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-dragonfly-1')?.imageUrl || '' },
     { name: 'Networking', img: PlaceHolderImages.find(p => p.id === 'laptop-lenovo-thinkbook-14-irl-1')?.imageUrl || '' },
     { name: 'Storage', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-840-g8-2')?.imageUrl || '' },
-    { name: 'POS Systems', img: PlaceHolderImages.find(p => p.id === 'laptop-hp-1030-g8-1')?.imageUrl || '' },
+    { name: 'POS Systems', img: PlaceHolderImages.find(p => p.id === 'pos-system-hero')?.imageUrl || '' },
   ];
 
   const posImage = PlaceHolderImages.find(p => p.id === 'pos-system-hero');
@@ -138,7 +137,7 @@ export default function Home() {
                   src={posImage.imageUrl} 
                   alt={posImage.description} 
                   fill 
-                  className="object-cover rounded-2xl grayscale" 
+                  className="object-cover rounded-2xl" 
                   data-ai-hint={posImage.imageHint}
                 />
               )}
