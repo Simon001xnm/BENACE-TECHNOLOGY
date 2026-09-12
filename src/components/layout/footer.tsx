@@ -129,10 +129,12 @@ export function Footer() {
           <div className="flex flex-col items-center gap-2">
             <p className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.2em] flex items-center justify-center flex-wrap gap-1">
               &copy; {currentYear}. MADE IN KENYA BY <Coffee className="h-3 w-3 text-primary mx-0.5" /> 
-              <span className="text-zinc-500">SIMON STYLES TECHNOLOGIES LIMITED</span> 
-              <span className="mx-2 text-zinc-800">|</span>
-              <Link href="https://simonstyles.co.ke/agency" target="_blank" className="text-primary hover:underline lowercase font-bold tracking-normal">
-                simonstyles.co.ke/agency
+              <Link 
+                href="https://simonstyles.co.ke/agency" 
+                target="_blank" 
+                className="text-zinc-500 hover:text-primary transition-colors"
+              >
+                SIMON STYLES TECHNOLOGIES LIMITED
               </Link>
             </p>
           </div>
