@@ -1,11 +1,20 @@
 import { initializeFirebaseApp } from './config';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
 export function initializeFirebase() {
   const app = initializeFirebaseApp();
-  const db = getFirestore(app);
+  
+  /**
+   * We use initializeFirestore with experimentalAutoDetectLongPolling enabled.
+   * This helps resolve "unavailable" errors in environments where the default 
+   * WebChannel connection might be blocked by proxies or firewalls.
+   */
+  const db = initializeFirestore(app, {
+    experimentalAutoDetectLongPolling: true,
+  });
+  
   const auth = getAuth(app);
   const storage = getStorage(app);
 

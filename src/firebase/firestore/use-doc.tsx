@@ -44,9 +44,6 @@ export function useDoc<T = DocumentData>(ref: DocumentReference<T> | null) {
         
         setError(serverError);
         setLoading(false);
-        
-        // Log the actual error for debugging
-        console.error("Firestore useDoc error:", serverError);
       }
     );
 

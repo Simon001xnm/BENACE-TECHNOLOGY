@@ -44,9 +44,6 @@ export function useCollection<T = DocumentData>(query: Query<T> | null) {
         
         setError(serverError);
         setLoading(false);
-        
-        // Log the actual error for debugging
-        console.error("Firestore useCollection error:", serverError);
       }
     );
 
