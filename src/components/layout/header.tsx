@@ -42,72 +42,64 @@ export function Header() {
           />
         </Link>
 
-        <div className="hidden xl:flex flex-col text-[12px] leading-tight">
-          <span className="text-zinc-400">Deliver to</span>
-          <div className="flex items-center font-bold">
-            <MapPin className="h-4 w-4 mr-1" /> Kenya & East Africa
+        <div className="hidden xl:flex flex-col text-[10px] leading-tight">
+          <span className="text-zinc-400 uppercase font-black tracking-widest">Deliver to</span>
+          <div className="flex items-center font-black uppercase tracking-widest">
+            <MapPin className="h-3 w-3 mr-1" /> Kenya & E.A
           </div>
         </div>
 
         {/* Search Bar */}
-        <div className="flex-grow flex h-10 overflow-hidden rounded-md">
-          <div className="hidden md:flex items-center bg-[#f3f3f3] text-zinc-600 px-3 border-r text-xs font-medium cursor-pointer hover:bg-zinc-200 transition-colors">
-            All <ChevronDown className="h-3 w-3 ml-1" />
+        <div className="flex-grow flex h-9 overflow-hidden rounded-md max-w-2xl mx-auto">
+          <div className="hidden md:flex items-center bg-[#f3f3f3] text-zinc-600 px-3 border-r text-[9px] font-black uppercase tracking-widest cursor-pointer hover:bg-zinc-200 transition-colors">
+            All <ChevronDown className="h-2 w-2 ml-1" />
           </div>
           <Input 
-            className="flex-grow border-none rounded-none focus-visible:ring-0 text-black h-full"
+            className="flex-grow border-none rounded-none focus-visible:ring-0 text-black h-full text-[9px] font-bold uppercase tracking-widest px-4"
             placeholder="Search for laptops, repairs and more..."
           />
           <Button className="bg-primary hover:bg-primary/90 rounded-none h-full px-5">
-            <Search className="h-5 w-5 text-white" />
+            <Search className="h-4 w-4 text-white" />
           </Button>
         </div>
 
-        <div className="hidden lg:flex items-center gap-6 text-[12px]">
-          <Link href="/admin/login" className="flex flex-col group">
-            <span className="text-zinc-400 group-hover:text-white transition-colors">Hello, Sign in</span>
-            <span className="font-bold flex items-center group-hover:text-white">Account Hub <ChevronDown className="h-3 w-3 ml-1" /></span>
-          </Link>
-          <Link href="/admin/orders" className="flex flex-col group">
-            <span className="text-zinc-400 group-hover:text-white transition-colors">Returns</span>
-            <span className="font-bold group-hover:text-white">& Orders</span>
-          </Link>
+        <div className="hidden lg:flex items-center gap-8 text-[10px]">
           <CartSheet>
-            <div className="relative flex items-end font-bold cursor-pointer group">
+            <div className="relative flex items-end font-black uppercase tracking-widest cursor-pointer group">
               <div className="relative">
-                <ShoppingCart className="h-8 w-8 text-white" />
-                <span className="absolute -top-1 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">
+                <ShoppingCart className="h-7 w-7 text-white" />
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-black text-white border-2 border-[#131921]">
                   {cartCount}
                 </span>
               </div>
-              <span className="ml-1 group-hover:text-primary transition-colors">Cart</span>
+              <span className="ml-2 group-hover:text-primary transition-colors text-[9px]">Cart</span>
             </div>
           </CartSheet>
         </div>
 
         <Button variant="ghost" className="lg:hidden text-white p-0">
-          <Menu className="h-7 w-7" />
+          <Menu className="h-6 w-6" />
         </Button>
       </div>
 
       {/* Secondary Nav Bar */}
-      <div className="bg-[#232f3e] text-white text-[13px] font-medium px-4 md:px-6 h-10 flex items-center justify-between">
+      <div className="bg-[#232f3e] text-white text-[10px] font-black uppercase tracking-widest px-4 md:px-6 h-9 flex items-center justify-between">
         <div className="flex items-center gap-6 h-full overflow-x-auto no-scrollbar">
-          <Button variant="ghost" className="text-white hover:bg-white/10 h-full rounded-none flex items-center px-2">
-            <Menu className="h-5 w-5 mr-1" /> All
+          <Button variant="ghost" className="text-white hover:bg-white/10 h-full rounded-none flex items-center px-3 text-[10px] font-black uppercase tracking-widest">
+            <Menu className="h-4 w-4 mr-2" /> All
           </Button>
           {topNavLinks.map((link) => (
             <Link 
               key={link.name} 
               href={link.href} 
-              className="whitespace-nowrap hover:text-primary transition-colors py-2 font-bold"
+              className="whitespace-nowrap hover:text-primary transition-colors py-2 px-1 border-b-2 border-transparent hover:border-primary"
             >
               {link.name}
             </Link>
           ))}
         </div>
         <div className="hidden md:flex items-center gap-2">
-           <span className="text-[10px] font-black uppercase tracking-widest text-primary">Nairobi Technical Hub Live</span>
+           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-primary animate-pulse">Nairobi Tech Hub Live</span>
         </div>
       </div>
     </header>

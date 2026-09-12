@@ -27,7 +27,6 @@ export function Footer() {
     {
       title: 'Let Us Help You',
       links: [
-        { name: 'Your Account', href: '/admin/login' },
         { name: 'Returns Center', href: '/contact' },
         { name: 'Purchase Protection', href: '/about' },
         { name: 'Help & Support', href: '/contact' },
@@ -48,7 +47,7 @@ export function Footer() {
     <footer className="bg-[#131921] text-white">
       {/* Back to top */}
       <button 
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onClick={() => typeof window !== 'undefined' && window.scrollTo({ top: 0, behavior: 'smooth' })}
         className="w-full bg-[#37475a] py-4 text-xs font-bold hover:bg-[#485769] transition-colors flex items-center justify-center gap-2"
       >
         <ArrowUp className="h-4 w-4" /> Back to top
