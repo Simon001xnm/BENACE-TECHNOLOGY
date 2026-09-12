@@ -1,24 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, ArrowUpRight, X } from 'lucide-react';
+import { ShoppingCart, Menu, Search, User, MapPin, ChevronDown, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartSheet } from '@/components/cart/cart-sheet';
 import { useCart } from '@/lib/cart-context';
 import Image from 'next/image';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Input } from '@/components/ui/input';
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 export function Header() {
   const { cartCount } = useCart();
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -27,102 +20,95 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Laptops', href: '/laptops' },
-    { name: 'Repairs', href: '/repairs' },
-    { name: 'Web Services', href: '/services' },
-    { name: 'Accessories', href: '/accessories' },
-    { name: 'Hire Laptops', href: '/laptop-hire' },
+  const topNavLinks = [
+    { name: "Today's Deals", href: '#' },
+    { name: 'Best Sellers', href: '/laptops' },
+    { name: 'New Releases', href: '#' },
+    { name: 'Customer Service', href: '/contact' },
+    { name: 'Gift Cards', href: '#' },
   ];
 
   return (
-    <header 
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        scrolled 
-          ? "bg-white/95 border-b py-2 backdrop-blur-md shadow-sm" 
-          : "bg-[#f8f9fa] py-4"
-      )}
-    >
-      <div className="container mx-auto flex h-14 items-center px-4 md:px-6">
-        <Link href="/" className="mr-10 group shrink-0">
+    <header className="w-full flex flex-col">
+      {/* Top Primary Nav */}
+      <div className="bg-[#131921] text-white py-2 px-4 md:px-6 flex items-center gap-4 md:gap-8 h-16">
+        <Link href="/" className="shrink-0 pt-1">
           <Image
             src="/use.png"
-            alt="Benace Tech Hub Nairobi"
-            width={120}
-            height={32}
+            alt="Benace Store"
+            width={100}
+            height={30}
             priority
-            className="object-contain transition-transform group-hover:scale-105"
+            className="invert brightness-200"
           />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-primary transition-colors"
+        <div className="hidden xl:flex flex-col text-[12px] leading-tight">
+          <span className="text-zinc-400">Deliver to</span>
+          <div className="flex items-center font-bold">
+            <MapPin className="h-4 w-4 mr-1" /> Kenya & East Africa
+          </div>
+        </div>
+
+        {/* Search Bar */}
+        <div className="flex-grow flex h-10 overflow-hidden rounded-md">
+          <div className="hidden md:flex items-center bg-[#f3f3f3] text-zinc-600 px-3 border-r text-xs font-medium cursor-pointer hover:bg-zinc-200 transition-colors">
+            All <ChevronDown className="h-3 w-3 ml-1" />
+          </div>
+          <Input 
+            className="flex-grow border-none rounded-none focus-visible:ring-0 text-black h-full"
+            placeholder="Search for products, brands and more..."
+          />
+          <Button className="bg-primary hover:bg-primary/90 rounded-none h-full px-5">
+            <Search className="h-5 w-5 text-white" />
+          </Button>
+        </div>
+
+        <div className="hidden lg:flex items-center gap-6 text-[12px]">
+          <Link href="/admin/login" className="flex flex-col group">
+            <span className="text-zinc-400 group-hover:text-white transition-colors">Hello, Sign in</span>
+            <span className="font-bold flex items-center group-hover:text-white">Account & Lists <ChevronDown className="h-3 w-3 ml-1" /></span>
+          </Link>
+          <Link href="/admin/orders" className="flex flex-col group">
+            <span className="text-zinc-400 group-hover:text-white transition-colors">Returns</span>
+            <span className="font-bold group-hover:text-white">& Orders</span>
+          </Link>
+          <CartSheet>
+            <div className="relative flex items-end font-bold cursor-pointer group">
+              <div className="relative">
+                <ShoppingCart className="h-8 w-8 text-white" />
+                <span className="absolute -top-1 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">
+                  {cartCount}
+                </span>
+              </div>
+              <span className="ml-1 group-hover:text-primary transition-colors">Cart</span>
+            </div>
+          </CartSheet>
+        </div>
+
+        <Button variant="ghost" className="lg:hidden text-white p-0">
+          <Menu className="h-7 w-7" />
+        </Button>
+      </div>
+
+      {/* Secondary Nav Bar */}
+      <div className="bg-[#232f3e] text-white text-[13px] font-medium px-4 md:px-6 h-10 flex items-center justify-between">
+        <div className="flex items-center gap-6 h-full overflow-x-auto no-scrollbar">
+          <Button variant="ghost" className="text-white hover:bg-white/10 h-full rounded-none flex items-center px-2">
+            <Menu className="h-5 w-5 mr-1" /> All Categories
+          </Button>
+          {topNavLinks.map((link) => (
+            <Link 
+              key={link.name} 
+              href={link.href} 
+              className="whitespace-nowrap hover:text-primary transition-colors py-2"
             >
               {link.name}
             </Link>
           ))}
-        </nav>
-
-        <div className="ml-auto flex items-center gap-4">
-          <CartSheet>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="relative h-10 w-10 rounded-xl bg-white hover:bg-zinc-50 transition-all border border-zinc-100"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              {cartCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-black text-white">
-                  {cartCount}
-                </span>
-              )}
-            </Button>
-          </CartSheet>
-
-          <div className="lg:hidden">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl bg-white border border-zinc-100">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:max-w-sm p-0 flex flex-col border-none">
-                <SheetHeader className="p-6 border-b bg-white flex flex-row items-center justify-between">
-                  <SheetTitle className="text-left font-black text-xl uppercase tracking-tighter">
-                    Benace Hub
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="flex-grow flex flex-col p-8 gap-8 bg-white overflow-y-auto">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className="text-3xl font-black uppercase tracking-tighter hover:text-primary transition-colors flex items-center justify-between group"
-                    >
-                      {link.name}
-                      <ArrowUpRight className="h-6 w-6 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                    </Link>
-                  ))}
-                  <div className="mt-auto pt-8 border-t space-y-6">
-                    <div>
-                      <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">Location</p>
-                      <p className="text-sm font-bold">Old Nation House, 2nd Floor, Shop D1</p>
-                    </div>
-                    <Button asChild className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-widest hover:bg-primary transition-all shadow-xl">
-                      <Link href="/contact" onClick={() => setIsOpen(false)}>Talk to Us Now</Link>
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+        </div>
+        <div className="hidden md:flex items-center gap-2">
+           <Image src="https://picsum.photos/seed/promo/200/40" alt="Special Deals" width={100} height={20} className="rounded" />
         </div>
       </div>
     </header>
