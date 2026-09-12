@@ -81,7 +81,7 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
 
         <Button 
           onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-          className="w-full h-6 rounded-none bg-[#ffd814] hover:bg-[#f7ca00] text-black border border-[#e7af06] font-black text-[8px] uppercase tracking-widest shadow-sm mt-auto py-0"
+          className="w-full h-6 rounded-none bg-primary hover:bg-primary/90 text-primary-foreground border border-primary font-black text-[8px] uppercase tracking-widest shadow-sm mt-auto py-0"
         >
           Add to Cart
         </Button>

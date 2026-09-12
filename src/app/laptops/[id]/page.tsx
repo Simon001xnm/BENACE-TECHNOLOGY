@@ -130,7 +130,7 @@ export default function LaptopDetailPage() {
             <div className="flex flex-col sm:flex-row gap-2 pt-2 max-w-md">
               <Button 
                 size="sm" 
-                className="flex-1 h-9 rounded-none bg-[#ffd814] hover:bg-[#f7ca00] text-black border border-[#e7af06] font-black uppercase text-[8px] tracking-widest shadow-sm" 
+                className="flex-1 h-9 rounded-none bg-primary hover:bg-primary/90 text-primary-foreground border border-primary font-black uppercase text-[8px] tracking-widest shadow-sm" 
                 onClick={() => addToCart(laptop as any)}
               >
                 <ShoppingCart className="mr-2 h-3 w-3" /> Add to Cart
