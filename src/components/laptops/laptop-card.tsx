@@ -28,9 +28,9 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
 
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden rounded-none border-none bg-white transition-all hover:z-10 hover:shadow-2xl">
-      <CardContent className="p-2 flex flex-col h-full space-y-2">
-        <div className="absolute top-2 left-2 z-10">
-          <Badge className="bg-red-600 text-white font-black text-[7px] px-1 py-0.5 rounded-none uppercase">
+      <CardContent className="p-1.5 flex flex-col h-full space-y-1">
+        <div className="absolute top-1.5 left-1.5 z-10">
+          <Badge className="bg-red-600 text-white font-black text-[6px] px-1 py-0.5 rounded-none uppercase leading-none">
             {salePercentage}% OFF
           </Badge>
         </div>
@@ -46,34 +46,34 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-zinc-50">
-              <span className="text-[7px] font-black text-zinc-300 uppercase tracking-widest">No Image</span>
+              <span className="text-[6px] font-black text-zinc-300 uppercase tracking-widest">No Image</span>
             </div>
           )}
         </Link>
 
-        <div className="flex flex-col flex-grow space-y-1">
+        <div className="flex flex-col flex-grow space-y-0.5 pt-1">
           <Link href={`/laptops/${laptop.id}`}>
-            <h3 className="text-[10px] font-bold leading-tight text-zinc-900 line-clamp-2 group-hover:text-primary transition-colors uppercase tracking-tight">
+            <h3 className="text-[9px] font-bold leading-[1.1] text-zinc-900 line-clamp-2 group-hover:text-primary transition-colors uppercase tracking-tighter">
               {laptop.brand} {laptop.name} {laptop.specifications?.processor}
             </h3>
           </Link>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className={cn("h-2 w-2", i < 4 ? "fill-[#ffa41c] text-[#ffa41c]" : "text-zinc-200")} />
+                <Star key={i} className={cn("h-1.5 w-1.5", i < 4 ? "fill-[#ffa41c] text-[#ffa41c]" : "text-zinc-200")} />
               ))}
             </div>
-            <span className="text-[8px] text-zinc-400 font-bold">12.5k</span>
+            <span className="text-[7px] text-zinc-400 font-bold">12k</span>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-0.5">
             <div className="flex items-baseline gap-1">
-              <span className="text-[11px] font-black text-black">
+              <span className="text-[10px] font-black text-black">
                 KES {laptop.price.toLocaleString()}
               </span>
-              <span className="text-[8px] text-zinc-400 line-through font-medium">
-                KES {originalPrice.toLocaleString()}
+              <span className="text-[7px] text-zinc-400 line-through font-medium">
+                {originalPrice.toLocaleString()}
               </span>
             </div>
           </div>
@@ -81,7 +81,7 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
 
         <Button 
           onClick={() => addToCart({ ...laptop, quantity: 1 } as any)}
-          className="w-full h-7 rounded-none bg-[#ffd814] hover:bg-[#f7ca00] text-black border border-[#e7af06] font-black text-[9px] uppercase tracking-widest shadow-sm mt-auto py-0"
+          className="w-full h-6 rounded-none bg-[#ffd814] hover:bg-[#f7ca00] text-black border border-[#e7af06] font-black text-[8px] uppercase tracking-widest shadow-sm mt-auto py-0"
         >
           Add to Cart
         </Button>

@@ -16,16 +16,13 @@ import {
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import { Loader2, DatabaseBackup, BarChart2, Trash2 } from 'lucide-react';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { Loader2, DatabaseBackup } from 'lucide-react';
 import { laptops as staticLaptops } from '@/lib/data';
 
 export function LaptopsGrid() {
   const db = useFirestore();
-  const { compareItems, setIsComparing, clearCompare } = useCompare();
+  const { compareItems, setIsComparing } = useCompare();
   
-  // Filter States
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('relevance');
   const [inStockOnly, setInStockOnly] = useState(false);
@@ -94,8 +91,7 @@ export function LaptopsGrid() {
   return (
     <div className="w-full pb-20">
       <div className="flex flex-col lg:flex-row gap-0">
-        {/* Sidebar Filters */}
-        <aside className="hidden lg:block w-64 shrink-0 bg-white border-r border-zinc-200 p-6 space-y-6">
+        <aside className="hidden lg:block w-56 shrink-0 bg-white border-r border-zinc-200 p-4 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-[10px] font-black uppercase tracking-widest text-primary">Filters</h2>
             {(searchTerm || inStockOnly || selectedProcessors.length > 0) && (
@@ -112,11 +108,11 @@ export function LaptopsGrid() {
                 <div className="flex items-center gap-2">
                   <Checkbox 
                     id="in-stock" 
-                    className="h-3.5 w-3.5 border-zinc-300" 
+                    className="h-3 w-3 border-zinc-300" 
                     checked={inStockOnly}
                     onCheckedChange={(checked) => setInStockOnly(!!checked)}
                   />
-                  <label htmlFor="in-stock" className="text-[10px] font-bold uppercase tracking-tight cursor-pointer">In Stock</label>
+                  <label htmlFor="in-stock" className="text-[9px] font-bold uppercase tracking-tight cursor-pointer">In Stock</label>
                 </div>
               </div>
             </section>
@@ -128,11 +124,11 @@ export function LaptopsGrid() {
                   <div key={i} className="flex items-center gap-2">
                     <Checkbox 
                       id={`proc-${i}`} 
-                      className="h-3.5 w-3.5 border-zinc-300" 
+                      className="h-3 w-3 border-zinc-300" 
                       checked={selectedProcessors.includes(proc)}
                       onCheckedChange={() => handleProcessorToggle(proc)}
                     />
-                    <label htmlFor={`proc-${i}`} className="text-[10px] font-bold uppercase tracking-tight cursor-pointer">{proc}</label>
+                    <label htmlFor={`proc-${i}`} className="text-[9px] font-bold uppercase tracking-tight cursor-pointer">{proc}</label>
                   </div>
                 ))}
               </div>
@@ -140,47 +136,41 @@ export function LaptopsGrid() {
           </div>
         </aside>
 
-        {/* Main Product Feed */}
-        <main className="flex-grow">
-          {/* Controls Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-3 border-b border-zinc-200">
+        <main className="flex-grow w-full overflow-hidden">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 border-b border-zinc-200">
             <div className="flex-grow max-w-md w-full">
               <Input 
                 placeholder="Search..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-9 rounded-none border-zinc-200 font-bold uppercase text-[9px] tracking-widest"
+                className="h-8 rounded-none border-zinc-200 font-bold uppercase text-[8px] tracking-widest"
               />
             </div>
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="h-9 rounded-none border-zinc-200 w-full sm:w-40 text-[9px] font-black uppercase tracking-widest">
+                <SelectTrigger className="h-8 rounded-none border-zinc-200 w-full sm:w-36 text-[8px] font-black uppercase tracking-widest">
                   <SelectValue placeholder="Sort" />
                 </SelectTrigger>
                 <SelectContent className="rounded-none border-zinc-200">
-                  <SelectItem value="relevance">Recent</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="relevance" className="text-[8px]">Recent</SelectItem>
+                  <SelectItem value="price-low" className="text-[8px]">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high" className="text-[8px]">Price: High to Low</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
-          {/* Comparison Bar */}
           {compareItems.length > 0 && (
-            <div className="sticky top-0 z-40 flex items-center justify-between bg-black px-4 py-2 text-white">
-              <span className="text-[9px] font-black uppercase tracking-widest">Comparing {compareItems.length} items</span>
-              <div className="flex gap-2">
-                <Button size="sm" onClick={() => setIsComparing(true)} className="bg-primary text-black font-black uppercase text-[8px] rounded-none px-4 h-7">
-                  Compare Now
-                </Button>
-              </div>
+            <div className="sticky top-0 z-40 flex items-center justify-between bg-black px-4 py-1.5 text-white">
+              <span className="text-[8px] font-black uppercase tracking-widest">Comparing {compareItems.length} items</span>
+              <Button size="sm" onClick={() => setIsComparing(true)} className="bg-primary text-black font-black uppercase text-[8px] rounded-none px-4 h-6">
+                Compare Now
+              </Button>
             </div>
           )}
 
-          {/* Grid Container - TOUCHING EDGES */}
           {filteredLaptops.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 w-full border-l border-zinc-200">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full border-l border-zinc-200">
               {filteredLaptops.map(laptop => (
                 <div key={laptop.id} className="border-r border-b border-zinc-200">
                   <LaptopCard laptop={laptop} variant="grid" />
@@ -189,8 +179,8 @@ export function LaptopsGrid() {
             </div>
           ) : (
             <div className="py-20 text-center bg-white">
-              <DatabaseBackup className="mx-auto h-8 w-8 text-zinc-100 mb-2" />
-              <p className="font-black text-zinc-400 uppercase tracking-widest text-[9px]">No models found</p>
+              <DatabaseBackup className="mx-auto h-6 w-6 text-zinc-100 mb-2" />
+              <p className="font-black text-zinc-400 uppercase tracking-widest text-[8px]">No models found</p>
             </div>
           )}
         </main>
