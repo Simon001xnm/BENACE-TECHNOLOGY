@@ -79,7 +79,7 @@ export function Footer() {
             <Link href="/" className="shrink-0">
               <Image
                 src="/logo.jpeg"
-                alt="Matesh Technologies"
+                alt="Benace Tech Hub"
                 width={100}
                 height={35}
                 className="rounded-sm brightness-0 invert"

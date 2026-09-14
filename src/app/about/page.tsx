@@ -9,10 +9,10 @@ export default function AboutPage() {
       <div className="grid gap-12 md:grid-cols-2 items-center">
         <div>
           <h1 className="font-headline text-4xl font-bold tracking-tight text-primary uppercase">
-            About Matesh Technologies
+            About Benace Tech Hub
           </h1>
           <p className="mt-6 text-lg text-muted-foreground">
-            Matesh Technologies is a premier computer shop and technical solutions hub based in Nairobi. We specialize in high-quality hardware, expert repairs, and custom digital services.
+            Benace Tech Hub is a premier computer shop and technical solutions hub based in Nairobi. We specialize in high-quality hardware, expert repairs, and custom digital services.
           </p>
           <p className="mt-4 text-lg text-muted-foreground">
             Our mission is to empower professionals, students, and businesses across East Africa with reliable technology and world-class support.
@@ -32,7 +32,7 @@ export default function AboutPage() {
           {heroImage && (
             <Image
               src={heroImage.imageUrl}
-              alt="Matesh Technologies Workspace"
+              alt="Benace Tech Hub Workspace"
               fill
               className="object-cover"
               data-ai-hint="modern office"

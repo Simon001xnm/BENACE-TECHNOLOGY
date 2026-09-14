@@ -34,7 +34,7 @@ export function Header() {
         <Link href="/" className="shrink-0 pt-1">
           <Image
             src="/logo.jpeg"
-            alt="Matesh Technologies"
+            alt="Benace Tech Hub"
             width={120}
             height={40}
             priority
