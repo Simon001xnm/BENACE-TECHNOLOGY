@@ -8,31 +8,31 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 py-12">
       <div className="grid gap-12 md:grid-cols-2 items-center">
         <div>
-          <h1 className="font-headline text-4xl font-bold tracking-tight text-primary">
-            About Benace Tech Hub
+          <h1 className="font-headline text-4xl font-bold tracking-tight text-primary uppercase">
+            About Matesh Technologies
           </h1>
           <p className="mt-6 text-lg text-muted-foreground">
-            Benace Tech Hub is a computer shop in Nairobi. We sell high-quality laptops, fix broken computers, and build websites.
+            Matesh Technologies is a premier computer shop and technical solutions hub based in Nairobi. We specialize in high-quality hardware, expert repairs, and custom digital services.
           </p>
           <p className="mt-4 text-lg text-muted-foreground">
-            Our goal is to help people get the right computers for their work or school. We have cheap laptops for students and strong ones for work. We are here to help you.
+            Our mission is to empower professionals, students, and businesses across East Africa with reliable technology and world-class support.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-4">
-            <div className="rounded-lg border bg-card p-4 text-center">
+            <div className="rounded-lg border bg-card p-6 text-center shadow-sm">
               <p className="text-3xl font-bold text-primary">100%</p>
-              <p className="text-sm text-muted-foreground font-medium">Happy Customers</p>
+              <p className="text-xs text-muted-foreground font-black uppercase tracking-widest mt-2">Quality Support</p>
             </div>
-            <div className="rounded-lg border bg-card p-4 text-center">
+            <div className="rounded-lg border bg-card p-6 text-center shadow-sm">
               <p className="text-3xl font-bold text-primary">Fast</p>
-              <p className="text-sm text-muted-foreground font-medium">Repair Service</p>
+              <p className="text-xs text-muted-foreground font-black uppercase tracking-widest mt-2">Turnaround</p>
             </div>
           </div>
         </div>
-        <div className="relative h-[400px] overflow-hidden rounded-2xl shadow-xl">
+        <div className="relative h-[450px] overflow-hidden rounded-3xl shadow-2xl border-4 border-white">
           {heroImage && (
             <Image
               src={heroImage.imageUrl}
-              alt="Our Workspace"
+              alt="Matesh Technologies Workspace"
               fill
               className="object-cover"
               data-ai-hint="modern office"
