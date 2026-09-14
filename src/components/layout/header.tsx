@@ -28,9 +28,9 @@ export function Header() {
   ];
 
   return (
-    <header className="w-full flex flex-col sticky top-0 z-50 shadow-md">
-      {/* Top Primary Nav */}
-      <div className="bg-[#131921] text-white py-2 px-4 md:px-6 flex items-center gap-4 md:gap-8 h-16">
+    <header className="w-full flex flex-col sticky top-0 z-50 shadow-md transition-all">
+      {/* Top Primary Nav - Branded deep blue */}
+      <div className="bg-[#003087] text-white py-2 px-4 md:px-6 flex items-center gap-4 md:gap-8 h-16">
         <Link href="/" className="shrink-0 pt-1">
           <Image
             src="/logo.jpeg"
@@ -43,22 +43,22 @@ export function Header() {
         </Link>
 
         <div className="hidden xl:flex flex-col text-[10px] leading-tight">
-          <span className="text-zinc-400 uppercase font-black tracking-widest">Deliver to</span>
-          <div className="flex items-center font-black uppercase tracking-widest">
+          <span className="text-white/60 uppercase font-black tracking-widest">Deliver to</span>
+          <div className="flex items-center font-black uppercase tracking-widest text-white">
             <MapPin className="h-3 w-3 mr-1" /> Kenya & E.A
           </div>
         </div>
 
         {/* Search Bar */}
-        <div className="flex-grow flex h-9 overflow-hidden rounded-md max-w-2xl mx-auto">
-          <div className="hidden md:flex items-center bg-[#f3f3f3] text-zinc-600 px-3 border-r text-[9px] font-black uppercase tracking-widest cursor-pointer hover:bg-zinc-200 transition-colors">
+        <div className="flex-grow flex h-9 overflow-hidden rounded-md max-w-2xl mx-auto ring-1 ring-white/20">
+          <div className="hidden md:flex items-center bg-white text-zinc-600 px-3 border-r text-[9px] font-black uppercase tracking-widest cursor-pointer hover:bg-zinc-100 transition-colors">
             All <ChevronDown className="h-2 w-2 ml-1" />
           </div>
           <Input 
-            className="flex-grow border-none rounded-none focus-visible:ring-0 text-black h-full text-[9px] font-bold uppercase tracking-widest px-4"
+            className="flex-grow border-none rounded-none focus-visible:ring-0 text-black h-full text-[9px] font-bold uppercase tracking-widest px-4 bg-white"
             placeholder="Search for laptops, repairs and more..."
           />
-          <Button className="bg-primary hover:bg-primary/90 rounded-none h-full px-5">
+          <Button className="bg-[#0070ba] hover:bg-[#005ea6] rounded-none h-full px-5 border-l border-white/10">
             <Search className="h-4 w-4 text-white" />
           </Button>
         </div>
@@ -68,11 +68,11 @@ export function Header() {
             <div className="relative flex items-end font-black uppercase tracking-widest cursor-pointer group">
               <div className="relative">
                 <ShoppingCart className="h-7 w-7 text-white" />
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-black text-white border-2 border-[#131921]">
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[9px] font-black text-[#003087] border-2 border-[#003087]">
                   {cartCount}
                 </span>
               </div>
-              <span className="ml-2 group-hover:text-primary transition-colors text-[9px]">Cart</span>
+              <span className="ml-2 group-hover:text-white/80 transition-colors text-[9px] text-white">Cart</span>
             </div>
           </CartSheet>
         </div>
@@ -82,8 +82,8 @@ export function Header() {
         </Button>
       </div>
 
-      {/* Secondary Nav Bar */}
-      <div className="bg-[#232f3e] text-white text-[10px] font-black uppercase tracking-widest px-4 md:px-6 h-9 flex items-center justify-between">
+      {/* Secondary Nav Bar - Branded PayPal Blue */}
+      <div className="bg-[#0070ba] text-white text-[10px] font-black uppercase tracking-widest px-4 md:px-6 h-9 flex items-center justify-between shadow-inner">
         <div className="flex items-center gap-6 h-full overflow-x-auto no-scrollbar">
           <Button variant="ghost" className="text-white hover:bg-white/10 h-full rounded-none flex items-center px-3 text-[10px] font-black uppercase tracking-widest">
             <Menu className="h-4 w-4 mr-2" /> All
@@ -92,14 +92,14 @@ export function Header() {
             <Link 
               key={link.name} 
               href={link.href} 
-              className="whitespace-nowrap hover:text-primary transition-colors py-2 px-1 border-b-2 border-transparent hover:border-primary"
+              className="whitespace-nowrap hover:text-white/80 transition-colors py-2 px-1 border-b-2 border-transparent hover:border-white"
             >
               {link.name}
             </Link>
           ))}
         </div>
         <div className="hidden md:flex items-center gap-2">
-           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-primary animate-pulse">Nairobi Tech Hub Live</span>
+           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/90 animate-pulse">Nairobi Hub Live</span>
         </div>
       </div>
     </header>
