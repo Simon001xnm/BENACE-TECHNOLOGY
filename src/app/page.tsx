@@ -10,7 +10,8 @@ import {
   ShieldCheck,
   Headphones,
   Award,
-  BadgeCheck
+  BadgeCheck,
+  PackageSearch
 } from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, limit } from 'firebase/firestore';
@@ -24,20 +25,17 @@ export default function Home() {
 
   const productsQuery = useMemo(() => {
     if (!db) return null;
-    // High limit to show all products if uploaded
     return query(collection(db, 'products'), limit(100));
   }, [db]);
 
   const { data: dbProducts, loading } = useCollection(productsQuery);
 
   const allLiveProducts = useMemo(() => {
-    // If the DB has products, use them. If not, use the expanded static catalog.
     if (dbProducts && dbProducts.length > 0) return dbProducts;
     return staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
   }, [dbProducts]);
 
   const featuredLaptops = useMemo(() => {
-    // Filter by type and show all items on the homepage
     return allLiveProducts.filter(p => p.type === 'laptop');
   }, [allLiveProducts]);
 
@@ -95,28 +93,34 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-4 w-full">
+      <section className="py-4 w-full min-h-[40vh]">
         <div className="w-full">
           <div className="px-4 flex items-center justify-between mb-4">
             <h2 className="text-sm font-black uppercase tracking-tight">Today's Top Deals</h2>
             <Link href="/laptops" className="text-[8px] font-black text-[#0070ba] hover:underline uppercase">View all</Link>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 w-full border-t border-l border-zinc-200">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 w-full border-t border-l border-zinc-200 min-h-[300px]">
             {loading && dbProducts === null ? (
                <>
                   {[...Array(6)].map((_, i) => (
                     <div key={i} className="aspect-square w-full animate-pulse bg-white border-r border-b border-zinc-200"></div>
                   ))}
                </>
-            ) : (
+            ) : featuredLaptops.length > 0 ? (
               <>
                   {featuredLaptops.map(laptop => (
-                    <div key={laptop.id} className="border-r border-b border-zinc-200">
+                    <div key={laptop.id} className="border-r border-b border-zinc-200 bg-white">
                       <LaptopCard laptop={laptop} variant="deal" />
                     </div>
                   ))}
               </>
+            ) : (
+              <div className="col-span-full flex flex-col items-center justify-center py-20 bg-white border-r border-b border-zinc-200">
+                <PackageSearch className="h-10 w-10 text-zinc-200 mb-4" />
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Inventory Coming Soon</p>
+                <p className="text-[8px] font-bold text-zinc-300 uppercase mt-1">We are currently updating our catalog</p>
+              </div>
             )}
           </div>
         </div>
@@ -145,26 +149,6 @@ export default function Home() {
                 />
               )}
            </div>
-        </div>
-      </section>
-
-      <section className="bg-[#003087] text-white py-8">
-        <div className="w-full px-4 grid grid-cols-2 lg:grid-cols-5 gap-6">
-          {[
-            { icon: Award, label: 'Top Brands', desc: 'Trusted daily' },
-            { icon: BadgeCheck, label: 'Best Prices', desc: 'Unbeatable' },
-            { icon: Truck, label: 'Fast Shipping', desc: 'Door to door' },
-            { icon: ShieldCheck, label: 'Originals', desc: '100% authentic' },
-            { icon: RotateCcw, label: 'Easy Returns', desc: 'Hassle-free' }
-          ].map((item, i) => (
-            <div key={i} className="flex flex-col items-center text-center gap-1.5">
-              <item.icon className="h-4 w-4 text-[#0070ba]" />
-              <div className="space-y-0.5">
-                <p className="text-[8px] font-black uppercase tracking-widest">{item.label}</p>
-                <p className="text-[7px] text-zinc-400 font-medium uppercase">{item.desc}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 

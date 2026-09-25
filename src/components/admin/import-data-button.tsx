@@ -5,18 +5,14 @@ import { useFirestore } from '@/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { laptops, accessories } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { DatabaseBackup, Loader2, CheckCircle2 } from 'lucide-react';
+import { DatabaseBackup, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-/**
- * Recursively removes undefined values from an object to make it Firestore-compatible.
- */
 function sanitizeFirestoreData(data: any): any {
   if (Array.isArray(data)) {
     return data.map(sanitizeFirestoreData);
   }
   if (data !== null && typeof data === 'object' && !(data instanceof Date)) {
-    // Check if it's a Firestore sentinel like serverTimestamp()
     if (data._methodName === 'serverTimestamp' || data.constructor?.name === 'FieldValueImpl') {
       return data;
     }
@@ -38,6 +34,16 @@ export function ImportDataButton() {
 
   const handleImport = async () => {
     if (!db) return;
+    
+    if (laptops.length === 0 && accessories.length === 0) {
+        toast({
+            variant: "destructive",
+            title: "Source Catalog Empty",
+            description: "The static source file is currently empty. Please add products manually.",
+        });
+        return;
+    }
+
     setLoading(true);
 
     try {
@@ -75,6 +81,17 @@ export function ImportDataButton() {
       setLoading(false);
     }
   };
+
+  if (laptops.length === 0 && accessories.length === 0) {
+      return (
+        <Button 
+            disabled 
+            className="bg-zinc-100 text-zinc-400 font-black uppercase tracking-widest border-2 border-zinc-200 shadow-none cursor-not-allowed"
+        >
+            <AlertCircle className="mr-2 h-4 w-4" /> Manual Setup Mode
+        </Button>
+      );
+  }
 
   if (done) {
     return (
