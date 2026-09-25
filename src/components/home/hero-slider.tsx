@@ -17,7 +17,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 const SLIDES = [
   {
     title: 'THE BEST LAPTOPS IN NAIROBI.',
-    subtitle: 'QUALITY GEAR • FAIR PRICES',
+    subtitle: 'QUALITY • FAIR PRICES',
     description: 'Find fast and reliable computers for school, work, or business. We have high-spec 13th Gen models ready for you today.',
     cta: 'Browse Laptops',
     link: '/laptops',
