@@ -98,9 +98,6 @@ export function Header() {
             </Link>
           ))}
         </div>
-        <div className="hidden md:flex items-center gap-3">
-           <span className="text-[9px] font-black uppercase tracking-widest text-white/80 animate-pulse">Hub Live</span>
-        </div>
       </div>
     </header>
   );
