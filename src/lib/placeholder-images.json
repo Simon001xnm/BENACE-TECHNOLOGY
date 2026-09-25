@@ -55,6 +55,12 @@
       "imageHint": "hp elitebook"
     },
     {
+      "id": "dell-latitude-7400-img",
+      "description": "Dell Latitude 7400 Business Laptop",
+      "imageUrl": "/FB_IMG_1753354615878.jpg",
+      "imageHint": "dell latitude"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",

@@ -243,6 +243,43 @@ Looking to secure an elite portable workstation? Visit Benace Technologies Limit
     },
     imageId: 'hp-elitebook-830-g8-img',
     type: 'laptop'
+  },
+  {
+    id: 'dell-latitude-7400-i7',
+    name: 'Dell Latitude 7400 Intel Core i7 8th Gen',
+    brand: 'Dell',
+    price: 38500,
+    oldPrice: 43000,
+    salePercentage: 10,
+    status: 'Ex-UK',
+    description: `The Dell Latitude 7400 is a powerful and portable business laptop designed for professionals who need reliability and performance on the go. Featuring an 8th Generation Intel Core i7 processor and 16GB of DDR4 RAM, it handles complex workflows with ease.
+
+Key Highlights:
+- Processor: Intel Core i7 8th Generation
+- Memory: 16GB DDR4 RAM for smooth multitasking
+- Storage: 256GB PCIe NVMe SSD for fast boot and data access
+- Display: 14-inch Full HD (1920 × 1080) Anti-Glare IPS
+- Graphics: Intel UHD Graphics 620
+- Camera: HD Webcam with Privacy Shutter
+- Audio: Stereo Speakers with Waves MaxxAudio® Pro
+- Keyboard: Backlit Spill-Resistant Keyboard
+- Weight: Approximately 1.36 kg
+- Operating System: Windows 11 Pro Ready
+
+Available at Benace Technologies Limited
+Visit Benace Technologies Limited for the Dell Latitude 7400. We offer quality enterprise products and fast delivery across Nairobi and Kenya.`,
+    specifications: {
+      processor: 'Intel Core i7 8th Generation',
+      ram: '16GB DDR4 RAM',
+      storage: '256GB PCIe NVMe SSD',
+      display: '14" FHD IPS Anti-Glare',
+      graphics: 'Intel UHD Graphics 620',
+      battery: '4-Cell 60Wh Battery',
+      weight: '1.36 kg',
+      os: 'Windows 11 Pro'
+    },
+    imageId: 'dell-latitude-7400-img',
+    type: 'laptop'
   }
 ];
 
