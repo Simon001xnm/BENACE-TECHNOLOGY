@@ -24,18 +24,21 @@ export default function Home() {
 
   const productsQuery = useMemo(() => {
     if (!db) return null;
-    return query(collection(db, 'products'), limit(24));
+    // Increased limit to show all products if uploaded
+    return query(collection(db, 'products'), limit(100));
   }, [db]);
 
   const { data: dbProducts, loading } = useCollection(productsQuery);
 
   const allLiveProducts = useMemo(() => {
+    // If the DB has products, use them. If not, use the expanded static catalog.
     if (dbProducts && dbProducts.length > 0) return dbProducts;
     return staticLaptops.map(l => ({ ...l, type: 'laptop' }));
   }, [dbProducts]);
 
   const featuredLaptops = useMemo(() => {
-    return allLiveProducts.filter(p => p.type === 'laptop').slice(0, 18);
+    // Filter by type and show a larger set on the homepage
+    return allLiveProducts.filter(p => p.type === 'laptop').slice(0, 48);
   }, [allLiveProducts]);
 
   const categories = [
