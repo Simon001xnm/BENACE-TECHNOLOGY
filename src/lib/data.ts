@@ -187,7 +187,7 @@ Features:
 - Memory: 16GB DDR4 RAM for exceptional productivity execution
 - Storage: 256GB SSD high-speed system access drive
 - Graphics: Integrated Intel HD Graphics 620
-- Display: 13.5 Inches FHD IPS anti-glare LED-backlit screen (1920 x 1080p)
+- Display Size : 13.5 Inches FHD IPS anti-glare LED-backlit screen (1920 x 1080p)
 - Keyboard: Premium Backlit configuration layout
 - Connectivity & Interfaces: Display Port, RJ-45, USB 3.0, Type-C, MicroSD Card Reader
 - Extras Included: Wireless Mouse, Power Adapter kit
@@ -206,6 +206,42 @@ Get the best enterprise setups with top-tier mobility specifications. Visit Bena
       os: 'Windows 10 / 11 Pro'
     },
     imageId: 'hp-elitebook-830-g7-img',
+    type: 'laptop'
+  },
+  {
+    id: 'hp-elitebook-830-g8-premium',
+    name: 'HP EliteBook 830 G8 Intel Core i5 11th Gen',
+    brand: 'HP',
+    price: 45000,
+    oldPrice: 52000,
+    salePercentage: 13,
+    status: 'New',
+    description: `The HP EliteBook 830 G8 is an elite, high-performance laptop customized for executives, corporate professionals, remote workers, and demanding students. Powered by an ultra-efficient 11th Gen Intel Core i5-1135G7 processor, it excels at managing intense workflows and daily multi-application environments.
+
+Key Highlights:
+- Intel Core i5-1135G7 processor for efficient multitasking.
+- 16GB RAM ensures smooth performance across multiple applications.
+- 256GB NVMe SSD provides fast startup and file access.
+- 13.3-inch Full HD display delivers sharp, clear visuals.
+- Intel Iris Xe Graphics improves graphics performance.
+- Wi-Fi 6 offers fast and reliable wireless connectivity.
+- Thunderbolt 4 ports support high-speed data transfer.
+- Advanced security features protect business data.
+- Lightweight 1.26kg design enhances portability.
+
+Available at Benace Technologies Limited
+Looking to secure an elite portable workstation? Visit Benace Technologies Limited for the HP EliteBook 830 G8, offering state-of-the-art corporate mobility at unmatched pricing. We provide swift courier delivery across Nairobi and Kenya alongside excellent technical customer assistance.`,
+    specifications: {
+      processor: 'Intel Core i5-1135G7 11th Gen',
+      ram: '16GB DDR4 RAM',
+      storage: '256GB NVMe High-Speed SSD',
+      display: '13.3" Full HD (1920x1080) IPS',
+      graphics: 'Intel Iris Xe Graphics',
+      battery: 'Wi-Fi 6 + Thunderbolt 4 Support',
+      weight: '1.26 kg Ultraportable Build',
+      os: 'Windows 10 / 11 Pro'
+    },
+    imageId: 'hp-elitebook-830-g8-img',
     type: 'laptop'
   }
 ];

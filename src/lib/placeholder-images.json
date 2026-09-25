@@ -49,6 +49,12 @@
       "imageHint": "hp elitebook"
     },
     {
+      "id": "hp-elitebook-830-g8-img",
+      "description": "HP EliteBook 830 G8 Laptop",
+      "imageUrl": "/FB_IMG_1752822069369.jpg",
+      "imageHint": "hp elitebook"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",
