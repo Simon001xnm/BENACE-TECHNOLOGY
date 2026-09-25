@@ -39,6 +39,7 @@ export function Footer() {
       links: [
         { name: 'Location', href: '/contact' },
         { name: 'Contact Us', href: '/contact' },
+        { name: 'Google Profile', href: 'https://share.google/KF3VkjKGYkdCNJMUz' },
         { name: 'East Africa', href: '/about' },
       ],
     },
@@ -60,7 +61,11 @@ export function Footer() {
             <ul className="space-y-3">
               {section.links.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-[10px] font-bold text-white/60 hover:text-white uppercase tracking-wider transition-colors">
+                  <Link 
+                    href={link.href} 
+                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                    className="text-[10px] font-bold text-white/60 hover:text-white uppercase tracking-wider transition-colors"
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -97,7 +102,6 @@ export function Footer() {
               <Facebook className="h-4.5 w-4.5" />
             </Link>
             <Link href="#" className="h-9 w-9 flex items-center justify-center rounded-full border border-white/20 hover:border-white hover:text-white transition-all">
-              <Image src="/logo.jpeg" alt="Instagram Logo placeholder" width={18} height={18} className="hidden" />
               <Instagram className="h-4.5 w-4.5" />
             </Link>
             <Link href="#" className="h-9 w-9 flex items-center justify-center rounded-full border border-white/20 hover:border-white hover:text-white transition-all">
