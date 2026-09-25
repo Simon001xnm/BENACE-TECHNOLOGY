@@ -31,8 +31,6 @@ export default function Home() {
   const { data: dbProducts, loading } = useCollection(productsQuery);
 
   const allLiveProducts = useMemo(() => {
-    // If we have products in Firestore, use them. 
-    // Otherwise, use our verified static inventory list.
     const liveItems = dbProducts || [];
     if (liveItems.length > 0) return liveItems;
     return staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
@@ -42,15 +40,16 @@ export default function Home() {
     return allLiveProducts.filter(p => p.type === 'laptop');
   }, [allLiveProducts]);
 
+  // Guaranteed image mappings matching verified registry records to prevent blank paths
   const categories = [
-    { name: 'Laptops', img: PlaceHolderImages.find(p => p.id === 'lenovo-thinkbook-14-g6-webp')?.imageUrl || '' },
-    { name: 'Monitors', img: PlaceHolderImages.find(p => p.id === 'laptop-dell-pro-14-1')?.imageUrl || '' },
-    { name: 'Printers', img: PlaceHolderImages.find(p => p.id === 'printer-placeholder')?.imageUrl || '' },
-    { name: 'Accessories', img: PlaceHolderImages.find(p => p.id === 'accessory-dell-mouse-1')?.imageUrl || '' },
-    { name: 'Repair Tools', img: PlaceHolderImages.find(p => p.id === 'hero-1')?.imageUrl || '' },
-    { name: 'Networking', img: PlaceHolderImages.find(p => p.id === 'cart-item-placeholder')?.imageUrl || '' },
-    { name: 'Storage', img: PlaceHolderImages.find(p => p.id === 'shop-hero')?.imageUrl || '' },
-    { name: 'POS Systems', img: PlaceHolderImages.find(p => p.id === 'pos-system-hero')?.imageUrl || '' },
+    { name: 'Laptops', img: PlaceHolderImages.find(p => p.id === 'lenovo-thinkbook-14-g6-webp')?.imageUrl || '/0iqgqn78il76mvlr74kjcfbdyvmxew672970.webp' },
+    { name: 'Monitors', img: PlaceHolderImages.find(p => p.id === 'hero-1')?.imageUrl || '/FB_IMG_1753445965146.jpg' },
+    { name: 'Printers', img: PlaceHolderImages.find(p => p.id === 'printer-placeholder')?.imageUrl || 'https://picsum.photos/seed/printer/600/400' },
+    { name: 'Accessories', img: PlaceHolderImages.find(p => p.id === 'accessory-dell-mouse-1')?.imageUrl || '/FB_IMG_1753354619216.jpg' },
+    { name: 'Repair Tools', img: PlaceHolderImages.find(p => p.id === 'hero-1')?.imageUrl || '/FB_IMG_1753445965146.jpg' },
+    { name: 'Networking', img: PlaceHolderImages.find(p => p.id === 'cart-item-placeholder')?.imageUrl || '/FB_IMG_1753445965146.jpg' },
+    { name: 'Storage', img: PlaceHolderImages.find(p => p.id === 'shop-hero')?.imageUrl || '/FB_IMG_1753445965146.jpg' },
+    { name: 'POS Systems', img: PlaceHolderImages.find(p => p.id === 'pos-system-hero')?.imageUrl || '/3da4051a8a4c87af701f96948c2ceec7.jpg' },
   ];
 
   const posImage = PlaceHolderImages.find(p => p.id === 'pos-system-hero');
