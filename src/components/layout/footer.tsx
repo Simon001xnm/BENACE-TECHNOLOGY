@@ -46,7 +46,6 @@ export function Footer() {
 
   return (
     <footer className="bg-[#003087] text-white">
-      {/* Back to top */}
       <button 
         onClick={() => typeof window !== 'undefined' && window.scrollTo({ top: 0, behavior: 'smooth' })}
         className="w-full bg-[#0070ba] py-4 text-[10px] font-black uppercase tracking-widest hover:bg-[#005ea6] transition-colors flex items-center justify-center gap-2"
@@ -54,7 +53,6 @@ export function Footer() {
         <ArrowUp className="h-3 w-3" /> Back to top
       </button>
 
-      {/* Main Footer Links */}
       <div className="container mx-auto max-w-7xl px-4 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
         {footerLinks.map((section) => (
           <div key={section.title}>
@@ -72,17 +70,16 @@ export function Footer() {
         ))}
       </div>
 
-      {/* Bottom Footer Details */}
       <div className="border-t border-white/10 py-10">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-8">
-            <Link href="/" className="shrink-0">
+            <Link href="/" className="shrink-0 bg-white p-1 rounded-md block">
               <Image
                 src="/logo.jpeg"
                 alt="Benace Tech Hub"
                 width={100}
                 height={35}
-                className="rounded-sm brightness-0 invert"
+                className="rounded-sm object-contain"
               />
             </Link>
             <div className="flex items-center gap-4 text-[9px] font-black uppercase tracking-widest text-white/50">
@@ -100,6 +97,7 @@ export function Footer() {
               <Facebook className="h-4.5 w-4.5" />
             </Link>
             <Link href="#" className="h-9 w-9 flex items-center justify-center rounded-full border border-white/20 hover:border-white hover:text-white transition-all">
+              <Image src="/logo.jpeg" alt="Instagram Logo placeholder" width={18} height={18} className="hidden" />
               <Instagram className="h-4.5 w-4.5" />
             </Link>
             <Link href="#" className="h-9 w-9 flex items-center justify-center rounded-full border border-white/20 hover:border-white hover:text-white transition-all">
@@ -109,7 +107,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Legal & Attribution */}
       <div className="bg-[#002566] py-10 border-t border-white/5">
         <div className="container mx-auto px-4 text-center space-y-6">
           <div className="flex flex-wrap justify-center gap-6 text-[8px] text-white/40 font-black uppercase tracking-widest">
