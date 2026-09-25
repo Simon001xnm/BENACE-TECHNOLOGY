@@ -19,6 +19,12 @@
       "imageHint": "lenovo thinkbook"
     },
     {
+      "id": "hp-elitebook-820-g3-img",
+      "description": "HP EliteBook 820 G3 Business Laptop",
+      "imageUrl": "/FB_IMG_1750676058156.jpg",
+      "imageHint": "hp elitebook"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",

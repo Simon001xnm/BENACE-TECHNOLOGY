@@ -46,6 +46,37 @@ Why Buy from Benace Technologies Limited?
     },
     imageId: 'lenovo-thinkbook-14-g6-webp',
     type: 'laptop'
+  },
+  {
+    id: 'hp-elitebook-820-g3-premium',
+    name: 'HP EliteBook 820 G3 6th Gen Core i7',
+    brand: 'HP',
+    price: 27000,
+    oldPrice: 35000,
+    salePercentage: 22,
+    status: 'Ex-UK',
+    description: `Impressively thin and light: The HP EliteBook 820 empowers users to create, connect, and collaborate, using enterprise-class performance technology that helps keep you productive in and out of the office.
+
+Portable powerhouse: Combine high performance technology and long battery life with FreeDOS, 6th Gen Intel Core processors, and a high-speed SSD. Unlock next generation memory performance with DDR4 memory for your most demanding business applications.
+
+Slim new design with all the right ports: Connect to essential ports you need without the hassle of dongles. At just 18.9 mm, the ultraslim and light HP EliteBook 820 comes with VGA, Display Port, RJ-45, USB, USB-C, and enterprise docking capabilities.
+
+Strong security, powerful manageability: Protect, detect, and recover from malicious attacks with Sure Start with Dynamic Protection mechanisms.
+
+Available at Benace Technologies Limited
+Looking to purchase a reliable, enterprise-ready laptop at an affordable rate? Visit Benace Technologies Limited for the HP EliteBook 820 G3, offering 6th Gen Intel Core i7, 8GB RAM, and a fast 256GB SSD. We provide prompt delivery across Nairobi and Kenya, complete with a 6-month warranty framework.`,
+    specifications: {
+      processor: 'Intel Core i7-6200U 6th Gen',
+      ram: '8GB DDR4 RAM',
+      storage: '256GB High-Speed SSD',
+      display: '12.5" FHD Display Slim',
+      graphics: 'Intel HD Graphics 520',
+      battery: 'Bluetooth, Webcam & WiFi Integrated',
+      weight: '1.26 kg Ultralight Design',
+      os: 'FreeDOS'
+    },
+    imageId: 'hp-elitebook-820-g3-img',
+    type: 'laptop'
   }
 ];
 
