@@ -171,6 +171,42 @@ Looking to get enterprise-ready laptops at highly competitive price tags? Visit 
     },
     imageId: 'dell-latitude-5400-img',
     type: 'laptop'
+  },
+  {
+    id: 'hp-elitebook-830-g7-premium',
+    name: 'HP EliteBook 830 G7 Intel Core i7 10th Gen',
+    brand: 'HP',
+    price: 43500,
+    oldPrice: 50000,
+    salePercentage: 13,
+    status: 'Boxed',
+    description: `The HP EliteBook 830 G7 is a premium business laptop designed for mobile professionals who require advanced computing capability, enterprise security, and seamless collaboration tools. Powered by a high-performance 10th Gen Intel Core i7 processor and 16GB of DDR4 memory.
+
+Features:
+- Processor: Intel Core i7 10th Generation
+- Memory: 16GB DDR4 RAM for exceptional productivity execution
+- Storage: 256GB SSD high-speed system access drive
+- Graphics: Integrated Intel HD Graphics 620
+- Display: 13.5 Inches FHD IPS anti-glare LED-backlit screen (1920 x 1080p)
+- Keyboard: Premium Backlit configuration layout
+- Connectivity & Interfaces: Display Port, RJ-45, USB 3.0, Type-C, MicroSD Card Reader
+- Extras Included: Wireless Mouse, Power Adapter kit
+- Warranty Status: Refurbished 6 Months complete coverage framework
+
+Available at Benace Technologies Limited
+Get the best enterprise setups with top-tier mobility specifications. Visit Benace Technologies Limited for the HP EliteBook 830 G7. We provide fast cross-county delivery and tech setup frameworks in Nairobi and across Kenya.`,
+    specifications: {
+      processor: 'Intel Core i7 10th Generation',
+      ram: '16GB DDR4 RAM',
+      storage: '256GB SSD Solid State Drive',
+      display: '13.5" FHD IPS Anti-glare (1920x1080)',
+      graphics: 'Integrated Intel HD Graphics 620',
+      battery: 'Backlit Keyboard, Type-C interface',
+      weight: '1.33 kg Premium Layout',
+      os: 'Windows 10 / 11 Pro'
+    },
+    imageId: 'hp-elitebook-830-g7-img',
+    type: 'laptop'
   }
 ];
 

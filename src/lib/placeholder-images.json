@@ -43,6 +43,12 @@
       "imageHint": "dell laptop"
     },
     {
+      "id": "hp-elitebook-830-g7-img",
+      "description": "HP EliteBook 830 G7 Laptop",
+      "imageUrl": "/FB_IMG_1752822061452.jpg",
+      "imageHint": "hp elitebook"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",
