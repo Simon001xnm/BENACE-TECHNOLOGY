@@ -18,7 +18,7 @@ Key Features:
 - 512GB PCIe 4.0 SSD: Lightning-fast data transfer and boot times.
 - 14" 1920 x 1200 IPS Touchscreen: Sharp, vibrant display with wide viewing angles.
 - Intel Iris Xe Graphics: Smooth visuals for everyday tasks and media editing.
-- 1080p Webcam with Privacy Shutter: Clear video for meetings with enhanced security.
+- 1080p Webcam with Privacy Phutter: Clear video for meetings with enhanced security.
 - Windows 11 Pro: Latest intuitive interface and performance.
 - 1 Year Dealership Warranty.
 
@@ -230,7 +230,7 @@ Key Highlights:
 - Lightweight 1.26kg design enhances portability.
 
 Available at Benace Technologies Limited
-Looking to secure an elite portable workstation? Visit Benace Technologies Limited for the HP EliteBook 830 G8, offering state-of-the-art corporate mobility at unmatched pricing. We provide swift courier delivery across Nairobi and Kenya alongside excellent technical customer assistance.`,
+Looking to secure an elite portable workstation? Visit Benace Technologies Limited for the HP EliteBook 830 G8, offering state-of-the-art corporate mobility at unmatched pricing. We provide swift courier courier courier delivery across Nairobi and Kenya alongside excellent technical customer assistance.`,
     specifications: {
       processor: 'Intel Core i5-1135G7 11th Gen',
       ram: '16GB DDR4 RAM',
@@ -283,7 +283,33 @@ Visit Benace Technologies Limited for the Dell Latitude 7400. We offer quality e
   }
 ];
 
-export const accessories: Accessory[] = [];
+export const accessories: Accessory[] = [
+  {
+    id: 'hp-series-5-524sf-monitor',
+    name: 'Hp series 5 524SF 24″ display monitor edge to edge',
+    brand: 'HP',
+    price: 28000,
+    oldPrice: 32000,
+    salePercentage: 12,
+    category: 'Monitors',
+    status: 'New',
+    description: `Experience vivid clarity and sleek modern styling with the Hp series 5 524SF 24-inch edge-to-edge desktop monitor. Engineered with a beautiful 3-sided micro-edge bezel and high-fidelity IPS panel, this display outputs stunning 1920 x 1080 Full HD content perfect for productivity, office workloads, or multi-window multitasking.
+
+Key Features & Specifications:
+- Screen Size: 24 Inches with an expansive view plane.
+- Aspect Ratio: 16:9 standard cinematic aspect formatting.
+- Resolution: Full HD 1920 x 1080 crisp pixel tracking density.
+- Panel Type: IPS premium liquid crystal configuration for wide viewing angles.
+- Refresh Rate: Smooth 100Hz acceleration to reduce trailing artifacts.
+- Response Time: 5ms rapid response metric for fluid workflows.
+- Adjustability: Precision tilt alignment parameters.
+
+Available at Benace Technologies Limited
+Upgrade your workspace setup with top-tier desktop clarity. We provide instant tracking, delivery support, and custom electronic assistance for corporate and retail layouts across Nairobi and greater Kenya.`,
+    imageId: 'hp-series-5-524sf-monitor-img',
+    type: 'accessory'
+  }
+];
 
 export const services: Service[] = [
   {

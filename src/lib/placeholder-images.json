@@ -61,6 +61,12 @@
       "imageHint": "dell latitude"
     },
     {
+      "id": "hp-series-5-524sf-monitor-img",
+      "description": "Hp series 5 524SF 24″ display monitor edge to edge",
+      "imageUrl": "/FB_IMG_1753795370057.jpg",
+      "imageHint": "hp monitor"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",
