@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Facebook, Instagram, Twitter, Globe, ArrowUp, Coffee } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Globe, ArrowUp, Coffee, ExternalLink } from 'lucide-react';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const gbpImage = PlaceHolderImages.find(p => p.id === 'shop-hero');
 
   const footerLinks = [
     {
@@ -34,15 +36,6 @@ export function Footer() {
         { name: 'Help Center', href: '/contact' },
       ],
     },
-    {
-      title: 'Reach Us',
-      links: [
-        { name: 'Location', href: '/contact' },
-        { name: 'Contact Us', href: '/contact' },
-        { name: 'Google Profile', href: 'https://share.google/KF3VkjKGYkdCNJMUz' },
-        { name: 'East Africa', href: '/about' },
-      ],
-    },
   ];
 
   return (
@@ -63,7 +56,6 @@ export function Footer() {
                 <li key={link.name}>
                   <Link 
                     href={link.href} 
-                    target={link.href.startsWith('http') ? '_blank' : undefined}
                     className="text-[10px] font-bold text-white/60 hover:text-white uppercase tracking-wider transition-colors"
                   >
                     {link.name}
@@ -73,6 +65,50 @@ export function Footer() {
             </ul>
           </div>
         ))}
+        
+        <div>
+          <h4 className="text-[11px] font-black uppercase tracking-widest mb-6 text-white">Reach Us</h4>
+          <div className="space-y-4">
+            <Link 
+              href="https://share.google/KF3VkjKGYkdCNJMUz" 
+              target="_blank"
+              className="group block overflow-hidden rounded-xl border border-white/10 bg-white/5 transition-all hover:border-white/30"
+            >
+              <div className="relative h-24 w-full">
+                {gbpImage && (
+                  <Image 
+                    src={gbpImage.imageUrl} 
+                    alt="Benace Tech Hub Location" 
+                    fill 
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    data-ai-hint="shop exterior"
+                  />
+                )}
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                   <div className="bg-white/20 backdrop-blur-md rounded-full p-2">
+                     <ExternalLink className="h-4 w-4 text-white" />
+                   </div>
+                </div>
+              </div>
+              <div className="p-3">
+                <p className="text-[9px] font-black uppercase tracking-widest text-white">Google Business Profile</p>
+                <p className="text-[8px] font-bold text-white/50 uppercase mt-0.5">Visit Old Nation House</p>
+              </div>
+            </Link>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/contact" className="text-[10px] font-bold text-white/60 hover:text-white uppercase tracking-wider transition-colors">
+                  Contact Support
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-[10px] font-bold text-white/60 hover:text-white uppercase tracking-wider transition-colors">
+                  East Africa Hub
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div className="border-t border-white/10 py-10">
