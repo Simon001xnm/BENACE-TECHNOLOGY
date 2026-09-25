@@ -1,10 +1,6 @@
 import type { Laptop, Service, PortfolioProject, Accessory } from '@/lib/types';
 import { Code, Wrench, Zap } from 'lucide-react';
 
-/**
- * Static product arrays containing real verified store items.
- * All brand mentions updated specifically to Benace Technologies Limited.
- */
 export const laptops: Laptop[] = [
   {
     id: 'lenovo-tb-14-g6-premium',
@@ -61,7 +57,7 @@ Portable powerhouse: Combine high performance technology and long battery life w
 
 Slim new design with all the right ports: Connect to essential ports you need without the hassle of dongles. At just 18.9 mm, the ultraslim and light HP EliteBook 820 comes with VGA, Display Port, RJ-45, USB, USB-C, and enterprise docking capabilities.
 
-Strong security, powerful manageability: Protect, detect, and recover from malicious attacks with Sure Start with Dynamic Protection mechanisms.
+Strong security, powerful manageability: Protect, detect, and recover from malicious attacks with HP Sure Start with Dynamic Protection mechanisms.
 
 Available at Benace Technologies Limited
 Looking to purchase a reliable, enterprise-ready laptop at an affordable rate? Visit Benace Technologies Limited for the HP EliteBook 820 G3, offering 6th Gen Intel Core i7, 8GB RAM, and a fast 256GB SSD. We provide prompt delivery across Nairobi and Kenya, complete with a 6-month warranty framework.`,
@@ -105,6 +101,40 @@ Looking to elevate your professional setup with an elite luxury laptop? Visit Be
       os: 'Windows 10 / 11 Pro'
     },
     imageId: 'hp-spectre-13-x360-img',
+    type: 'laptop'
+  },
+  {
+    id: 'dell-latitude-7420-i5',
+    name: 'Dell Latitude 7420 Core i5',
+    brand: 'Dell',
+    price: 30000,
+    oldPrice: 32000,
+    salePercentage: 6,
+    status: 'Ex-UK',
+    description: `Elevate your business productivity with the Dell Latitude 7420. Powered by a 10th Gen Intel Core i5 processor and 16GB of LPDDR4x RAM, this 14-inch business laptop is designed for professionals who need power, security, and portability. With a lightweight design starting at 1.22kg and Thunderbolt 4 connectivity, it is perfect for the modern workspace.
+
+Key Features:
+- 10th Gen Intel Core i5 processor: Reliable performance for daily office tasks and multitasking.
+- 16GB LPDDR4x RAM: Smooth operation even with multiple browser tabs and office applications.
+- 256GB PCIe NVMe SSD: Fast boot times and data access.
+- 14.0″ FHD IPS Anti-glare Display: Clear visuals for comfortable work throughout the day.
+- Intel Iris Xe Integrated Graphics: Handles all business visual needs efficiently.
+- Wi-Fi 6 + Bluetooth 5.x: Cutting-edge connectivity for fast wireless speeds.
+- Lightweight Chassis: Easy to carry between meetings or during travel.
+
+Available at Benace Technologies Limited
+Looking for a high-performance business laptop at an unbeatable price? Visit Benace Technologies Limited for the Dell Latitude 7420. We offer fast delivery across Nairobi and Kenya, backed by our professional technical support.`,
+    specifications: {
+      processor: '10th Gen Intel Core i5',
+      ram: '16GB LPDDR4x RAM',
+      storage: '256GB PCIe NVMe SSD',
+      display: '14.0" FHD (1920x1080) IPS',
+      graphics: 'Intel Iris Xe Graphics',
+      battery: '4-cell High Capacity Battery',
+      weight: '1.22 kg Business Chassis',
+      os: 'Windows 10 / 11 Pro'
+    },
+    imageId: 'dell-latitude-7420-img',
     type: 'laptop'
   }
 ];

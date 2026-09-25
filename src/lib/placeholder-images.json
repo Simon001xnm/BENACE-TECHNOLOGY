@@ -31,6 +31,12 @@
       "imageHint": "hp spectre"
     },
     {
+      "id": "dell-latitude-7420-img",
+      "description": "Dell Latitude 7420 Business Laptop",
+      "imageUrl": "/FB_IMG_1751703961859.jpg",
+      "imageHint": "dell latitude"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",
