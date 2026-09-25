@@ -48,7 +48,7 @@ export function AccessoryCard({ accessory }: { accessory: Accessory }) {
         <div className="flex flex-col flex-grow space-y-0.5 pt-1">
           <Link href={`/laptops/${accessory.id}`}>
             <h3 className="text-[9px] font-bold leading-[1.1] text-zinc-900 line-clamp-2 group-hover:text-primary transition-colors uppercase tracking-tighter">
-              {accessory.brand} {accessory.name}
+              {accessory.name}
             </h3>
           </Link>
 

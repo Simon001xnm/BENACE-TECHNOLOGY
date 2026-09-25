@@ -54,7 +54,7 @@ export function LaptopCard({ laptop, variant = 'deal' }: LaptopCardProps) {
         <div className="flex flex-col flex-grow space-y-0.5 pt-1">
           <Link href={`/laptops/${laptop.id}`}>
             <h3 className="text-[9px] font-bold leading-[1.1] text-zinc-900 line-clamp-2 group-hover:text-primary transition-colors uppercase tracking-tighter">
-              {laptop.brand} {laptop.name} {laptop.specifications?.processor}
+              {laptop.name}
             </h3>
           </Link>
 
