@@ -25,6 +25,12 @@
       "imageHint": "hp elitebook"
     },
     {
+      "id": "hp-spectre-13-x360-img",
+      "description": "HP Spectre 13 x360 Convertible Premium Laptop",
+      "imageUrl": "/FB_IMG_1751553587061.jpg",
+      "imageHint": "hp spectre"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",

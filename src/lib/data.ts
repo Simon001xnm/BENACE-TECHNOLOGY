@@ -77,6 +77,35 @@ Looking to purchase a reliable, enterprise-ready laptop at an affordable rate? V
     },
     imageId: 'hp-elitebook-820-g3-img',
     type: 'laptop'
+  },
+  {
+    id: 'hp-spectre-13-x360-premium',
+    name: 'HP Spectre 13 x360 11th Gen Core i7 Convertible',
+    brand: 'HP',
+    price: 185000,
+    oldPrice: 220000,
+    salePercentage: 15,
+    status: 'New',
+    description: `Masterful craftsmanship meets breathtaking performance. The HP Spectre 13 x360 convertible laptop dynamically adapts to your lifestyle, delivering top-tier performance with an 11th Generation Intel Core i7 processor and an elegant, ultra-premium aluminum gem-cut chassis.
+
+Equipped with 16GB of onboard memory and a blazing-fast 512GB SSD augmented with 32GB Intel Optane™ Memory for extreme storage acceleration. The vibrant 13.3-inch IPS touchscreen display delivers rich colors, wide viewing angles, and a highly responsive workflow interface.
+
+Enjoy seamless connectivity, an integrated high-definition webcam, and smooth graphics computation powered by Intel Iris Xe Graphics. Perfect for high-level business executives, digital content creators, and remote professionals.
+
+Available at Benace Technologies Limited
+Looking to elevate your professional setup with an elite luxury laptop? Visit Benace Technologies Limited for the HP Spectre 13 x360. We provide fast delivery across Nairobi and Kenya, backed by a comprehensive dealership warranty framework.`,
+    specifications: {
+      processor: '11th Gen Intel Core i7 Processor',
+      ram: '16GB High-Speed RAM',
+      storage: '512GB SSD + 32GB Intel Optane Acceleration',
+      display: '13.3" IPS Touchscreen Display',
+      graphics: 'Intel Iris Xᵉ Graphics',
+      battery: 'High-Capacity Long Battery Life',
+      weight: '1.27 kg Gem-Cut Chassis',
+      os: 'Windows 10 / 11 Pro'
+    },
+    imageId: 'hp-spectre-13-x360-img',
+    type: 'laptop'
   }
 ];
 
