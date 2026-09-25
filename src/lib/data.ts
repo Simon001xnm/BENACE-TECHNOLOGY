@@ -53,7 +53,7 @@ Why Buy from Benace Technologies Limited?
     status: 'Ex-UK',
     description: `Impressively thin and light: The HP EliteBook 820 empowers users to create, connect, and collaborate, using enterprise-class performance technology that helps keep you productive in and out of the office.
 
-Portable powerhouse: Combine high performance technology and long battery life with FreeDOS, 6th Gen Intel Core processors, and a high-speed SSD. Unlock next generation memory performance with DDR4 memory for your most demanding business applications.
+Portable powerhouse: Combine high performance technology and long battery life with Windows 10 Pro, 6th Gen Intel Core processors, and a PCIe Gen3 SSD. Unlock next generation memory performance with DDR4 memory for your most demanding business applications.
 
 Slim new design with all the right ports: Connect to essential ports you need without the hassle of dongles. At just 18.9 mm, the ultraslim and light HP EliteBook 820 comes with VGA, Display Port, RJ-45, USB, USB-C, and enterprise docking capabilities.
 
@@ -135,6 +135,41 @@ Looking for a high-performance business laptop at an unbeatable price? Visit Ben
       os: 'Windows 10 / 11 Pro'
     },
     imageId: 'dell-latitude-7420-img',
+    type: 'laptop'
+  },
+  {
+    id: 'dell-latitude-5400-i5',
+    name: 'Dell Latitude 5400 Business Laptop 14.0" Display',
+    brand: 'Dell',
+    price: 27500,
+    oldPrice: 31000,
+    salePercentage: 11,
+    status: 'Ex-UK',
+    description: `The Dell Latitude 5400 is an enterprise-grade 14-inch laptop designed for optimal business environments, performance, and long-lasting productivity. Powered by an efficient 8th Generation Intel Core i5 quad-core processor, it delivers fast computing capabilities while staying incredibly portable.
+
+General Specifications:
+- 1.6 GHz upto 4.1GHz Intel Core i5-8365U / 8265U Quad-Core
+- 8GB of DDR4 RAM for responsive computing
+- 256GB High-Speed PCIe M.2 SSD for rapid data storage
+- 14.0" 1920 x 1080 Full HD Anti-glare Display
+- Intel UHD 620 Graphics
+- Wi-Fi 5 (802.11ac), Bluetooth 5.0, Gigabit Ethernet Port
+- Secure and reliable enterprise design layout
+- Ex-UK with a 6 Months Warranty framework
+
+Available at Benace Technologies Limited
+Looking to get enterprise-ready laptops at highly competitive price tags? Visit Benace Technologies Limited for the Dell Latitude 5400, offering dependable 8th Gen processing, 8GB RAM, and a fast 256GB SSD. We provide quick shipping across Nairobi and all corners of Kenya.`,
+    specifications: {
+      processor: 'Intel Core i5-8365U Quad-Core Upto 4.1GHz',
+      ram: '8GB DDR4 RAM',
+      storage: '256GB PCIe M.2 SSD',
+      display: '14.0" FHD (1920x1080) Anti-glare',
+      graphics: 'Intel UHD 620 Graphics',
+      battery: 'High-capacity ExpressCharge battery',
+      weight: '1.48 kg Durable Chassis',
+      os: 'Windows 10 / 11 Pro'
+    },
+    imageId: 'dell-latitude-5400-img',
     type: 'laptop'
   }
 ];

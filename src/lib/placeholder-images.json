@@ -37,6 +37,12 @@
       "imageHint": "dell latitude"
     },
     {
+      "id": "dell-latitude-5400-img",
+      "description": "Dell Latitude 5400 Business Laptop",
+      "imageUrl": "/FB_IMG_1751721820518.jpg",
+      "imageHint": "dell laptop"
+    },
+    {
       "id": "printer-placeholder",
       "description": "Professional Office Printer",
       "imageUrl": "https://picsum.photos/seed/printer/600/400",
