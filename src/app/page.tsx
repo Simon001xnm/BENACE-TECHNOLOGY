@@ -24,7 +24,7 @@ export default function Home() {
 
   const productsQuery = useMemo(() => {
     if (!db) return null;
-    // Increased limit to show all products if uploaded
+    // High limit to show all products if uploaded
     return query(collection(db, 'products'), limit(100));
   }, [db]);
 
@@ -33,12 +33,12 @@ export default function Home() {
   const allLiveProducts = useMemo(() => {
     // If the DB has products, use them. If not, use the expanded static catalog.
     if (dbProducts && dbProducts.length > 0) return dbProducts;
-    return staticLaptops.map(l => ({ ...l, type: 'laptop' }));
+    return staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
   }, [dbProducts]);
 
   const featuredLaptops = useMemo(() => {
-    // Filter by type and show a larger set on the homepage
-    return allLiveProducts.filter(p => p.type === 'laptop').slice(0, 48);
+    // Filter by type and show all items on the homepage
+    return allLiveProducts.filter(p => p.type === 'laptop');
   }, [allLiveProducts]);
 
   const categories = [
@@ -66,7 +66,7 @@ export default function Home() {
             { icon: Award, label: 'Top Benefits', desc: 'Exclusive deals' }
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-1.5">
-              <item.icon className="h-3 w-3 text-zinc-400" />
+              <item.icon className="h-3 w-3 text-[#0070ba]" />
               <div className="flex flex-col">
                 <span className="text-[8px] font-black uppercase text-black leading-none">{item.label}</span>
                 <span className="text-[7px] text-zinc-400 font-medium leading-none mt-0.5">{item.desc}</span>
@@ -80,15 +80,15 @@ export default function Home() {
         <div className="w-full px-4">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-black uppercase tracking-tight">Shop by Department</h2>
-            <Link href="/laptops" className="text-[8px] font-black text-primary hover:underline uppercase">View all</Link>
+            <Link href="/laptops" className="text-[8px] font-black text-[#0070ba] hover:underline uppercase">View all</Link>
           </div>
           <div className="flex items-start gap-4 overflow-x-auto no-scrollbar pb-2">
             {categories.map((cat, i) => (
               <div key={i} className="flex flex-col items-center gap-2 shrink-0 cursor-pointer group">
-                <div className="h-14 w-14 rounded-full overflow-hidden bg-zinc-50 border border-zinc-100 group-hover:border-primary transition-all">
+                <div className="h-14 w-14 rounded-full overflow-hidden bg-zinc-50 border border-zinc-100 group-hover:border-[#0070ba] transition-all">
                   <Image src={cat.img} alt={cat.name} width={56} height={56} className="object-cover" />
                 </div>
-                <span className="text-[8px] font-black uppercase tracking-tight group-hover:text-primary transition-colors">{cat.name}</span>
+                <span className="text-[8px] font-black uppercase tracking-tight group-hover:text-[#0070ba] transition-colors">{cat.name}</span>
               </div>
             ))}
           </div>
@@ -99,7 +99,7 @@ export default function Home() {
         <div className="w-full">
           <div className="px-4 flex items-center justify-between mb-4">
             <h2 className="text-sm font-black uppercase tracking-tight">Today's Top Deals</h2>
-            <Link href="/laptops" className="text-[8px] font-black text-primary hover:underline uppercase">View all</Link>
+            <Link href="/laptops" className="text-[8px] font-black text-[#0070ba] hover:underline uppercase">View all</Link>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 w-full border-t border-l border-zinc-200">
@@ -125,12 +125,12 @@ export default function Home() {
       <section className="py-10 bg-black text-white overflow-hidden relative">
         <div className="w-full px-6 flex flex-col md:flex-row items-center gap-8">
            <div className="flex-1 space-y-4 z-10">
-              <div className="inline-block bg-primary px-2 py-0.5 text-[7px] font-black uppercase text-white">New Solution</div>
+              <div className="inline-block bg-[#0070ba] px-2 py-0.5 text-[7px] font-black uppercase text-white">New Solution</div>
               <h2 className="text-2xl font-black uppercase tracking-tighter leading-none">Smart <br />POS Systems</h2>
               <p className="text-[10px] font-bold text-zinc-400 max-w-sm leading-tight">
                 Setup your retail shop today. Manage stock, sales, and money with ease across Kenya.
               </p>
-              <Button asChild className="h-9 rounded-none bg-primary text-white font-black uppercase text-[8px] tracking-widest px-8 border border-primary hover:bg-white hover:text-primary transition-all">
+              <Button asChild className="h-9 rounded-none bg-[#0070ba] text-white font-black uppercase text-[8px] tracking-widest px-8 border border-[#0070ba] hover:bg-white hover:text-[#0070ba] transition-all">
                 <Link href="/services">Setup Now</Link>
               </Button>
            </div>
@@ -148,7 +148,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#232f3e] text-white py-8">
+      <section className="bg-[#003087] text-white py-8">
         <div className="w-full px-4 grid grid-cols-2 lg:grid-cols-5 gap-6">
           {[
             { icon: Award, label: 'Top Brands', desc: 'Trusted daily' },
@@ -158,7 +158,7 @@ export default function Home() {
             { icon: RotateCcw, label: 'Easy Returns', desc: 'Hassle-free' }
           ].map((item, i) => (
             <div key={i} className="flex flex-col items-center text-center gap-1.5">
-              <item.icon className="h-4 w-4 text-primary" />
+              <item.icon className="h-4 w-4 text-[#0070ba]" />
               <div className="space-y-0.5">
                 <p className="text-[8px] font-black uppercase tracking-widest">{item.label}</p>
                 <p className="text-[7px] text-zinc-400 font-medium uppercase">{item.desc}</p>
