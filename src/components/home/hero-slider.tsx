@@ -42,7 +42,7 @@ const SLIDES = [
     description: 'We build beautiful, fast websites and setup POS systems to help your business find more customers in Kenya.',
     cta: 'View Our Work',
     link: '/services',
-    heroImageId: 'hero-laptop-png-1',
+    heroImageId: 'hp-series-5-524sf-monitor-img',
     bgImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop',
     hint: 'business website'
   }
@@ -111,13 +111,13 @@ export function HeroSlider() {
                   </div>
                 </div>
 
-                {/* Right Side: Primary PNG Showcase (Very Clear & Visible) */}
+                {/* Right Side: Primary PNG Showcase (Maximum Visibility) */}
                 <div className="relative hidden lg:flex items-center justify-center h-[650px] w-full animate-in fade-in zoom-in duration-1000 delay-300">
                   <div className="relative h-full w-full flex items-center justify-center">
-                    {/* Stronger Glowing effect behind PNG */}
-                    <div className="absolute h-[500px] w-[500px] bg-[#0070ba]/25 rounded-full blur-[120px] animate-pulse" />
+                    {/* Glowing effect behind product */}
+                    <div className="absolute h-[550px] w-[550px] bg-[#0070ba]/30 rounded-full blur-[140px] animate-pulse" />
                     
-                    {/* The PNG Image */}
+                    {/* The Product Image */}
                     {(() => {
                       const img = PlaceHolderImages.find(p => p.id === slide.heroImageId);
                       if (!img) return null;
@@ -126,9 +126,9 @@ export function HeroSlider() {
                           <Image 
                             src={img.imageUrl} 
                             alt={img.description} 
-                            width={1000}
-                            height={800}
-                            className="object-contain drop-shadow-[0_45px_70px_rgba(0,112,186,0.6)] transition-transform duration-700 hover:scale-105" 
+                            width={1100}
+                            height={900}
+                            className="object-contain drop-shadow-[0_45px_70px_rgba(0,112,186,0.6)] transition-transform duration-700 hover:scale-110" 
                             data-ai-hint={img.imageHint}
                             priority
                           />
@@ -161,7 +161,7 @@ export function HeroSlider() {
       <style jsx global>{`
         @keyframes float-high {
           0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-30px) scale(1.02); }
+          50% { transform: translateY(-30px) scale(1.05); }
         }
         .animate-float-high {
           animation: float-high 6s ease-in-out infinite;
