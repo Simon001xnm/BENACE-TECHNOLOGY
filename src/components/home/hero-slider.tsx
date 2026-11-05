@@ -22,7 +22,7 @@ const SLIDES = [
     description: 'Find fast and reliable computers for school, work, or business. We have high-spec 13th Gen models ready for you today.',
     cta: 'Browse Laptops',
     link: '/laptops',
-    heroImageId: 'hero-laptop-png-primary',
+    heroImageId: 'hero-laptop-png-2',
     bgImage: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1920&auto=format&fit=crop',
     hint: 'modern laptop'
   },
@@ -32,7 +32,7 @@ const SLIDES = [
     description: 'Is your laptop broken or slow? We fix screens, batteries, and software problems quickly so you can get back to work.',
     cta: 'Fix My Device',
     link: '/repairs',
-    heroImageId: 'hero-laptop-png-2',
+    heroImageId: 'hero-repair-png-new',
     bgImage: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=1920&auto=format&fit=crop',
     hint: 'repair tools'
   },
@@ -42,7 +42,7 @@ const SLIDES = [
     description: 'We build beautiful, fast websites and setup POS systems to help your business find more customers in Kenya.',
     cta: 'View Our Work',
     link: '/services',
-    heroImageId: 'hp-series-5-524sf-monitor-img',
+    heroImageId: 'hero-laptop-png-primary',
     bgImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop',
     hint: 'business website'
   }
