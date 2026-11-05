@@ -70,7 +70,7 @@ export function HeroSlider() {
     <Carousel setApi={setApi} opts={{ loop: true }} className="w-full">
       <CarouselContent>
         {SLIDES.map((slide, index) => (
-          <CarouselItem key={index} className="relative h-[80vh] min-h-[600px] w-full overflow-hidden">
+          <CarouselItem key={index} className="relative h-[85vh] min-h-[700px] w-full overflow-hidden">
             {/* Dark Professional Background */}
             <div className="absolute inset-0 z-0">
               <Image
@@ -81,20 +81,20 @@ export function HeroSlider() {
                 priority={index === 0}
                 data-ai-hint={slide.hint}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent" />
             </div>
 
-            <div className="container relative z-10 flex h-full items-center px-6">
+            <div className="container relative z-10 flex h-full items-center px-6 mx-auto">
               <div className="grid w-full gap-12 lg:grid-cols-2 lg:items-center">
                 {/* Left Side: Impactful Text */}
                 <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left duration-700">
                   <div className="inline-flex items-center gap-2 rounded-full bg-[#0070ba]/20 border border-[#0070ba]/40 backdrop-blur-md px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white">
                     <Sparkles className="h-4 w-4 text-[#0070ba]" /> {slide.subtitle}
                   </div>
-                  <h1 className="font-headline text-4xl font-black leading-[1.1] tracking-tighter text-white md:text-6xl lg:text-7xl uppercase">
+                  <h1 className="font-headline text-5xl font-black leading-[1.05] tracking-tighter text-white md:text-7xl lg:text-8xl uppercase">
                     {slide.title}
                   </h1>
-                  <p className="max-w-md text-lg font-bold text-zinc-400 leading-relaxed">
+                  <p className="max-w-md text-xl font-bold text-zinc-400 leading-relaxed">
                     {slide.description}
                   </p>
                   <div className="flex flex-col gap-4 sm:flex-row pt-6">
@@ -111,24 +111,24 @@ export function HeroSlider() {
                   </div>
                 </div>
 
-                {/* Right Side: Primary PNG Showcase */}
-                <div className="relative hidden lg:flex items-center justify-center h-[550px] animate-in fade-in zoom-in duration-1000 delay-300">
+                {/* Right Side: Primary PNG Showcase (Very Clear & Visible) */}
+                <div className="relative hidden lg:flex items-center justify-center h-[650px] w-full animate-in fade-in zoom-in duration-1000 delay-300">
                   <div className="relative h-full w-full flex items-center justify-center">
-                    {/* Glowing effect behind PNG */}
-                    <div className="absolute h-96 w-96 bg-[#0070ba]/20 rounded-full blur-[100px] animate-pulse" />
+                    {/* Stronger Glowing effect behind PNG */}
+                    <div className="absolute h-[500px] w-[500px] bg-[#0070ba]/25 rounded-full blur-[120px] animate-pulse" />
                     
-                    {/* Single Large Impact Image */}
+                    {/* The PNG Image */}
                     {(() => {
                       const img = PlaceHolderImages.find(p => p.id === slide.heroImageId);
                       if (!img) return null;
                       return (
-                        <div className="relative w-full h-full flex items-center justify-center animate-bounce-slow">
+                        <div className="relative w-full h-full flex items-center justify-center animate-float-high">
                           <Image 
                             src={img.imageUrl} 
                             alt={img.description} 
-                            width={800}
-                            height={600}
-                            className="object-contain drop-shadow-[0_25px_50px_rgba(0,112,186,0.4)] transition-transform duration-700 hover:scale-105" 
+                            width={1000}
+                            height={800}
+                            className="object-contain drop-shadow-[0_45px_70px_rgba(0,112,186,0.6)] transition-transform duration-700 hover:scale-105" 
                             data-ai-hint={img.imageHint}
                             priority
                           />
@@ -144,7 +144,7 @@ export function HeroSlider() {
       </CarouselContent>
 
       {/* Progress Bar Indicators */}
-      <div className="absolute bottom-12 left-8 z-20 flex gap-4">
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 lg:left-8 lg:translate-x-0 z-20 flex gap-4">
         {SLIDES.map((_, i) => (
           <button
             key={i}
@@ -159,12 +159,12 @@ export function HeroSlider() {
       </div>
       
       <style jsx global>{`
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
+        @keyframes float-high {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-30px) scale(1.02); }
         }
-        .animate-bounce-slow {
-          animation: bounce-slow 5s ease-in-out infinite;
+        .animate-float-high {
+          animation: float-high 6s ease-in-out infinite;
         }
       `}</style>
     </Carousel>
