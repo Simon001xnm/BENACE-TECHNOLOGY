@@ -22,7 +22,7 @@ const SLIDES = [
     description: 'Find fast and reliable computers for school, work, or business. We have high-spec 13th Gen models ready for you today.',
     cta: 'Browse Laptops',
     link: '/laptops',
-    heroImageId: 'hero-laptop-png-1',
+    heroImageId: 'hero-laptop-png-primary',
     bgImage: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1920&auto=format&fit=crop',
     hint: 'modern laptop'
   },

@@ -13,6 +13,12 @@
       "imageHint": "laptop hero"
     },
     {
+      "id": "hero-laptop-png-primary",
+      "description": "Premium Flagship Laptop PNG",
+      "imageUrl": "/e426c33cb143010389a2fdc8243a4ed0-removebg-preview.png",
+      "imageHint": "premium laptop"
+    },
+    {
       "id": "hero-laptop-png-1",
       "description": "Premium High-End Laptop PNG",
       "imageUrl": "/45da62cbc8c1f55a242071be3f84e8d9-removebg-preview.png",
