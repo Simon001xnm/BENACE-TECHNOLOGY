@@ -36,7 +36,8 @@ const SLIDES: Slide[] = [
     link: '/laptops',
     heroImageId: 'hero-laptop-png-2',
     bgImage: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1920&auto=format&fit=crop',
-    hint: 'modern laptop'
+    hint: 'modern laptop',
+    imageClassName: 'lg:scale-125'
   },
   {
     title: 'FAST COMPUTER REPAIR SERVICE.',
@@ -47,7 +48,7 @@ const SLIDES: Slide[] = [
     heroImageId: 'hero-repair-png-new',
     bgImage: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=1920&auto=format&fit=crop',
     hint: 'repair tools',
-    imageClassName: 'lg:translate-y-32' // Lowered significantly to center and prevent clipping
+    imageClassName: 'lg:translate-y-24 lg:scale-110' // Padded down to center and prevent blocking
   },
   {
     title: 'PROFESSIONAL WEB DESIGN.',
@@ -57,7 +58,8 @@ const SLIDES: Slide[] = [
     link: '/services',
     heroImageId: 'hero-laptop-png-primary',
     bgImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop',
-    hint: 'business website'
+    hint: 'business website',
+    imageClassName: 'lg:scale-110'
   }
 ];
 
@@ -144,7 +146,7 @@ export function HeroSlider() {
                             alt={img.description} 
                             width={1100}
                             height={900}
-                            className="object-contain drop-shadow-[0_45px_70px_rgba(0,112,186,0.6)] transition-transform duration-700 hover:scale-110" 
+                            className="object-contain drop-shadow-[0_45px_70px_rgba(0,112,186,0.6)] transition-transform duration-700 hover:scale-105" 
                             data-ai-hint={img.imageHint}
                             priority
                           />
