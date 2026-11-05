@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -21,7 +22,7 @@ const SLIDES = [
     description: 'Find fast and reliable computers for school, work, or business. We have high-spec 13th Gen models ready for you today.',
     cta: 'Browse Laptops',
     link: '/laptops',
-    showcaseImages: ['lenovo-thinkbook-14-g6-webp', 'laptop-dell-pro-14-1', 'hero-1'],
+    heroImageId: 'hero-laptop-png-1',
     bgImage: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1920&auto=format&fit=crop',
     hint: 'modern laptop'
   },
@@ -31,7 +32,7 @@ const SLIDES = [
     description: 'Is your laptop broken or slow? We fix screens, batteries, and software problems quickly so you can get back to work.',
     cta: 'Fix My Device',
     link: '/repairs',
-    showcaseImages: ['accessory-dell-mouse-1', 'cart-item-placeholder'],
+    heroImageId: 'hero-laptop-png-2',
     bgImage: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=1920&auto=format&fit=crop',
     hint: 'repair tools'
   },
@@ -41,7 +42,7 @@ const SLIDES = [
     description: 'We build beautiful, fast websites and setup POS systems to help your business find more customers in Kenya.',
     cta: 'View Our Work',
     link: '/services',
-    showcaseImages: ['portfolio-1', 'portfolio-2'],
+    heroImageId: 'hero-laptop-png-1',
     bgImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop',
     hint: 'business website'
   }
@@ -110,29 +111,30 @@ export function HeroSlider() {
                   </div>
                 </div>
 
-                {/* Right Side: Product Showcase */}
+                {/* Right Side: Primary PNG Showcase */}
                 <div className="relative hidden lg:flex items-center justify-center h-[550px] animate-in fade-in zoom-in duration-1000 delay-300">
-                  <div className="relative h-full w-full rounded-[4rem] overflow-hidden border-8 border-white/5 bg-black/40 backdrop-blur-2xl p-10 shadow-2xl">
-                     <div className="grid grid-cols-2 gap-6 h-full">
-                        {slide.showcaseImages.slice(0, 4).map((imgId, idx) => {
-                          const img = PlaceHolderImages.find(p => p.id === imgId);
-                          if (!img) return null;
-                          return (
-                            <div key={idx} className={cn(
-                              "relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-inner",
-                              idx === 0 ? "row-span-2 aspect-[3/4]" : "aspect-square"
-                            )}>
-                              <Image 
-                                src={img.imageUrl} 
-                                alt={img.description} 
-                                fill 
-                                className="object-cover p-4 transition-transform duration-700 hover:scale-110" 
-                                data-ai-hint={img.imageHint}
-                              />
-                            </div>
-                          );
-                        })}
-                     </div>
+                  <div className="relative h-full w-full flex items-center justify-center">
+                    {/* Glowing effect behind PNG */}
+                    <div className="absolute h-96 w-96 bg-[#0070ba]/20 rounded-full blur-[100px] animate-pulse" />
+                    
+                    {/* Single Large Impact Image */}
+                    {(() => {
+                      const img = PlaceHolderImages.find(p => p.id === slide.heroImageId);
+                      if (!img) return null;
+                      return (
+                        <div className="relative w-full h-full flex items-center justify-center animate-bounce-slow">
+                          <Image 
+                            src={img.imageUrl} 
+                            alt={img.description} 
+                            width={800}
+                            height={600}
+                            className="object-contain drop-shadow-[0_25px_50px_rgba(0,112,186,0.4)] transition-transform duration-700 hover:scale-105" 
+                            data-ai-hint={img.imageHint}
+                            priority
+                          />
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
@@ -155,6 +157,16 @@ export function HeroSlider() {
           />
         ))}
       </div>
+      
+      <style jsx global>{`
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 5s ease-in-out infinite;
+        }
+      `}</style>
     </Carousel>
   );
 }

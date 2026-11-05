@@ -13,6 +13,18 @@
       "imageHint": "laptop hero"
     },
     {
+      "id": "hero-laptop-png-1",
+      "description": "Premium High-End Laptop PNG",
+      "imageUrl": "/45da62cbc8c1f55a242071be3f84e8d9-removebg-preview.png",
+      "imageHint": "laptop png"
+    },
+    {
+      "id": "hero-laptop-png-2",
+      "description": "Corporate Workstation PNG",
+      "imageUrl": "/2e25a9f71bc402ef5babc62b5f9a586c-removebg-preview.png",
+      "imageHint": "laptop transparent"
+    },
+    {
       "id": "lenovo-thinkbook-14-g6-webp",
       "description": "Lenovo ThinkBook 14 G6 Premium WebP Photo",
       "imageUrl": "/0iqgqn78il76mvlr74kjcfbdyvmxew672970.webp",
