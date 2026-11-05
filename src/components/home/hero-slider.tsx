@@ -47,7 +47,7 @@ const SLIDES: Slide[] = [
     heroImageId: 'hero-repair-png-new',
     bgImage: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=1920&auto=format&fit=crop',
     hint: 'repair tools',
-    imageClassName: 'lg:translate-y-20' // Moved down as requested by user
+    imageClassName: 'lg:translate-y-32' // Lowered significantly to center and prevent clipping
   },
   {
     title: 'PROFESSIONAL WEB DESIGN.',
