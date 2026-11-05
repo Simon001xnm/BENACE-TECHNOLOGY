@@ -15,7 +15,19 @@ import { Sparkles, MessageCircle, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const SLIDES = [
+interface Slide {
+  title: string;
+  subtitle: string;
+  description: string;
+  cta: string;
+  link: string;
+  heroImageId: string;
+  bgImage: string;
+  hint: string;
+  imageClassName?: string;
+}
+
+const SLIDES: Slide[] = [
   {
     title: 'THE BEST LAPTOPS IN NAIROBI.',
     subtitle: 'QUALITY • FAIR PRICES',
@@ -34,7 +46,8 @@ const SLIDES = [
     link: '/repairs',
     heroImageId: 'hero-repair-png-new',
     bgImage: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=1920&auto=format&fit=crop',
-    hint: 'repair tools'
+    hint: 'repair tools',
+    imageClassName: 'lg:translate-y-20' // Moved down as requested by user
   },
   {
     title: 'PROFESSIONAL WEB DESIGN.',
@@ -122,7 +135,10 @@ export function HeroSlider() {
                       const img = PlaceHolderImages.find(p => p.id === slide.heroImageId);
                       if (!img) return null;
                       return (
-                        <div className="relative w-full h-full flex items-center justify-center animate-float-high">
+                        <div className={cn(
+                          "relative w-full h-full flex items-center justify-center animate-float-high",
+                          slide.imageClassName
+                        )}>
                           <Image 
                             src={img.imageUrl} 
                             alt={img.description} 
