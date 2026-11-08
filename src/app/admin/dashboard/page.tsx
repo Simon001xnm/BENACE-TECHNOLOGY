@@ -4,7 +4,7 @@ import { useUser, useCollection, useFirestore } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { collection, query } from 'firebase/firestore';
-import { Laptop, AlertTriangle, TrendingUp, Plus, DollarSign, Users, ArrowUpRight, Activity } from 'lucide-react';
+import { Laptop, ShoppingCart, DollarSign, Activity, ArrowUpRight, Plus, Package, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ImportDataButton } from '@/components/admin/import-data-button';
@@ -25,10 +25,10 @@ export default function AdminDashboardPage() {
 
   if (authLoading || productsLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-[#f3f6f9]">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-10 w-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Syncing Matrix...</span>
+          <div className="h-10 w-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Synchronizing Hub...</span>
         </div>
       </div>
     );
@@ -37,94 +37,102 @@ export default function AdminDashboardPage() {
   const stats = {
     totalProducts: products?.length || 0,
     outOfStock: products?.filter(p => !p.inStock).length || 0,
+    inventoryValue: products?.reduce((sum, p) => sum + (p.price || 0), 0) || 0,
     categories: [...new Set(products?.map(p => p.category))].length,
   };
 
   return (
-    <div className="max-w-[1600px] mx-auto p-6 lg:p-10 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-px border-zinc-100 pb-8">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">System Live</span>
+    <div className="p-8 space-y-10 bg-[#f3f6f9] min-h-screen">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-10">
+          <div>
+            <h1 className="text-2xl font-black uppercase tracking-tight text-zinc-900 leading-none">Intelligence Command</h1>
+            <p className="font-bold text-zinc-400 uppercase tracking-widest text-[10px] mt-2">Global Storefront Monitoring</p>
           </div>
-          <h1 className="text-4xl font-black uppercase tracking-tight text-zinc-900 leading-none">Hub Intelligence</h1>
-          <p className="font-bold text-zinc-400 uppercase tracking-widest text-[10px] mt-2">Unified Storefront Analytics & Management</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <ImportDataButton />
-          <Button asChild className="rounded-xl h-11 bg-primary text-white font-black uppercase text-[10px] tracking-widest px-6 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
-            <Link href="/admin/products/new">
-              <Plus className="mr-2 h-4 w-4" /> New Product
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          { label: 'Active Inventory', value: stats.totalProducts, icon: Laptop, color: 'text-primary', bg: 'bg-primary/5' },
-          { label: 'Shortage Alert', value: stats.outOfStock, icon: AlertTriangle, color: 'text-orange-500', bg: 'bg-orange-50' },
-          { label: 'Catalog Groups', value: stats.categories, icon: TrendingUp, color: 'text-indigo-500', bg: 'bg-indigo-50' },
-          { label: 'Customer Trust', value: '4.9', icon: Activity, color: 'text-emerald-500', bg: 'bg-emerald-50' }
-        ].map((stat, i) => (
-          <div key={i} className="group bg-white rounded-3xl p-6 border border-zinc-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
-            <div className="flex items-center justify-between mb-6">
-              <div className={`p-2.5 rounded-2xl ${stat.bg} ${stat.color}`}>
-                <stat.icon className="h-5 w-5" />
-              </div>
-              <ArrowUpRight className="h-4 w-4 text-zinc-200 group-hover:text-zinc-400 transition-colors" />
-            </div>
-            <div className="space-y-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{stat.label}</p>
-              <div className="text-4xl font-black tracking-tight text-zinc-900">{stat.value}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 shadow-sm">
-            <div className="flex items-center justify-between mb-10">
-              <h2 className="text-lg font-black uppercase tracking-tight text-zinc-900">Command Modules</h2>
-              <Link href="/admin/products" className="text-[10px] font-black uppercase text-primary hover:underline">Full Inventory</Link>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                { label: 'Control Registry', sub: 'Update & manage live stock in real-time', href: '/admin/products', icon: Laptop, accent: 'bg-zinc-900 text-white' },
-                { label: 'Communications', sub: 'Monitor customer WhatsApp inquiries', href: '/admin/orders', icon: TrendingUp, accent: 'bg-zinc-50 text-zinc-900' },
-                { label: 'Global Configurations', sub: 'Adjust storefront system preferences', href: '/admin/settings', icon: Users, accent: 'bg-zinc-50 text-zinc-900' },
-                { label: 'Instant Launch', sub: 'Deploy new product profiles instantly', href: '/admin/products/new', icon: Plus, accent: 'bg-primary text-white' }
-              ].map((link, i) => (
-                <Link key={i} href={link.href} className={`flex flex-col p-6 rounded-3xl border border-zinc-100 transition-all hover:shadow-lg hover:bg-zinc-50 group`}>
-                   <div className={`h-10 w-10 flex items-center justify-center rounded-2xl mb-4 transition-transform group-hover:scale-110 ${link.accent}`}>
-                     <link.icon className="h-5 w-5" />
-                   </div>
-                   <h3 className="text-xs font-black uppercase tracking-tight mb-1">{link.label}</h3>
-                   <p className="text-[10px] font-bold text-zinc-400 leading-tight uppercase tracking-wide">{link.sub}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="bg-zinc-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 h-32 w-32 bg-primary/20 blur-[80px] group-hover:blur-[100px] transition-all"></div>
-            <h3 className="text-xl font-black uppercase tracking-tight mb-3">Frontier Mode</h3>
-            <p className="text-[11px] font-bold text-zinc-400 mb-8 uppercase leading-relaxed tracking-wider">Your changes are deployed to the global storefront with zero latency.</p>
-            <Button asChild className="w-full h-12 rounded-2xl bg-white text-black font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-white transition-all">
-              <Link href="/" target="_blank">Access Live Site</Link>
+          <div className="flex items-center gap-3">
+            <ImportDataButton />
+            <Button asChild className="rounded-lg h-10 bg-indigo-500 hover:bg-indigo-600 text-white font-bold uppercase text-[10px] tracking-widest px-6 shadow-xl shadow-indigo-500/20">
+              <Link href="/admin/products/new">
+                <Plus className="mr-2 h-4 w-4" /> Quick Entry
+              </Link>
             </Button>
           </div>
-          
-          <div className="bg-white rounded-3xl border border-zinc-100 p-8 shadow-sm flex items-center justify-between">
-             <div className="space-y-1">
-               <span className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">Database Core</span>
-               <p className="text-xs font-bold uppercase tracking-tight">Sync Integrity 100%</p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+          {[
+            { label: 'Total Catalog', value: stats.totalProducts, icon: Package, color: 'text-indigo-500', bg: 'bg-indigo-50' },
+            { label: 'Out of Stock', value: stats.outOfStock, icon: Laptop, color: 'text-rose-500', bg: 'bg-rose-50' },
+            { label: 'Asset Valuation', value: `KES ${(stats.inventoryValue / 1000).toFixed(1)}k`, icon: DollarSign, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+            { label: 'Inquiries', value: '12 Active', icon: MessageSquare, color: 'text-amber-500', bg: 'bg-amber-50' }
+          ].map((stat, i) => (
+            <div key={i} className="bg-white rounded-xl p-6 border transition-all hover:shadow-lg">
+              <div className="flex items-center justify-between mb-4">
+                <div className={cn("p-2 rounded-lg", stat.bg, stat.color)}>
+                  <stat.icon className="h-4 w-4" />
+                </div>
+                <ArrowUpRight className="h-3 w-3 text-zinc-300" />
+              </div>
+              <div className="space-y-0.5">
+                <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{stat.label}</p>
+                <div className="text-2xl font-black tracking-tight text-zinc-900">{stat.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2 bg-white rounded-2xl border p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-[12px] font-black uppercase tracking-widest text-zinc-900">Recent System Activity</h2>
+              <Link href="/admin/products" className="text-[10px] font-bold text-indigo-500 uppercase hover:underline">Full Registry</Link>
+            </div>
+            
+            <div className="space-y-6">
+               {products?.slice(0, 5).map((p, i) => (
+                 <div key={i} className="flex items-center justify-between py-3 border-b last:border-0 border-zinc-50">
+                    <div className="flex items-center gap-4">
+                       <div className="h-10 w-10 bg-zinc-50 rounded-lg flex items-center justify-center text-zinc-300">
+                          <Package className="h-5 w-5" />
+                       </div>
+                       <div>
+                          <p className="text-xs font-bold uppercase tracking-tight text-zinc-900">{p.name}</p>
+                          <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">{p.brand} • {p.status}</p>
+                       </div>
+                    </div>
+                    <div className="text-right">
+                       <p className="text-xs font-black text-zinc-900">KES {p.price.toLocaleString()}</p>
+                       <p className="text-[8px] font-bold text-emerald-500 uppercase mt-0.5">Synced</p>
+                    </div>
+                 </div>
+               ))}
+            </div>
+          </div>
+
+          <div className="space-y-6">
+             <div className="bg-indigo-600 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 h-32 w-32 bg-white/10 blur-[60px] group-hover:blur-[80px] transition-all"></div>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-2">Live Storefront</h3>
+                <p className="text-[10px] font-bold text-indigo-100 mb-8 uppercase leading-relaxed tracking-wider">Monitor real-time changes across the global infrastructure.</p>
+                <Button asChild className="w-full h-11 rounded-lg bg-white text-indigo-600 font-black uppercase text-[10px] tracking-widest hover:bg-zinc-100 transition-all">
+                  <Link href="/" target="_blank">Access Portal</Link>
+                </Button>
              </div>
-             <Activity className="h-6 w-6 text-emerald-500 animate-pulse" />
+
+             <div className="bg-white rounded-xl border p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                   <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Database Core</span>
+                   <Activity className="h-4 w-4 text-emerald-500" />
+                </div>
+                <div className="flex items-center justify-between py-2 border-b border-zinc-50">
+                   <span className="text-[11px] font-bold text-zinc-600 uppercase">Uptime</span>
+                   <span className="text-[11px] font-black text-zinc-900">99.99%</span>
+                </div>
+                <div className="flex items-center justify-between py-2 border-b border-zinc-50">
+                   <span className="text-[11px] font-bold text-zinc-600 uppercase">Latency</span>
+                   <span className="text-[11px] font-black text-zinc-900">24ms</span>
+                </div>
+             </div>
           </div>
         </div>
       </div>
