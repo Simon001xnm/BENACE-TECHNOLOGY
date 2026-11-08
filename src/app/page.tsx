@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -31,15 +30,21 @@ export default function Home() {
 
   const { data: dbProducts, loading } = useCollection(productsQuery);
 
-  const allLiveProducts = useMemo(() => {
-    const liveItems = dbProducts || [];
-    if (liveItems.length > 0) return liveItems;
-    return staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
-  }, [dbProducts]);
-
   const featuredLaptops = useMemo(() => {
-    return allLiveProducts.filter(p => p.type === 'laptop');
-  }, [allLiveProducts]);
+    const liveItems = dbProducts || [];
+    const staticItems = staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
+    
+    // Create a registry to merge items, prioritizing live database items over static templates
+    const registry = new Map();
+    staticItems.forEach(item => registry.set(item.id, item));
+    liveItems.forEach(item => {
+      if (item.type === 'laptop') {
+        registry.set(item.id, item);
+      }
+    });
+    
+    return Array.from(registry.values());
+  }, [dbProducts]);
 
   const categories = [
     { name: 'Laptops', img: PlaceHolderImages.find(p => p.id === 'lenovo-thinkbook-14-g6-webp')?.imageUrl || '/0iqgqn78il76mvlr74kjcfbdyvmxew672970.webp' },

@@ -53,9 +53,15 @@ export function LaptopsGrid() {
   };
 
   const allLaptops = useMemo(() => {
-    const fromDb = dbLaptops?.filter(p => p.type === 'laptop') || [];
-    if (fromDb.length > 0) return fromDb;
-    return staticLaptops.map(l => ({ ...l, type: 'laptop' }));
+    const liveItems = dbLaptops?.filter(p => p.type === 'laptop') || [];
+    const staticItems = staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
+    
+    // Create a registry to merge items, prioritizing live database items over static templates
+    const registry = new Map();
+    staticItems.forEach(item => registry.set(item.id, item));
+    liveItems.forEach(item => registry.set(item.id, item));
+    
+    return Array.from(registry.values());
   }, [dbLaptops]);
 
   const filteredLaptops = useMemo(() => {

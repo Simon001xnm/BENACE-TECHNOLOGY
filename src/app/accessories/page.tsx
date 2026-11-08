@@ -29,8 +29,15 @@ export default function AccessoriesPage() {
   const { data: dbAccessories, loading } = useCollection(accessoriesQuery);
 
   const allAccessories = useMemo(() => {
-    if (dbAccessories && dbAccessories.length > 0) return dbAccessories;
-    return staticAccessories.map(a => ({ ...a, type: 'accessory' }));
+    const liveItems = dbAccessories || [];
+    const staticItems = staticAccessories.map(a => ({ ...a, type: 'accessory' as const }));
+    
+    // Create a registry to merge items, prioritizing live database items over static templates
+    const registry = new Map();
+    staticItems.forEach(item => registry.set(item.id, item));
+    liveItems.forEach(item => registry.set(item.id, item));
+    
+    return Array.from(registry.values());
   }, [dbAccessories]);
 
   const categories = useMemo(() => ['all', ...new Set(allAccessories.map(a => a.category || 'Gear'))], [allAccessories]);
