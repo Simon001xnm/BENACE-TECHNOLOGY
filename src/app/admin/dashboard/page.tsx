@@ -8,6 +8,7 @@ import { Laptop, ShoppingCart, DollarSign, Activity, ArrowUpRight, Plus, Package
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ImportDataButton } from '@/components/admin/import-data-button';
+import { cn } from '@/lib/utils';
 
 export default function AdminDashboardPage() {
   const { user, loading: authLoading } = useUser();
