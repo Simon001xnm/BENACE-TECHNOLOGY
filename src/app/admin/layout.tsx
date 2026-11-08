@@ -163,7 +163,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
         <SheetContent side="left" className="p-0 border-none w-[240px]">
-            <SidebarContent />
+          <SheetHeader className="sr-only">
+            <SheetTitle>Admin Navigation Menu</SheetTitle>
+          </SheetHeader>
+          <SidebarContent />
         </SheetContent>
       </Sheet>
     </div>
