@@ -4,8 +4,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useDoc, useFirestore, useCollection } from '@/firebase';
-import { doc, collection, query, limit, where } from 'firebase/firestore';
-import { laptops as staticLaptops } from '@/lib/data';
+import { doc, collection, query, limit } from 'firebase/firestore';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,6 @@ import { Badge } from '@/components/ui/badge';
 import { LaptopCard } from '@/components/laptops/laptop-card';
 import { ShoppingCart, ArrowLeft, Cpu, HardDrive, Monitor, Layers, Info, Loader2, MessageSquare } from 'lucide-react';
 import { useMemo } from 'react';
-import { cn } from '@/lib/utils';
 
 export default function LaptopDetailPage() {
   const params = useParams();
@@ -22,7 +20,7 @@ export default function LaptopDetailPage() {
   const db = useFirestore();
 
   const productRef = db ? doc(db, 'products', laptopId) : null;
-  const { data: dbLaptop, loading } = useDoc(productRef);
+  const { data: laptop, loading } = useDoc(productRef);
 
   // Fetch related products
   const relatedQuery = useMemo(() => {
@@ -30,11 +28,6 @@ export default function LaptopDetailPage() {
     return query(collection(db, 'products'), limit(6));
   }, [db]);
   const { data: relatedProducts } = useCollection(relatedQuery);
-
-  const laptop = useMemo(() => {
-    if (dbLaptop) return dbLaptop;
-    return staticLaptops.find((l) => l.id === laptopId);
-  }, [dbLaptop, laptopId]);
 
   if (loading) {
     return (
@@ -49,6 +42,7 @@ export default function LaptopDetailPage() {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <h1 className="text-[9px] font-black uppercase text-black tracking-widest">Model Not Found</h1>
+        <p className="text-[7px] font-bold text-zinc-400 uppercase mt-2">This product may have been removed from our catalog.</p>
         <Button asChild className="mt-4 h-7 rounded-none text-[7px] font-black uppercase tracking-widest px-6" variant="outline">
           <Link href="/laptops">Back to Collection</Link>
         </Button>
@@ -145,25 +139,22 @@ export default function LaptopDetailPage() {
         </div>
 
         {/* Other models section */}
-        <div className="mt-16 border-t pt-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-[9px] font-black uppercase tracking-[0.3em] text-black">Recommended Technical Models</h2>
-            <Link href="/laptops" className="text-[7px] font-black text-primary hover:underline uppercase tracking-widest">View Full Catalog</Link>
+        {otherModels.length > 0 && (
+          <div className="mt-16 border-t pt-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-[9px] font-black uppercase tracking-[0.3em] text-black">Recommended Technical Models</h2>
+              <Link href="/laptops" className="text-[7px] font-black text-primary hover:underline uppercase tracking-widest">View Full Catalog</Link>
+            </div>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 border-t border-l border-zinc-200">
+              {otherModels.map(model => (
+                <div key={model.id} className="border-r border-b border-zinc-200">
+                  <LaptopCard laptop={model as any} variant="deal" />
+                </div>
+              ))}
+            </div>
           </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 border-t border-l border-zinc-200">
-            {otherModels.map(model => (
-              <div key={model.id} className="border-r border-b border-zinc-200">
-                <LaptopCard laptop={model} variant="deal" />
-              </div>
-            ))}
-            {otherModels.length === 0 && staticLaptops.filter(l => l.id !== laptopId).map(model => (
-              <div key={model.id} className="border-r border-b border-zinc-200">
-                <LaptopCard laptop={model} variant="deal" />
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

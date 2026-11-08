@@ -17,7 +17,6 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Loader2, DatabaseBackup } from 'lucide-react';
-import { laptops as staticLaptops } from '@/lib/data';
 
 export function LaptopsGrid() {
   const db = useFirestore();
@@ -53,15 +52,9 @@ export function LaptopsGrid() {
   };
 
   const allLaptops = useMemo(() => {
-    const liveItems = dbLaptops?.filter(p => p.type === 'laptop') || [];
-    const staticItems = staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
-    
-    // Create a registry to merge items, prioritizing live database items over static templates
-    const registry = new Map();
-    staticItems.forEach(item => registry.set(item.id, item));
-    liveItems.forEach(item => registry.set(item.id, item));
-    
-    return Array.from(registry.values());
+    // Exclusively rely on Firestore for the truth of the inventory
+    if (!dbLaptops) return [];
+    return dbLaptops.filter(p => p.type === 'laptop');
   }, [dbLaptops]);
 
   const filteredLaptops = useMemo(() => {
@@ -179,14 +172,15 @@ export function LaptopsGrid() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full border-l border-zinc-200">
               {filteredLaptops.map(laptop => (
                 <div key={laptop.id} className="border-r border-b border-zinc-200">
-                  <LaptopCard laptop={laptop} variant="grid" />
+                  <LaptopCard laptop={laptop as any} variant="grid" />
                 </div>
               ))}
             </div>
           ) : (
-            <div className="py-20 text-center bg-white">
+            <div className="py-20 text-center bg-white border-b border-zinc-200">
               <DatabaseBackup className="mx-auto h-6 w-6 text-zinc-100 mb-2" />
               <p className="font-black text-zinc-400 uppercase tracking-widest text-[8px]">No models found</p>
+              <p className="text-[7px] font-bold text-zinc-300 mt-1 uppercase">Please add products in Admin Hub</p>
             </div>
           )}
         </main>

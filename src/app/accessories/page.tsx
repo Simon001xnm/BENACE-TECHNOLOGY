@@ -12,9 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { Loader2, DatabaseBackup } from 'lucide-react';
-import { accessories as staticAccessories } from '@/lib/data';
 
 export default function AccessoriesPage() {
   const db = useFirestore();
@@ -29,15 +27,8 @@ export default function AccessoriesPage() {
   const { data: dbAccessories, loading } = useCollection(accessoriesQuery);
 
   const allAccessories = useMemo(() => {
-    const liveItems = dbAccessories || [];
-    const staticItems = staticAccessories.map(a => ({ ...a, type: 'accessory' as const }));
-    
-    // Create a registry to merge items, prioritizing live database items over static templates
-    const registry = new Map();
-    staticItems.forEach(item => registry.set(item.id, item));
-    liveItems.forEach(item => registry.set(item.id, item));
-    
-    return Array.from(registry.values());
+    // Exclusively rely on Firestore for synchronized inventory
+    return dbAccessories || [];
   }, [dbAccessories]);
 
   const categories = useMemo(() => ['all', ...new Set(allAccessories.map(a => a.category || 'Gear'))], [allAccessories]);
@@ -101,7 +92,7 @@ export default function AccessoriesPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full border-l border-zinc-200">
             {filteredAccessories.map(accessory => (
               <div key={accessory.id} className="border-r border-b border-zinc-200 bg-white">
-                <AccessoryCard accessory={accessory} />
+                <AccessoryCard accessory={accessory as any} />
               </div>
             ))}
           </div>
@@ -109,6 +100,7 @@ export default function AccessoriesPage() {
           <div className="py-20 text-center bg-white border-b border-zinc-200">
             <DatabaseBackup className="mx-auto h-6 w-6 text-zinc-200 mb-2" />
             <p className="font-black text-zinc-400 uppercase tracking-widest text-[8px]">No components found</p>
+            <p className="text-[7px] font-bold text-zinc-300 mt-1 uppercase">Please add gear in Admin Hub</p>
           </div>
         )}
       </div>

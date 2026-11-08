@@ -16,7 +16,6 @@ import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
 import Image from 'next/image';
-import { laptops as staticLaptops } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { HeroSlider } from '@/components/home/hero-slider';
 
@@ -31,19 +30,9 @@ export default function Home() {
   const { data: dbProducts, loading } = useCollection(productsQuery);
 
   const featuredLaptops = useMemo(() => {
-    const liveItems = dbProducts || [];
-    const staticItems = staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
-    
-    // Create a registry to merge items, prioritizing live database items over static templates
-    const registry = new Map();
-    staticItems.forEach(item => registry.set(item.id, item));
-    liveItems.forEach(item => {
-      if (item.type === 'laptop') {
-        registry.set(item.id, item);
-      }
-    });
-    
-    return Array.from(registry.values());
+    // Only use live Firestore data to ensure Admin deletions/additions are perfectly synced
+    if (!dbProducts) return [];
+    return dbProducts.filter(p => p.type === 'laptop');
   }, [dbProducts]);
 
   const categories = [
@@ -94,12 +83,12 @@ export default function Home() {
           </div>
           <div className="flex items-start gap-6 overflow-x-auto no-scrollbar pb-4">
             {categories.map((cat, i) => (
-              <div key={i} className="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
+              <Link key={i} href={cat.name === 'Accessories' ? '/accessories' : '/laptops'} className="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
                 <div className="h-20 w-20 rounded-2xl overflow-hidden bg-zinc-50 border-2 border-zinc-100 group-hover:border-[#0070ba] transition-all duration-300 shadow-sm">
                   <Image src={cat.img} alt={cat.name} width={80} height={80} className="object-cover transition-transform group-hover:scale-110" />
                 </div>
                 <span className="text-[9px] font-black uppercase tracking-widest group-hover:text-[#0070ba] transition-colors">{cat.name}</span>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -117,7 +106,7 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full border-t border-l border-zinc-200 bg-white shadow-sm">
-            {loading && dbProducts === null ? (
+            {loading ? (
                <>
                   {[...Array(6)].map((_, i) => (
                     <div key={i} className="aspect-square w-full animate-pulse bg-zinc-50 border-r border-b border-zinc-200"></div>
@@ -127,14 +116,14 @@ export default function Home() {
               <>
                   {featuredLaptops.map(laptop => (
                     <div key={laptop.id} className="border-r border-b border-zinc-200">
-                      <LaptopCard laptop={laptop} variant="deal" />
+                      <LaptopCard laptop={laptop as any} variant="deal" />
                     </div>
                   ))}
               </>
             ) : (
               <div className="col-span-full flex flex-col items-center justify-center py-32 bg-white border-r border-b border-zinc-200">
                 <PackageSearch className="h-12 w-12 text-zinc-200 mb-4" />
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Updating Technical Registry</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Inventory Empty</p>
                 <p className="text-[8px] font-bold text-zinc-300 uppercase mt-2">New high-spec units arriving daily</p>
               </div>
             )}
