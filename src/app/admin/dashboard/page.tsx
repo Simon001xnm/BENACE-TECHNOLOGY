@@ -4,8 +4,7 @@ import { useUser, useCollection, useFirestore } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { collection, query } from 'firebase/firestore';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Laptop, ShoppingBag, AlertTriangle, TrendingUp, Plus, DatabaseBackup, DollarSign, Users } from 'lucide-react';
+import { Laptop, AlertTriangle, TrendingUp, Plus, DollarSign, Users, ArrowUpRight, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ImportDataButton } from '@/components/admin/import-data-button';
@@ -26,9 +25,10 @@ export default function AdminDashboardPage() {
 
   if (authLoading || productsLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-zinc-50">
-        <div className="text-center font-black uppercase tracking-widest animate-pulse">
-          Synchronizing Hub Data...
+      <div className="flex h-screen items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Syncing Matrix...</span>
         </div>
       </div>
     );
@@ -41,19 +41,21 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="space-y-8 p-6 md:p-10">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div className="max-w-[1600px] mx-auto p-6 lg:p-10 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-px border-zinc-100 pb-8">
         <div>
-          <h1 className="text-4xl font-black uppercase tracking-tighter text-black">Hub Overview</h1>
-          <p className="font-bold text-muted-foreground uppercase tracking-widest text-xs mt-1">
-            Live Control Panel for Benace Tech Hub
-          </p>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">System Live</span>
+          </div>
+          <h1 className="text-4xl font-black uppercase tracking-tight text-zinc-900 leading-none">Hub Intelligence</h1>
+          <p className="font-bold text-zinc-400 uppercase tracking-widest text-[10px] mt-2">Unified Storefront Analytics & Management</p>
         </div>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex items-center gap-3">
           <ImportDataButton />
-          <Button asChild className="bg-black text-white font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+          <Button asChild className="rounded-xl h-11 bg-primary text-white font-black uppercase text-[10px] tracking-widest px-6 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
             <Link href="/admin/products/new">
-              <Plus className="mr-2 h-4 w-4" /> Add Product
+              <Plus className="mr-2 h-4 w-4" /> New Product
             </Link>
           </Button>
         </div>
@@ -61,61 +63,68 @@ export default function AdminDashboardPage() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: 'Live Stock', value: stats.totalProducts, icon: Laptop, shadow: 'rgba(0,0,0,1)', desc: 'Active Listings' },
-          { label: 'Out of Stock', value: stats.outOfStock, icon: AlertTriangle, shadow: 'rgba(239,68,68,1)', color: 'text-red-500', desc: 'Action Required' },
-          { label: 'Active Categories', value: stats.categories, icon: TrendingUp, shadow: 'rgba(0,186,242,1)', desc: 'Product Groups' },
-          { label: 'User Rating', value: '4.9/5', icon: DollarSign, shadow: 'rgba(34,197,94,1)', color: 'text-emerald-500', desc: 'Trust Factor' }
+          { label: 'Active Inventory', value: stats.totalProducts, icon: Laptop, color: 'text-primary', bg: 'bg-primary/5' },
+          { label: 'Shortage Alert', value: stats.outOfStock, icon: AlertTriangle, color: 'text-orange-500', bg: 'bg-orange-50' },
+          { label: 'Catalog Groups', value: stats.categories, icon: TrendingUp, color: 'text-indigo-500', bg: 'bg-indigo-50' },
+          { label: 'Customer Trust', value: '4.9', icon: Activity, color: 'text-emerald-500', bg: 'bg-emerald-50' }
         ].map((stat, i) => (
-          <Card key={i} className={`border-4 border-black shadow-[6px_6px_0px_0px_${stat.shadow}] transition-all hover:-translate-y-1 bg-white`}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-[10px] font-black uppercase tracking-[0.2em]">{stat.label}</CardTitle>
-              <stat.icon className={`h-4 w-4 ${stat.color || 'text-primary'}`} />
-            </CardHeader>
-            <CardContent>
-              <div className={`text-5xl font-black ${stat.color}`}>{stat.value}</div>
-              <p className="text-[10px] font-bold text-muted-foreground mt-2 uppercase tracking-widest">{stat.desc}</p>
-            </CardContent>
-          </Card>
+          <div key={i} className="group bg-white rounded-3xl p-6 border border-zinc-100 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
+            <div className="flex items-center justify-between mb-6">
+              <div className={`p-2.5 rounded-2xl ${stat.bg} ${stat.color}`}>
+                <stat.icon className="h-5 w-5" />
+              </div>
+              <ArrowUpRight className="h-4 w-4 text-zinc-200 group-hover:text-zinc-400 transition-colors" />
+            </div>
+            <div className="space-y-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{stat.label}</p>
+              <div className="text-4xl font-black tracking-tight text-zinc-900">{stat.value}</div>
+            </div>
+          </div>
         ))}
       </div>
 
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
-          <div className="rounded-2xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <h2 className="text-xl font-black uppercase tracking-tight mb-8">Management Hub</h2>
+          <div className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 shadow-sm">
+            <div className="flex items-center justify-between mb-10">
+              <h2 className="text-lg font-black uppercase tracking-tight text-zinc-900">Command Modules</h2>
+              <Link href="/admin/products" className="text-[10px] font-black uppercase text-primary hover:underline">Full Inventory</Link>
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                { label: 'Manage Inventory', href: '/admin/products', icon: Laptop, color: 'hover:bg-primary/10' },
-                { label: 'WhatsApp Inquiries', href: '/admin/orders', icon: TrendingUp, color: 'hover:bg-zinc-100' },
-                { label: 'Hub Settings', href: '/admin/settings', icon: Users, color: 'hover:bg-zinc-100' },
-                { label: 'Publish New Item', href: '/admin/products/new', icon: Plus, color: 'hover:bg-primary/10' }
+                { label: 'Control Registry', sub: 'Update & manage live stock in real-time', href: '/admin/products', icon: Laptop, accent: 'bg-zinc-900 text-white' },
+                { label: 'Communications', sub: 'Monitor customer WhatsApp inquiries', href: '/admin/orders', icon: TrendingUp, accent: 'bg-zinc-50 text-zinc-900' },
+                { label: 'Global Configurations', sub: 'Adjust storefront system preferences', href: '/admin/settings', icon: Users, accent: 'bg-zinc-50 text-zinc-900' },
+                { label: 'Instant Launch', sub: 'Deploy new product profiles instantly', href: '/admin/products/new', icon: Plus, accent: 'bg-primary text-white' }
               ].map((link, i) => (
-                <Button key={i} variant="outline" asChild className={`h-20 border-2 border-black font-black uppercase flex items-center justify-start gap-4 px-6 transition-all ${link.color}`}>
-                  <Link href={link.href}>
-                    <link.icon className="h-6 w-6" />
-                    {link.label}
-                  </Link>
-                </Button>
+                <Link key={i} href={link.href} className={`flex flex-col p-6 rounded-3xl border border-zinc-100 transition-all hover:shadow-lg hover:bg-zinc-50 group`}>
+                   <div className={`h-10 w-10 flex items-center justify-center rounded-2xl mb-4 transition-transform group-hover:scale-110 ${link.accent}`}>
+                     <link.icon className="h-5 w-5" />
+                   </div>
+                   <h3 className="text-xs font-black uppercase tracking-tight mb-1">{link.label}</h3>
+                   <p className="text-[10px] font-bold text-zinc-400 leading-tight uppercase tracking-wide">{link.sub}</p>
+                </Link>
               ))}
             </div>
           </div>
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-2xl border-4 border-black bg-primary p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-black font-black uppercase tracking-tight mb-2">Live Storefront</h3>
-            <p className="text-sm font-bold text-black/70 mb-6 leading-tight">Every change you make here is pushed instantly to your customers around the world.</p>
-            <Button asChild className="w-full bg-black text-white font-black uppercase tracking-widest border-2 border-black hover:bg-white hover:text-black transition-colors">
-              <Link href="/" target="_blank">View Live Website</Link>
+          <div className="bg-zinc-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 h-32 w-32 bg-primary/20 blur-[80px] group-hover:blur-[100px] transition-all"></div>
+            <h3 className="text-xl font-black uppercase tracking-tight mb-3">Frontier Mode</h3>
+            <p className="text-[11px] font-bold text-zinc-400 mb-8 uppercase leading-relaxed tracking-wider">Your changes are deployed to the global storefront with zero latency.</p>
+            <Button asChild className="w-full h-12 rounded-2xl bg-white text-black font-black uppercase text-[10px] tracking-widest hover:bg-primary hover:text-white transition-all">
+              <Link href="/" target="_blank">Access Live Site</Link>
             </Button>
           </div>
           
-          <div className="rounded-2xl border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,186,242,1)]">
-             <div className="flex items-center justify-between mb-4">
-               <span className="text-xs font-black uppercase tracking-widest">Database Status</span>
-               <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
+          <div className="bg-white rounded-3xl border border-zinc-100 p-8 shadow-sm flex items-center justify-between">
+             <div className="space-y-1">
+               <span className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">Database Core</span>
+               <p className="text-xs font-bold uppercase tracking-tight">Sync Integrity 100%</p>
              </div>
-             <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Fully Synchronized</p>
+             <Activity className="h-6 w-6 text-emerald-500 animate-pulse" />
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, Plus, Search, Edit2, Trash2, ExternalLink, DatabaseBackup, Loader2 } from 'lucide-react';
+import { MoreHorizontal, Plus, Search, Edit2, Trash2, ExternalLink, DatabaseBackup, Loader2, Filter } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -35,7 +35,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { ImportDataButton } from '@/components/admin/import-data-button';
-import { laptops as staticLaptops } from '@/lib/data';
 
 export default function AdminProductsPage() {
   const db = useFirestore();
@@ -51,42 +50,23 @@ export default function AdminProductsPage() {
 
   const { data: dbProducts, loading } = useCollection(productsQuery);
 
-  const combinedProducts = useMemo(() => {
-    const liveItems = dbProducts || [];
-    const staticItems = staticLaptops.map(l => ({ ...l, type: 'laptop' as const }));
-    
-    // Merge by ID ensuring live items override static templates
-    const registry = new Map();
-    staticItems.forEach(item => registry.set(item.id, item));
-    liveItems.forEach(item => registry.set(item.id, item));
-    
-    return Array.from(registry.values());
-  }, [dbProducts]);
-
   const filteredProducts = useMemo(() => {
-    return combinedProducts.filter((p) =>
+    const products = dbProducts || [];
+    return products.filter((p) =>
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      'laptops'.includes(searchTerm.toLowerCase())
+      p.category?.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [combinedProducts, searchTerm]);
+  }, [dbProducts, searchTerm]);
 
   const handleDelete = async () => {
     if (!db || !productToDelete) return;
 
     try {
       await deleteDoc(doc(db, 'products', productToDelete));
-      toast({
-        title: 'Product Deleted',
-        description: 'The product configuration was updated.',
-      });
+      toast({ title: 'Record Removed', description: 'Inventory has been synchronized.' });
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Could not complete modification.',
-      });
+      toast({ variant: 'destructive', title: 'Error', description: 'Could not update registry.' });
     } finally {
       setProductToDelete(null);
     }
@@ -101,146 +81,149 @@ export default function AdminProductsPage() {
       await Promise.all(deletions);
       toast({ title: 'Inventory Purged', description: 'All records have been cleared.' });
     } catch (error) {
-      toast({ variant: 'destructive', title: 'Clear Failed', description: 'Could not empty the repository.' });
+      toast({ variant: 'destructive', title: 'Clear Failed', description: 'Process interrupted.' });
     } finally {
       setIsClearingAll(false);
     }
   };
 
   return (
-    <div className="space-y-6 p-4 md:p-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="max-w-[1600px] mx-auto p-6 md:p-10 space-y-10 animate-in fade-in duration-500">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between border-b border-zinc-100 pb-8">
         <div>
-          <h1 className="text-3xl font-black uppercase tracking-tight text-black">Inventory Management</h1>
-          <p className="text-muted-foreground font-bold uppercase tracking-widest text-xs mt-1">Manage your active stock registry</p>
+          <h1 className="text-3xl font-black uppercase tracking-tight text-zinc-900 leading-none">Stock Registry</h1>
+          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mt-3">Advanced Inventory Control Module</p>
         </div>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <Button 
-            variant="destructive" 
+            variant="ghost" 
             onClick={handleClearAll} 
-            disabled={isClearingAll || !combinedProducts.length}
-            className="border-2 border-black font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-xs h-10 px-4"
+            disabled={isClearingAll || !filteredProducts.length}
+            className="rounded-xl font-black uppercase text-[10px] tracking-widest text-red-500 hover:bg-red-50 h-11 px-5"
           >
             {isClearingAll ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4 mr-2" />}
-            Clear All
+            Purge Core
           </Button>
           <ImportDataButton />
-          <Button asChild className="bg-primary text-primary-foreground font-black uppercase tracking-widest border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all text-xs h-10 px-4">
+          <Button asChild className="rounded-xl h-11 bg-primary text-white font-black uppercase text-[10px] tracking-widest px-6 shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all">
             <Link href="/admin/products/new">
-              <Plus className="mr-2 h-4 w-4" /> Add Product
+              <Plus className="mr-2 h-4 w-4" /> Create Profile
             </Link>
           </Button>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 rounded-lg border-2 border-black bg-white px-3 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] h-11">
-        <Search className="h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search items by keyword, processor or brand..."
-          className="border-none bg-transparent focus-visible:ring-0 font-bold text-xs uppercase"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className="flex flex-col sm:flex-row items-center gap-3">
+        <div className="relative flex-grow group">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 transition-colors group-focus-within:text-primary" />
+          <Input
+            placeholder="Search across brand, model, and processor matrix..."
+            className="h-12 border-zinc-100 bg-white rounded-2xl pl-11 text-[11px] font-bold uppercase tracking-wide focus:ring-primary/20 transition-all shadow-sm"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <Button variant="outline" className="h-12 px-6 rounded-2xl border-zinc-100 font-black uppercase text-[10px] tracking-widest">
+           <Filter className="h-4 w-4 mr-2" /> Filter
+        </Button>
       </div>
 
-      <div className="rounded-xl border-2 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+      <div className="bg-white rounded-[2rem] border border-zinc-100 shadow-sm overflow-hidden">
         <Table>
-          <TableHeader className="bg-zinc-50 border-b-2 border-black">
-            <TableRow>
-              <TableHead className="font-black uppercase text-[10px] tracking-wider text-black">Product Model</TableHead>
-              <TableHead className="font-black uppercase text-[10px] tracking-wider text-black">Category</TableHead>
-              <TableHead className="font-black uppercase text-[10px] tracking-wider text-black">Price</TableHead>
-              <TableHead className="font-black uppercase text-[10px] tracking-wider text-black">Condition</TableHead>
-              <TableHead className="font-black uppercase text-[10px] tracking-wider text-black">Stock Status</TableHead>
-              <TableHead className="text-right font-black uppercase text-[10px] tracking-wider text-black">Actions</TableHead>
+          <TableHeader className="bg-zinc-50/50">
+            <TableRow className="border-b border-zinc-100">
+              <TableHead className="font-black uppercase text-[9px] tracking-[0.2em] text-zinc-400 py-4 px-6">Specification</TableHead>
+              <TableHead className="font-black uppercase text-[9px] tracking-[0.2em] text-zinc-400 py-4 px-6">Classification</TableHead>
+              <TableHead className="font-black uppercase text-[9px] tracking-[0.2em] text-zinc-400 py-4 px-6">Valuation</TableHead>
+              <TableHead className="font-black uppercase text-[9px] tracking-[0.2em] text-zinc-400 py-4 px-6">Status</TableHead>
+              <TableHead className="font-black uppercase text-[9px] tracking-[0.2em] text-zinc-400 py-4 px-6">Stock</TableHead>
+              <TableHead className="text-right py-4 px-6"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredProducts.map((product) => (
-              <TableRow key={product.id} className="border-b border-zinc-100 hover:bg-zinc-50 transition-colors">
-                <TableCell>
+              <TableRow key={product.id} className="border-b border-zinc-50 hover:bg-zinc-50/50 transition-colors group">
+                <TableCell className="py-4 px-6">
                   <div className="flex flex-col">
-                    <span className="font-black text-xs text-black uppercase">{product.name}</span>
-                    <span className="text-[9px] font-black text-[#0070ba] uppercase tracking-widest mt-0.5">{product.brand} • {product.specifications?.processor || 'Standard Specs'}</span>
+                    <span className="font-black text-xs text-zinc-900 uppercase tracking-tight">{product.name}</span>
+                    <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mt-0.5">{product.brand}</span>
                   </div>
                 </TableCell>
-                <TableCell>
-                  <Badge variant="outline" className="border-black font-black uppercase text-[9px] tracking-wider bg-zinc-50 rounded-none">
-                    {product.category || 'Laptops'}
-                  </Badge>
+                <TableCell className="py-4 px-6">
+                  <span className="text-[10px] font-black uppercase tracking-widest bg-zinc-100 px-3 py-1 rounded-full">{product.category || 'Laptop'}</span>
                 </TableCell>
-                <TableCell className="font-black text-xs text-zinc-900">
+                <TableCell className="py-4 px-6 font-black text-xs text-zinc-900">
                   KES {product.price.toLocaleString()}
                 </TableCell>
-                <TableCell>
-                  <Badge className={`font-black uppercase text-[9px] tracking-widest rounded-none ${product.status === 'New' ? 'bg-emerald-600 text-white' : 'bg-black text-white'}`}>
+                <TableCell className="py-4 px-6">
+                  <Badge variant="outline" className={cn("rounded-full font-black uppercase text-[8px] tracking-widest px-3", product.status === 'New' ? 'text-emerald-500 border-emerald-100' : 'text-zinc-500 border-zinc-100')}>
                     {product.status || 'New'}
                   </Badge>
                 </TableCell>
-                <TableCell>
-                  <Badge variant={product.inStock !== false ? 'secondary' : 'destructive'} className="font-black uppercase text-[9px] tracking-wider rounded-none">
-                    {product.inStock !== false ? 'In Stock' : 'Out of Stock'}
-                  </Badge>
+                <TableCell className="py-4 px-6">
+                  <div className="flex items-center gap-2">
+                    <div className={cn("h-1.5 w-1.5 rounded-full", product.inStock !== false ? "bg-emerald-500" : "bg-red-500")}></div>
+                    <span className="text-[10px] font-bold uppercase text-zinc-600">{product.inStock !== false ? 'Active' : 'Offline'}</span>
+                  </div>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="py-4 px-6 text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
+                      <Button variant="ghost" className="h-8 w-8 p-0 rounded-lg hover:bg-zinc-100">
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="border-2 border-black font-black text-xs rounded-none uppercase tracking-wide bg-white">
-                      <DropdownMenuLabel className="text-[9px] tracking-widest text-zinc-400">Actions</DropdownMenuLabel>
-                      <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href={`/admin/products/${product.id}/edit`} className="flex items-center">
-                          <Edit2 className="mr-2 h-3.5 w-3.5" /> Edit
+                    <DropdownMenuContent align="end" className="rounded-xl border-zinc-100 p-2 min-w-[140px] shadow-xl">
+                      <DropdownMenuLabel className="text-[8px] font-black uppercase tracking-widest text-zinc-400 mb-1">Actions</DropdownMenuLabel>
+                      <DropdownMenuItem asChild className="rounded-lg cursor-pointer">
+                        <Link href={`/admin/products/${product.id}/edit`} className="flex items-center text-[10px] font-black uppercase py-2">
+                          <Edit2 className="mr-2 h-3.5 w-3.5 text-zinc-400" /> Edit Profile
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link href={`/laptops/${product.id}`} target="_blank" className="flex items-center">
-                          <ExternalLink className="mr-2 h-3.5 w-3.5" /> View Live
+                      <DropdownMenuItem asChild className="rounded-lg cursor-pointer">
+                        <Link href={`/laptops/${product.id}`} target="_blank" className="flex items-center text-[10px] font-black uppercase py-2">
+                          <ExternalLink className="mr-2 h-3.5 w-3.5 text-zinc-400" /> Live View
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem 
-                        className="text-red-600 focus:text-red-600 focus:bg-red-50 cursor-pointer font-black"
+                        className="rounded-lg text-red-600 focus:text-red-700 focus:bg-red-50 cursor-pointer text-[10px] font-black uppercase py-2"
                         onClick={() => setProductToDelete(product.id)}
                       >
-                        <Trash2 className="mr-2 h-3.5 w-3.5" /> Delete
+                        <Trash2 className="mr-2 h-3.5 w-3.5" /> Erase
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}
-            {filteredProducts.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={6} className="h-48 text-center font-bold text-muted-foreground">
-                  <div className="flex flex-col items-center gap-4 justify-center">
-                    <DatabaseBackup className="h-8 w-8 text-zinc-300" />
-                    <div>
-                      <p className="text-black uppercase font-black text-xs tracking-wider">No matching inventory records found</p>
-                      <p className="text-[10px] text-zinc-400 mt-1 uppercase tracking-widest">Add customized models manually or adjust search fields</p>
-                    </div>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
           </TableBody>
         </Table>
+
+        {filteredProducts.length === 0 && !loading && (
+          <div className="py-32 flex flex-col items-center justify-center text-center space-y-4">
+            <div className="h-16 w-16 bg-zinc-50 rounded-full flex items-center justify-center">
+              <DatabaseBackup className="h-8 w-8 text-zinc-200" />
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-wider text-zinc-900">Registry Empty</p>
+              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">No matching assets found in the current hub</p>
+            </div>
+          </div>
+        )}
       </div>
 
       <AlertDialog open={!!productToDelete} onOpenChange={() => setProductToDelete(null)}>
-        <AlertDialogContent className="border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-none">
+        <AlertDialogContent className="rounded-[2rem] border-zinc-100 shadow-2xl p-8 max-w-md">
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-black uppercase tracking-tight">Confirm Stock Deletion</AlertDialogTitle>
-            <AlertDialogDescription className="font-bold text-xs uppercase tracking-wide text-zinc-500">
-              This action will remove the product profile from the public storefront and client order modules.
+            <AlertDialogTitle className="text-xl font-black uppercase tracking-tight">Confirm Deletion</AlertDialogTitle>
+            <AlertDialogDescription className="text-xs font-bold text-zinc-500 leading-relaxed uppercase tracking-wider mt-2">
+              You are about to permanently erase this product profile from the global storefront. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="border-2 border-black font-black uppercase text-xs rounded-none">Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-600 text-white font-black uppercase border-2 border-black hover:bg-red-700 text-xs rounded-none">
-              Delete Product
+          <AlertDialogFooter className="mt-8 gap-3">
+            <AlertDialogCancel className="rounded-2xl h-11 border-zinc-100 font-black uppercase text-[10px] tracking-widest">Abort</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="rounded-2xl h-11 bg-red-600 text-white hover:bg-red-700 font-black uppercase text-[10px] tracking-widest">
+              Confirm Erasure
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
