@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, X, Upload, Wand2, Eye, Save, Laptop, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Loader2, X, Upload, Wand2, Eye, Save, Laptop, Sparkles, CheckCircle2, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LaptopCard } from '@/components/laptops/laptop-card';
@@ -128,19 +128,29 @@ export function ProductForm({ initialData, productId }: ProductFormProps) {
 
     try {
       if (productId) {
-        await setDoc(doc(db, 'products', productId), productData, { merge: true });
+        setDoc(doc(db, 'products', productId), productData, { merge: true })
+          .catch(async (error) => {
+            errorEmitter.emit('permission-error', new FirestorePermissionError({
+              path: `products/${productId}`,
+              operation: 'update',
+              requestResourceData: productData,
+            }));
+          });
         toast({ title: 'Published!', description: 'Global storefront updated.' });
       } else {
-        await addDoc(collection(db, 'products'), productData);
+        addDoc(collection(db, 'products'), productData)
+          .catch(async (error) => {
+             errorEmitter.emit('permission-error', new FirestorePermissionError({
+              path: 'products',
+              operation: 'create',
+              requestResourceData: productData,
+            }));
+          });
         toast({ title: 'Product Created!', description: 'Live in your shop now.' });
       }
       router.push('/admin/products');
     } catch (error: any) {
-      errorEmitter.emit('permission-error', new FirestorePermissionError({
-        path: productId ? `products/${productId}` : 'products',
-        operation: productId ? 'update' : 'create',
-        requestResourceData: productData,
-      }));
+      console.error(error);
     } finally {
       setLoading(false);
     }
